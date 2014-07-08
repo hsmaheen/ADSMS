@@ -1,0 +1,5 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/Department/DepRep.Master" AutoEventWireup="true" CodeBehind="ViewCollectionDetails_Rep.aspx.cs" Inherits="ADSMS.Presentation.Department.ViewCollectionDetails_Rep" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+</asp:Content>

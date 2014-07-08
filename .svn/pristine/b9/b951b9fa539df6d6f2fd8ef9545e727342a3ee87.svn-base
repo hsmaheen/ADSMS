@@ -1,0 +1,52 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ADSMS.DataAccess;
+
+namespace ADSMS.BizLogic
+{
+    public class ClerkService_Phyo
+    {
+        ClerkRepositort_Phyo access = new ClerkRepositort_Phyo();
+
+        public List<category> getAllCategory()
+        {
+            return access.getAllCategory();
+        }
+        public List<item> getAllItemByCid(int cid)
+        {
+            return access.getAllItemByCid(cid);
+        }
+        public List<supplier> getAllSupplierByItmid(int itmid)
+        {
+            return access.getAllSupplierByItmid(itmid);
+        }
+        public double getPriceBySidItmid(int sid, int itmid)
+        {
+            return access.getPriceBySidItmid(sid, itmid);
+        }
+        public int createPurchaseOrder(purchaseorder r)
+        {
+            return access.createPurchaseOrder(r);
+        }
+        public int getSIDByPoid(int poid)
+        {
+            return access.getSIDByPoid(poid);
+        }
+        public int getPOIDBySid(int sid)
+        {
+            return access.getPOIDBySid(sid);
+        }
+        public void createPurchaseOrderDetails(purchaseorderdetail rd)
+        {
+            access.createPurchaseOrderDetails(rd);
+        }
+        ///Purchase Order History
+        public List<object> getAllPurchase()
+        {
+            return access.getAllPurchase();
+        }
+    }
+}

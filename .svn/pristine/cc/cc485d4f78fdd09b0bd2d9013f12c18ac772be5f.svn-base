@@ -1,0 +1,137 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Store.master.cs" Inherits="ADSMS.Presentation.Store.Store" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link href="../../Design/bootstrap.css" rel="stylesheet" />
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
+    <script src="../../Scripts/jquery-2.1.0.min.js"></script>
+    <script src="../../Scripts/bootstrap.min.js"></script>
+    <script src="../../Scripts/handlebars-v1.3.0.js"></script>
+    <script src="../../Scripts/jquery.cookie.js"></script>
+    <script src="../../Scripts/jquery.dataTables.js"></script>
+    <script src="../../Scripts/jquery.tabletojson.min.js"></script>
+    <script src="../../Scripts/jquery.validate.js"></script>
+    <script src="../../Scripts/handlebars-v1.3.0.js"></script>
+    <script src="../../Scripts/custom.js"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <div class="bs-header" id="content">
+        <div class="container">
+            <div class="jumbotron">
+                <div class="col-md-3 col-sm-4 col-xs-6">
+                    <img src="../../Images/stationerylogo.jpg" class="img-responsive" />
+                </div>
+                <h2><strong>Logic University Stationery Management Inventory System</strong> </h2>
+                <p>State of the art <a href="#" target="_blank">Stationery Management Inventory System</a> </p>
+            </div>
+
+
+            <div class="bs-example">
+                <div class="navbar navbar-default">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+
+                    <div class="navbar-collapse collapse navbar-responsive-collapse">
+                        <ul class="nav navbar-nav navbar-left">
+                            <li><a href="/Presentation/Store/StationeryRetrieveal_Emp.aspx">Requisition List</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <label>Disbursement  </label>
+                                    <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a data-toggle="modal" href="/Presentation/Store/DisbursementList_Final.aspx">Disbursement Information</a></li>
+                                    <li><a data-toggle="modal" href="/Presentation/Store/DisbursementHistory.aspx">Disbursement History</a></li>
+                                     <li><a data-toggle="modal" href="/Presentation/Store/DepartmentList.aspx">Department List</a>></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <label>Purchase Order  </label>
+                                    <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a data-toggle="modal" href="/Presentation/Store/PurchaseOrder.aspx">Purchase Order</a></li>
+                                    <li><a data-toggle="modal" href="/Presentation/Store/PurchaseOrderHistory.aspx">Purchase Order History</a></li>
+                                    
+
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <label>Stock Adjustment </label>
+                                    <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a data-toggle="modal" href="/Presentation/Store/UpdateAdjustmentVoucher.aspx">Adjustment Voucher</a></li>
+                                    <li><a data-toggle="modal" href="/Presentation/Store/ViewStockAdjustmentList.aspx">Adjustment Voucher Listing</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <label>Store Details </label>
+                                    <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a data-toggle="modal" href="/Presentation/Store/InventoryList.aspx">Inventory Details</a></li>
+                                    <li><a data-toggle="modal" href="/Presentation/Store/StockReportForm.aspx"> Low Stock Report</a></li>
+                                    <li><a data-toggle="modal" href="/Presentation/Store/StockTransaction.aspx">Inventory Transactions</a></li>
+                                    <li><a data-toggle="modal" href="/Presentation/Store/ChartGenerationForm.aspx">Trend Analysis Chart</a></li>
+                                </ul>
+                            </li>
+                            <li><a data-toggle="modal" href="/Presentation/Store/SupplierList.aspx">Supplier List</a></li>
+
+
+
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <label id="lbl_username" runat="server"></label>
+                                    <b class="caret"></b><i class="fa fa-user"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a data-toggle="modal" href="/Presentation/Logout.aspx">Logout</a></li>
+
+                                    <%--<li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li class="dropdown-header">Dropdown header</li>
+                                    <li><a href="#">Separated link</a></li>
+                                    <li><a href="#">One more separated link</a></li>--%>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <!-- /.nav-collapse -->
+                </div>
+                <!-- /.navbar -->
+            </div>
+            <!--</div>-->
+        </div>
+    </div>
+
+
+    <form id="form1" runat="server">
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+    <div id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <strong>Copyright &copy; Team 3 2014</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

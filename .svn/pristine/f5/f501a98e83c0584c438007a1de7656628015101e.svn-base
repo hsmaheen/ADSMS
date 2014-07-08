@@ -1,0 +1,15 @@
+﻿<div class="span4">
+    <h4><strong>Department Name:</strong> {{DepName}}</h4>
+    <h5><strong>Department Represntative Name:</strong> {{EmployeeName}}</h5>
+    <br />
+    <address>
+        <strong>Collection Point Details</strong><br>
+        <br />
+        <strong>Address: </strong>{{CollectionPointAddress}}
+                <br />
+        <strong>Phone: </strong>{{EmployeeContact}}                       
+    </address>
+</div>
+
+
+

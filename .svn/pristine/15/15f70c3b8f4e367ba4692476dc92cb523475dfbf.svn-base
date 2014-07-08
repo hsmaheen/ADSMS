@@ -1,0 +1,62 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using ADSMS.DataAccess;
+using ADSMS.BizLogic;
+
+namespace ADSMS.Presentation.Department
+{
+    public partial class ViewCollectionDetails_Rep : System.Web.UI.Page
+    {
+        Service_phyo service = new Service_phyo();
+        List<object> obj = new List<object>();
+        department dept = new department();
+        collectionPoint cp = new collectionPoint();
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                int eid;
+                int.TryParse(Session["userid"].ToString(),out eid);
+                dept = service.getDNameByEid(eid);
+                lblDName.Text = dept.DepName;
+                binding();
+            }
+        }
+        public void binding()
+        {
+            int eid;
+            int.TryParse(Session["userid"].ToString(),out eid);
+            string status="Ready";
+            DateTime date=DateTime.Today.AddDays(1);
+            obj = service.getAllCollectionItemByDepIdStatusDate(eid, status, date);
+            gvRep.DataSource = obj;
+            gvRep.DataBind();
+            if (obj.Count > 0)
+            {
+                btnConfirm.Visible = true;
+                dept = service.getDNameByEid(eid);
+                cp = service.getAllCollectionPointByDeptID(dept.DepID);
+                lblAddress.Text = cp.CollectionPointAddress;
+            }
+            else
+            {
+                btnConfirm.Visible = false;
+            }
+        }
+
+        protected void btnConfirm_Click(object sender, EventArgs e)
+        {
+            int eid;
+            int.TryParse(Session["userid"].ToString(), out eid);
+            dept = service.getDNameByEid(eid);
+            int deptId = dept.DepID;
+            service.UpdateDisbursementReceiveDateByDepID(deptId);
+            binding();
+        }
+    }
+}

@@ -1,0 +1,96 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.Services;
+using ADSMS.DataAccess;
+
+namespace ADSMS.Presentation.Store
+{
+    public partial class DisbursementDetails_StoreClerk : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        [WebMethod]
+        public static List<DepartmentDisbDetails> GetDepartmentForDisb()
+        {
+            List<DepartmentDisbDetails> finaldisbist = new List<DepartmentDisbDetails>();
+            DateTime checkdate=new DateTime();
+            checkdate=DateTime.Today;
+            List<object> dlist = new List<object>();
+            List<object> ditems = new List<object>();
+            stationeryEntities db = new stationeryEntities();
+            string status = "pending";
+            List<CustomDepartmentDisb> custdepdiblidt = new List<CustomDepartmentDisb>();
+            custdepdiblidt = db.getDepForDisb1(checkdate,status).ToList<CustomDepartmentDisb>();
+            foreach (CustomDepartmentDisb dep in custdepdiblidt)
+            {
+                DepartmentDisbDetails depitem = new DepartmentDisbDetails();
+                depitem.DepID = dep.DepID;
+                depitem.DepName = dep.DepName;
+                depitem.DepCPName = dep.CollectionPointName;
+                depitem.DepDisID = dep.DisbID;
+                depitem.DepDisbItems = db.getDisbItemsByDep(dep.DepID,status,checkdate).ToList<object>();
+                finaldisbist.Add(depitem);
+            }
+
+            return finaldisbist;
+        }
+
+        [WebMethod]
+        public static List<object> getCollectionPointDetails(int DepID)
+        {
+            stationeryEntities se = new stationeryEntities();
+            List<object> CPDetails = new List<object>();
+            CPDetails = se.getCPointbyDepID(DepID).ToList<Object>();
+            return CPDetails;
+
+
+
+
+        }
+        [WebMethod]
+        public static string confirmDisb(List<int> quantdel, List<int> itemID, int DisbID)
+        {
+            stationeryEntities se = new stationeryEntities();
+
+            string ans = "false";
+            int length = quantdel.Count;
+            for (int i = 0; i < length; i++)
+            {
+                disbursementdetail newdd = new disbursementdetail();
+                int itemid = itemID[i];
+                var q = from dd in se.disbursementdetails
+                        where dd.DisbID == DisbID &&
+                        dd.DisbItemID == itemid
+                        select dd;
+                newdd = q.FirstOrDefault();
+                if (newdd.DisbItemQuantDelivered != quantdel[i])
+                {
+                    newdd.DisbItemQuantDelivered = quantdel[i];
+                    se.SaveChanges();
+                }
+
+
+
+            }
+
+
+
+
+            return ans;
+
+        }
+    }
+
+
+
+
+
+
+}

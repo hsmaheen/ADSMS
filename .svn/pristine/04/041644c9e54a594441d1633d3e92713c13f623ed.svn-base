@@ -1,0 +1,58 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ADSMS.DataAccess
+{
+    public class DisbursementRepository_Web
+    {
+        public List<DepartmentDisbDetails> getDisbyStatus(string status, DateTime date)
+        {
+            DateTime checkdate = new DateTime();
+            checkdate = date;
+            List<DepartmentDisbDetails> finaldisbist = new List<DepartmentDisbDetails>();
+            List<object> dlist = new List<object>();
+            List<object> ditems = new List<object>();
+            stationeryEntities db = new stationeryEntities();
+            List<CustomDepartmentDisb> custdepdiblidt = new List<CustomDepartmentDisb>();
+            custdepdiblidt = db.getDepForDisb1(checkdate, status).ToList<CustomDepartmentDisb>();
+            foreach (CustomDepartmentDisb dep in custdepdiblidt)
+            {
+                DepartmentDisbDetails depitem = new DepartmentDisbDetails();
+                depitem.DepID = dep.DepID;
+                depitem.DepName = dep.DepName;
+                depitem.DepCPName = dep.CollectionPointName;
+                depitem.DepDisID = dep.DisbID;
+                depitem.DepDisbItems = db.getDisbItemsByDep1(dep.DepID, status, checkdate).ToList<object>();
+                finaldisbist.Add(depitem);
+            }
+
+
+            return finaldisbist;
+
+        }
+
+        public List<item> findLowQuantItems()
+        {
+            stationeryEntities se = new stationeryEntities();
+            List<item> lowitems = new List<item>();
+            var q = from i in se.items
+                    where i.ItemQuant < i.ItemReOrderLvl
+                    select i;
+            lowitems = q.ToList();
+
+            return lowitems;
+        }
+
+        public List<Object> getallCat()
+        {
+            stationeryEntities se = new stationeryEntities();
+            List<Object> categories = new List<Object>();
+            return categories;
+        }
+
+
+    }
+}

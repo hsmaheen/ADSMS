@@ -1,0 +1,142 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using ADSMS.BizLogic;
+using ADSMS.DataAccess;
+
+namespace ADSMS.Presentation.Department
+{
+    public partial class AuthoriseRequisition_head : System.Web.UI.Page
+    {
+        RequisitionService _RequisitionService;
+        DepartmentService _DepartmentService;
+        EmployeeService _EmployeeService;
+        ItemService _ItemService;
+
+        List<item> itemList;
+        requisition currentrequisition;
+        employee currentEmployee;
+        department currentDepartment;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            _RequisitionService = new RequisitionService();
+            _EmployeeService = new EmployeeService();
+            _DepartmentService = new DepartmentService();
+            _ItemService = new ItemService();
+
+            if (!IsPostBack)
+            {
+                int QueryStringReqID = Int32.Parse(Request.QueryString["ID"]);
+
+                currentrequisition = new requisition();
+                currentrequisition = _RequisitionService.GetRequisitionDetailsByReqID(QueryStringReqID);
+
+                if (currentrequisition!=null)
+                {
+                    if (currentrequisition.ReqStatus=="approved")
+                    {
+                        btnConfirmRequisition.Enabled = false;
+                        btnRejectRequisition.Enabled = false;
+                        txtReason.Enabled = false;
+                        PanelApprove.Visible = true;
+                    }
+                }
+                else
+                {
+                    Panel1.Visible = true;
+                }
+
+                loadDataFromQueryString(QueryStringReqID);
+                loadItemGridViewData(QueryStringReqID);
+            }
+            
+        }
+
+        private void loadItemGridViewData(int searchReqID)
+        {
+            List<item> itemList = new List<item>();
+            itemList=_ItemService.GetItemListByReqID(searchReqID);
+
+            if (itemList!=null)
+            {
+                gvItemDetails.DataSource = itemList;
+                gvItemDetails.DataBind();
+            }
+            else
+            {
+                Panel1.Visible = true;
+            }
+        }
+
+        private void loadDataFromQueryString(int ReqId)
+        {
+            currentEmployee = new employee();
+            currentEmployee = _EmployeeService.GetEmployeeDetailsByReqID(ReqId);
+
+            if (currentEmployee != null)
+            {
+                lblEmployeeName.Text = currentEmployee.EmployeeName;
+                lblEmpNo.Text = currentEmployee.EmployeeID.ToString();
+                lblEmpEmail.Text = currentEmployee.EmployeeEmail;
+
+                currentDepartment = new department();
+                int curdeptID = currentEmployee.EmployeeDepId ?? default(int);
+                if (currentDepartment != null)
+                {
+                    currentDepartment = _DepartmentService.GetdepartmentDetailsByDeptID(curdeptID);
+                    lblDeptName.Text = currentDepartment.DepName;
+                    lblDeptCode.Text = currentDepartment.DepID.ToString();
+                }
+                else
+                {
+                    Panel1.Visible = true;
+                }
+            }
+            else
+            {
+                Panel1.Visible = true;
+            }
+            
+        }
+
+        protected void btnConfirmRequisition_Click(object sender, EventArgs e)
+        {
+            string reason;
+            int i = Convert.ToInt32(Session["userid"].ToString());
+            int QueryStringReqID = Int32.Parse(Request.QueryString["ID"]);
+
+            if (txtReason.Text == "")
+            {
+                reason = "";
+            }
+            else
+            {
+                reason = txtReason.Text;
+            }
+            _RequisitionService.UpdateConfirmRequisition(QueryStringReqID,"approved",reason,i);
+            Response.Redirect("~/Presentation/Department/RequisitionList_haead.aspx");
+        }
+
+        protected void btnRejectRequisition_Click(object sender, EventArgs e)
+        {
+            string reason;
+            int userID = Convert.ToInt32(Session["userid"].ToString());
+            int QueryStringReqID = Int32.Parse(Request.QueryString["ID"]);
+
+            if (txtReason.Text == "")
+            {
+                reason = "";
+            }
+            else
+            {
+                reason = txtReason.Text;
+            }
+            _RequisitionService.UpdateConfirmRequisition(QueryStringReqID, "reject", reason, userID);
+            Response.Redirect("~/Presentation/Department/RequisitionList_haead.aspx");
+        }
+    }
+}

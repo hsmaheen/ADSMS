@@ -1,0 +1,37 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/Store/Store.Master" AutoEventWireup="true" CodeBehind="PurchaseOrderHistory.aspx.cs" Inherits="ADSMS.Presentation.Store.PurchaseOrderHistory" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-header">
+                    <h1 id="tables">Purchase Order History</h1>
+                   
+                </div>
+                <div>              
+                     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="POID" DataSourceID="SqlDataSource1" AllowPaging="True" CssClass="table table-striped table-hover" HeaderStyle-CssClass="danger" RowStyle-CssClass="info">
+                         <Columns>
+                             <asp:BoundField DataField="POID" HeaderText="Order ID" ReadOnly="True" SortExpression="POID" />
+                             <asp:BoundField DataField="POReqDate" HeaderText="Order Requisition Date" SortExpression="POReqDate" />
+                             <asp:BoundField DataField="ItemDescription" HeaderText="Item Description" SortExpression="ItemDescription" />
+                             <asp:BoundField DataField="POItemQuant" HeaderText="Order Quantity" SortExpression="POItemQuant" />
+                             <asp:BoundField DataField="POStatus" HeaderText="Order Status" SortExpression="POStatus" />
+                             <asp:TemplateField HeaderText="Order Details">
+                                    <ItemTemplate>
+                                        <asp:Button ID="btnPurchaseOrderDetails" runat="server" CssClass="btn btn-primary btn-xs" Text="Details" PostBackUrl='<%# Eval("POID","~/Presentation/Store/PurchaseOrderDetails.aspx?ID={0}") %>'/>
+                                    </ItemTemplate>
+                                    <HeaderStyle CssClass="danger" />
+                                </asp:TemplateField>
+                         </Columns>
+
+<HeaderStyle CssClass="danger"></HeaderStyle>
+
+<RowStyle CssClass="info"></RowStyle>
+                     </asp:GridView>
+                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:stationeryConnectionString %>" SelectCommand="SELECT purchaseorderdetails.POID, purchaseorder.POReqDate, item.ItemDescription, purchaseorderdetails.POItemQuant, purchaseorderdetails.POStatus FROM item INNER JOIN purchaseorderdetails ON item.ItemID = purchaseorderdetails.POItemID INNER JOIN purchaseorder ON purchaseorderdetails.POID = purchaseorder.POID AND purchaseorderdetails.POID = purchaseorder.POID"></asp:SqlDataSource>
+                </div>
+            </div>
+        </div>
+    </div>
+</asp:Content>

@@ -1,0 +1,134 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.Services;
+using ADSMS.DataAccess;
+using ADSMS.BizLogic;
+namespace ADSMS.Presentation.Store
+{
+    public partial class DisbursementDetails_StoreClerk : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        [WebMethod]
+        public static List<DepartmentDisbDetails> GetDepartmentForDisb()
+        {
+            DisbursementService_Web dser = new DisbursementService_Web();
+            List<DepartmentDisbDetails> finaldisbist = new List<DepartmentDisbDetails>();
+            DateTime checkdate=new DateTime();
+            checkdate = DateTime.Today.AddDays(1); //I have added one day to make sure today is also included because she might do some retrieveal today
+            String status ="pending";
+            finaldisbist = dser.getDisbbyStatus(status, checkdate);
+            return finaldisbist;
+        }
+
+        [WebMethod]
+        public static List<object> getCollectionPointDetails(int DepID)
+        {
+            stationeryEntities se = new stationeryEntities();
+            List<object> CPDetails = new List<object>();
+            CPDetails = se.getCPointbyDepID(DepID).ToList<Object>();
+            return CPDetails;
+        }
+
+        //Method to make final Disbursement
+
+        [WebMethod]
+        public static void saveFinalDisb()
+        {
+            DateTime checkdate=new DateTime();
+            List<disbursement> dlistFinal = new List<disbursement>();
+            checkdate = DateTime.Today.AddDays(1);  //I have added one day to make sure today is also included 
+            stationeryEntities se = new stationeryEntities();
+            var q = from d in se.disbursements
+                    where d.DisbStatus == "pending" &&
+                    d.DisbCreateDate < checkdate
+                    select d;
+           
+            dlistFinal = q.ToList();
+            foreach (disbursement d in dlistFinal)
+            {
+                d.DisbStatus = "Ready";
+                se.SaveChanges();
+ 
+            }
+
+
+
+        }
+
+
+
+
+        // Method to update the quantity of the Disbursement
+        [WebMethod]
+        public static string confirmDisb(List<int> quantdel, List<int> itemID, int DisbID)
+        {
+            stationeryEntities se = new stationeryEntities();
+            int currentquant;
+            int updatedquant;
+            int newquant;
+            item itemup = new item();
+            string ans = "false";
+            int length = quantdel.Count;
+            for (int i = 0; i < length; i++)
+            {
+                disbursementdetail newdd = new disbursementdetail();
+                int itemid = itemID[i];
+                itemup = se.items.Find(itemid);
+                var q = from dd in se.disbursementdetails
+                        where dd.DisbID == DisbID &&
+                        dd.DisbItemID == itemid
+                        select dd;
+                newdd = q.FirstOrDefault();
+
+                currentquant =Convert.ToInt32(newdd.DisbItemQuantDelivered);
+                updatedquant = quantdel[i];
+
+                //updating invenotory
+                if (updatedquant > currentquant)
+                {
+                    newquant = updatedquant - currentquant;
+                    itemup.ItemQuant = itemup.ItemQuant - newquant;
+                    se.SaveChanges();
+                }
+                else if (currentquant>updatedquant)
+                {
+                    newquant = currentquant - updatedquant;
+                    itemup.ItemQuant = itemup.ItemQuant + newquant;
+                    se.SaveChanges();
+ 
+                }
+
+
+                if (newdd.DisbItemQuantDelivered != quantdel[i])
+                {
+                    newdd.DisbItemQuantDelivered = quantdel[i];
+                    se.SaveChanges();
+                }
+
+
+
+
+            }
+
+
+
+
+            return ans;
+
+        }
+    }
+
+
+
+
+
+
+}

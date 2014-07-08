@@ -1,0 +1,77 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/Store/Store.Master" AutoEventWireup="true" CodeBehind="Chart-Test.aspx.cs" Inherits="ADSMS.Presentation.Chart_Test" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="container">
+
+        <div id="chart_div"></div>
+    </div>
+
+    <script>
+
+
+        $(function () {
+            // Load the Visualization API and the piechart package.
+            google.load('visualization', '1', { 'packages': ['corechart'] });
+
+            // Set a callback to run when the Google Visualization API is loaded.
+            google.setOnLoadCallback(function drawChart() {
+                var chartdata;
+
+                chartdata = {
+                    "cols": [
+                          { "id": "", "label": "Topping", "pattern": "", "type": "string" },
+                          { "id": "", "label": "Slices", "pattern": "", "type": "number" }
+                    ],
+                    "rows": [
+                          { "c": [{ "v": "Mushrooms", "f": null }, { "v": 3, "f": null }] },
+                          { "c": [{ "v": "Onions", "f": null }, { "v": 1, "f": null }] },
+                          { "c": [{ "v": "Olives", "f": null }, { "v": 1, "f": null }] },
+                          { "c": [{ "v": "Zucchini", "f": null }, { "v": 1, "f": null }] },
+                          { "c": [{ "v": "Pepperoni", "f": null }, { "v": 2, "f": null }] }
+                    ]
+                }
+                var jsonData = chartdata;
+
+                // Create our data table out of JSON data loaded from server.
+                var data = new google.visualization.DataTable(jsonData);
+
+                // Instantiate and draw our chart, passing in some options.
+                var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+                chart.draw(data, { width: 400, height: 240 });
+            });
+        
+
+            //$.ajax({
+            //    type: "POST",
+            //    url: "Chart-Test.aspx/getChartData",
+            //    contentType: "application/json",
+            //    data: JSON.stringify(itemquant),
+            //    dataType: "json"
+            //}).done(function () {
+            //    $('#myModal').modal('show');
+            //}).success(success);
+
+            //function success(data)
+            //{
+            //   //do something;
+
+
+            //}
+
+
+
+
+        });
+
+
+
+
+    </script>
+
+</asp:Content>
+

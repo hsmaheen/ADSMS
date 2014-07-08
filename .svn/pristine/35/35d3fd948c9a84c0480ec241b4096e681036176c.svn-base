@@ -1,0 +1,453 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.ServiceModel.Web;
+using System.Text;
+using ADSMS;
+
+namespace ADSMS.WCFService
+{
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IService1" in both code and config file together.
+    [ServiceContract]
+    public interface IService
+    {
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/Requisition", ResponseFormat = WebMessageFormat.Json)]
+        RequisitionItems[] GetData();
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/RequisitionDetail", ResponseFormat = WebMessageFormat.Json)]
+        RequisitionItemDetails[] GetDetailItem();
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/Item", ResponseFormat = WebMessageFormat.Json)]
+        Item[] GetAllItem();
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/DisbursementList/{id}", ResponseFormat = WebMessageFormat.Json)]
+        RequisitionItemByDepartment[] GetDataItemByDepartment(String id);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/PurchaseOrderList", ResponseFormat = WebMessageFormat.Json)]
+        PurchaseOrder[] selectPurchaseOrderList();
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/PurchaseOrderDetail/{id}", ResponseFormat = WebMessageFormat.Json)]
+        PurchaseOrderDetail[] selectPurchaseOrderDetails(String id);
+
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/CreateDisbursement", Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        bool CreateDisbursement(Disbursement disbursement);
+
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/HiHi", Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        String loginForMobile(Login _login);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/UpdatePurchaseOrder", Method = "POST",
+         RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json)]
+        bool UpdatePurchaseOrder(UpdateData data);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/UpdateItem", Method = "POST",
+         RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json)]
+        bool UpdateItem(MyData data);
+
+    }
+
+    [DataContract]
+    public class Item 
+    {
+        int itemID;
+        int itemCatID;
+        String categoryDescription;
+
+      
+        string itemDescription;
+        int itemReOrderLvl;
+        int itemReOrderQuant;
+        string itemUOM;
+        String itemBinID;
+        int itemQuant;
+
+        [DataMember]
+        public int ItemID 
+        { 
+            get{return itemID;}
+            set{itemID =value ;}
+        }
+        [DataMember]
+        public int ItemCatID
+        { 
+            get{return itemCatID;}
+            set{itemCatID =value ;}
+        }
+        [DataMember]
+        public String CategoryDescription
+        {
+            get { return categoryDescription; }
+            set { categoryDescription = value; }
+        }
+        [DataMember]
+        public string ItemDescription
+        { 
+            get{return itemDescription;}
+            set{itemDescription =value ;}
+        }
+        [DataMember]
+        public int ItemReOrderLvl { 
+            get{return itemReOrderLvl;}
+            set{itemReOrderLvl =value ;}
+        }
+        [DataMember]
+        public int ItemReOrderQuant 
+        { 
+             get{return itemReOrderQuant;}
+            set{itemReOrderQuant =value ;}
+        }
+        [DataMember]
+        public string ItemUOM 
+        {
+             get{return itemUOM;}
+            set{itemUOM =value ;}
+        }
+        [DataMember]
+        public String ItemBinID 
+        { 
+             get{return itemBinID;}
+            set{itemBinID =value ;}
+        }
+        [DataMember]
+        public int ItemQuant {
+             get{return itemQuant;}
+            set{itemQuant =value ;}
+        }
+    
+    }
+    
+    [DataContract]
+    public class RequisitionItems
+    {
+        string categoryid;
+        string categoryname;
+        string quantity;
+         [DataMember]
+        public string CategoryID
+        {
+            get { return categoryid; }
+            set { categoryid = value; }
+        }
+         [DataMember]
+        public string CategoryName
+        {
+            get { return categoryname; }
+            set { categoryname = value; }
+        }
+         [DataMember]
+        public string Quantity
+        {
+            get { return quantity; }
+            set { quantity = value; }
+        }
+    }
+
+    [DataContract]
+    public class RequisitionItemDetails
+    {
+        string itemID;
+        String itemDescription;
+        String itemQuant;
+        String requestedQuantity;
+
+        [DataMember]
+        public string ItemID
+        {
+            get { return itemID; }
+            set { itemID = value; }
+        }
+        [DataMember]
+        public String ItemDescription
+        {
+            get { return itemDescription; }
+            set { itemDescription = value; }
+        }
+        [DataMember]
+        public String ItemQuant
+        {
+            get { return itemQuant; }
+            set { itemQuant = value; }
+        }
+        [DataMember]
+        public String RequestedQuantity
+        {
+            get { return requestedQuantity; }
+            set { requestedQuantity = value; }
+        }
+
+
+
+    }
+
+    [DataContract]
+    public class RequisitionItemByDepartment
+    {
+        string depID;
+        string itemDescription;
+        string depName;
+        string requiredQuantity;
+        [DataMember]
+        public string DepID
+        {
+            get { return depID; }
+            set { depID = value; }
+        }
+
+        [DataMember]
+        public string ItemDescription
+        {
+            get { return itemDescription; }
+            set { itemDescription = value; }
+        }
+
+        [DataMember]
+        public string DepName
+        {
+            get { return depName; }
+            set { depName = value; }
+        }
+
+        [DataMember]
+        public string Required_Quantity
+        {
+            get { return requiredQuantity; }
+            set { requiredQuantity = value; }
+        }
+    }
+
+    [DataContract]
+    public class Disbursement
+    {
+        int itemID;
+        int itemBalance;
+        int reqQuant;
+        int depID;
+        int requiredQuant;
+        int updatedUserID;
+        [DataMember]
+        public int ItemBalance
+        {
+            get { return itemBalance; }
+            set { itemBalance = value; }
+        }
+         [DataMember]
+        public int ReqQuant
+        {
+            get { return reqQuant; }
+            set { reqQuant = value; }
+        }
+          [DataMember]
+        public int DepID
+        {
+            get { return depID; }
+            set { depID = value; }
+        }
+
+          [DataMember]
+        public int RequiredQuant
+        {
+            get { return requiredQuant; }
+            set { requiredQuant = value; }
+        }
+         [DataMember]
+        public int UpdatedUserID
+        {
+            get { return updatedUserID; }
+            set { updatedUserID = value; }
+        }
+         [DataMember]
+        public int ItemID 
+        { 
+            get{ return itemID;}
+            set { itemID = value; }
+        }
+       
+    }
+
+    [DataContract]
+    public class PurchaseOrder{
+    
+         int purchaseOrderID;
+         DateTime purchaseOrderDate;
+         string purchaseOrderSupplierName;
+         [DataMember]
+        public int PurchaseOrderID
+        {
+            get { return purchaseOrderID; }
+            set { purchaseOrderID = value; }
+        }
+       
+         [DataMember]
+        public DateTime PurchaseOrderDate
+        {
+                get { return purchaseOrderDate; }
+                set { purchaseOrderDate = value; }
+        }
+       
+        
+       
+         [DataMember]
+        public string PurchaseOrderSupplierName
+        {
+          get { return purchaseOrderSupplierName; }
+          set { purchaseOrderSupplierName = value; }
+        }
+    }
+
+
+    [DataContract]
+    public class UpdateData
+    {
+        string poID;
+        
+        string employeeID;
+        [DataMember]
+        public string PoID
+        {
+            get { return poID; }
+            set { poID = value; }
+        }
+
+         [DataMember]
+        public string EmployeeID
+        {
+            get { return employeeID; }
+            set { employeeID = value; }
+        }
+
+       
+    }
+    
+    [DataContract]
+    public class MyData
+    {
+        string itemID;
+
+        string quantity;
+        string userID;
+
+      
+        [DataMember]
+        public string ItemID
+        {
+            get { return itemID; }
+            set { itemID = value; }
+        }
+
+        [DataMember]
+        public string Quantity
+        {
+            get { return quantity; }
+            set { quantity = value; }
+        }
+        [DataMember]
+        public string UserID
+        {
+            get { return userID; }
+            set { userID = value; }
+        }
+
+    }
+   
+    [DataContract]
+    public class PurchaseOrderDetail
+    {
+        int poID;
+        int poItemID;
+        String itemDescription;
+        int pOItemQuantity;
+
+        [DataMember]
+        public int PoID
+        {
+            get { return poID; }
+            set { poID = value; }
+        }
+
+        [DataMember]
+        public int PoItemID
+        {
+            get { return poItemID; }
+            set { poItemID = value; }
+        }
+
+        [DataMember]
+        public String ItemDescription
+        {
+            get { return itemDescription; }
+            set { itemDescription = value; }
+        }
+
+        [DataMember]
+        public int POItemQuantity
+        {
+            get { return pOItemQuantity; }
+            set { pOItemQuantity = value; }
+        }
+
+    }
+
+
+    [DataContract]
+    public class Login
+    {
+        string userID;
+        string password;
+
+        [DataMember]
+        public string UserID
+        {
+            get { return userID; }
+            set { userID = value; }
+        }
+
+        [DataMember]
+        public string Password
+        {
+            get { return password; }
+            set { password = value; }
+        }
+
+    }
+    [DataContract]
+    public class loginData
+    {
+        string roleID;
+        string name;
+
+        [DataMember]
+        public string RoleID
+        {
+            get { return roleID; }
+            set { roleID = value; }
+        }
+       
+        [DataMember]
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+    }
+}
+    

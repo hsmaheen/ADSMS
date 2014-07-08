@@ -1,0 +1,145 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="ADSMS.Presentation.Login" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link href="../Design/bootstrap.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-2.1.0.min.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <script src="../Scripts/handlebars-v1.3.0.js"></script>
+    <script src="../Scripts/jquery.cookie.js"></script>
+    <script src="../Scripts/jquery.dataTables.js"></script>
+    <script src="../Scripts/jquery.tabletojson.min.js"></script>
+    <script src="../Scripts/jquery.validate.js"></script>
+    <script src="../Scripts/custom.js"></script>
+
+</head>
+<body>
+
+    <!--------top page begins here------->
+    <div class="bs-header" id="content">
+        <div class="container">
+            <div class="jumbotron">
+                <div class="col-md-3 col-sm-4 col-xs-6">
+                    <img src="../images/stationerylogo.jpg" class="img-responsive" />
+                </div>
+                <h2>Stationery Management Inventory System</h2>
+                <p>State of the art <a href="#" target="_blank">Stationery Management Inventory System</a> </p>
+
+                <!--<div class="bs-example">
+                    <div class="navbar navbar-default">
+
+                        <div class="navbar-collapse collapse navbar-responsive-collapse">
+                            <a class="navbar-brand" href="#">Welcome!</a>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="active"><a href="#">Requisition List</a></li>
+                                <li><a href="#">Purchase Order</a></li>
+                                <li><a href="#">Adjustment Voucher</a></li>
+                                <li><a href="#">Supplier List</a></li>
+                                <li><a href="#">Department List</a></li>
+                                <li><a href="#">Stock Inventory</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login Console<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a data-toggle="modal" href="#AdminLogin">Admin Login</a></li>
+                                        <li><a data-toggle="modal" href="#EmployeeLogin">Employee Login</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li class="dropdown-header">Dropdown header</li>
+                                        <li><a href="#">Separated link</a></li>
+                                        <li><a href="#">One more separated link</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div><!-- /.nav-collapse -->
+            </div>
+            <!-- /.navbar -->
+        </div>
+    </div>
+    <%--    </div>
+    </div>--%>
+
+
+    <!------top page ends here------->
+
+    <!-------login form begins here------->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Login
+                    </div>
+                    <div class="panel-body">
+                        <form id="login" runat="server">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label for="username" class="col-sm-3 control-label">
+                                        Username:
+                                    </label>
+                                    <div class="col-sm-9">
+
+                                        <asp:TextBox ID="txt_Username" runat="server" CssClass="form-control"></asp:TextBox>
+
+                                    </div>
+                                    <br />
+                                    <br />
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="col-sm-3 control-label">
+                                        Password:
+                                    </label>
+                                    <div class="col-sm-9">
+
+                                        <asp:TextBox ID="txt_Password" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>
+
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <br />
+                                <div class="form-group last">
+                                    <div class="col-lg-10 col-lg-offset-3">
+                                        <%--<button type="submit" class="btn btn-primary">Sign In</button>&nbsp;&nbsp;--%>
+                                        <asp:Button ID="btn_Login" runat="server" Text="Log In" CssClass="btn btn-primary" OnClick="btn_Login_Click" />
+                                        <%--   <button type="reset" class="btn btn-default">Reset</button>&nbsp;&nbsp;--%>
+                                        <asp:Button ID="btn_Reset" runat="server" Text="Reset" CssClass="btn btn-default" />
+
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </form>
+
+                    </div>
+                    <div class="panel-footer">
+                        Not Registered? <a href="CustomerRegistration.html">Register here</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-7 col-lg-offset-3" id="statusdiv" runat="server">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="bs-component">
+                    <div class="alert alert-dismissable alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <label id="lbl_status" runat="server"> </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!------enf of customr login page-->
+
+    <!------- custom scripts------>
+    <%--    <form id="form1" runat="server">
+        <div>
+        </div>
+    </form>--%>
+</body>
+</html>

@@ -1,0 +1,47 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ADSMS.DataAccess
+{
+    public class DelegateRepository_Jas
+    {
+        stationeryEntities entities = new stationeryEntities();
+
+        public delegation SearchDelegationWithDelgApproveEmpIdNDate(int DelgApprovedId)
+        {
+            try
+            {
+                delegation delegation = new delegation();
+                DateTime nowTime=DateTime.UtcNow;
+
+                delegation=(from d in entities.delegations
+                                where d.DelApproveEmpID == DelgApprovedId && (d.DelgFromDate >= nowTime || nowTime <= d.DelgToDate)
+                                select d).FirstOrDefault();
+
+                return delegation;
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+        }
+
+        public void SaveNewDelegation(delegation toSaveDelegation)
+        {
+            try
+            {
+                entities.delegations.Add(toSaveDelegation);
+                entities.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+        }
+    }
+}

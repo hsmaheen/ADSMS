@@ -1,0 +1,45 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using ADSMS.BizLogic;
+using ADSMS.DataAccess;
+
+namespace ADSMS.Presentation
+{
+    public partial class ChartGenerationForm : System.Web.UI.Page
+    {
+        ClerkService_Phyo service = new ClerkService_Phyo();
+        List<item> listI = new List<item>();
+        List<category> listC = new List<category>();
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                listC = service.getAllCategory();
+                categorylist.DataValueField = "CategoryID";
+                categorylist.DataTextField = "CategoryName";
+                categorylist.DataSource = listC;
+                categorylist.DataBind();
+ 
+            }
+
+
+        }
+
+        protected void categorylist_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            int cid =  int.Parse(categorylist.SelectedValue);
+            listI= service.getAllItemByCid(cid);
+            itemlist.DataValueField = "ItemID";
+            itemlist.DataTextField = "ItemDescription";
+            itemlist.DataSource = listI;
+            itemlist.DataBind();
+            
+            
+        }
+    }
+}

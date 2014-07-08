@@ -1,0 +1,93 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using ADSMS.BizLogic;
+
+namespace ADSMS.Presentation.Store
+{
+    public partial class CreateItems : System.Web.UI.Page
+    {
+        StoreService ss = new StoreService();
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if ((HttpContext.Current.User.IsInRole("Store Manager") || HttpContext.Current.User.IsInRole("Store Supervisor") || HttpContext.Current.User.IsInRole("Store Clerk")) != true)
+            {
+
+                Response.Redirect("/Presentation/Login.aspx");
+
+
+            }
+
+        }
+
+        protected void submit_Click(object sender, EventArgs e)
+        {
+            int SID1;
+            int SID2;
+            int SID3;
+
+            int SPrice1;
+            int SPrice2;
+            int SPrice3;
+            bool ans = false;
+
+            int c_Catid = Convert.ToInt32(ddl_Category.SelectedValue);
+            string i_desp = itemdesp.Text;
+            int i_quant =Convert.ToInt32(quant.Text);
+           // string i_cname = cname.Text;
+            int i_ReO =Convert.ToInt32(ReO.Text);
+            int i_ReoQ =Convert.ToInt32(ReoQ.Text);
+            string i_uom = uom.Text;
+
+            //Checking
+
+            if (ddl_Supplier1.SelectedValue == ddl_Supplier2.SelectedValue)
+            {
+              
+                lblError.Text = "Please make sure that the suppliers' chosen are different";
+ 
+            }
+            else if(ddl_Supplier1.SelectedValue==ddl_Supplier3.SelectedValue)
+            {
+                lblError.Text = "Please make sure that the suppliers' chosen are different";
+
+            }
+            else if (ddl_Supplier2.SelectedValue == ddl_Supplier3.SelectedValue)
+            {
+                lblError.Text = "Please make sure that the suppliers' chosen are different";
+
+            }
+            else
+            {
+                string i_BinNo = DropDownList1.SelectedValue;
+                SID1 = Convert.ToInt32(ddl_Supplier1.SelectedValue);
+                SID2 = Convert.ToInt32(ddl_Supplier2.SelectedValue);
+                SID3 = Convert.ToInt32(ddl_Supplier3.SelectedValue);
+
+                SPrice1 = Convert.ToInt32(txtPrice1.Text);
+                SPrice2 = Convert.ToInt32(txtPrice2.Text);
+                SPrice3 = Convert.ToInt32(txtPrice3.Text);
+
+
+                ss.AddItem(c_Catid, i_desp, i_quant, i_ReO, i_ReoQ, i_uom, i_BinNo, SID1, SID2, SID3, SPrice1, SPrice2, SPrice3);
+
+                if (ans == false)
+                {
+                    //Label1.Text = "Created";
+                    Response.Write("Update!!!!!!!!!");
+                    Response.Redirect("InventoryList.aspx");
+                }
+
+                else
+                {
+                    Response.Write("Failed");
+
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,62 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/Store/Store.Master" AutoEventWireup="true" CodeBehind="UpdateAdjustmentVoucher.aspx.cs" Inherits="ADSMS.Presentation.Store.UpdateAdjustmentVoucher" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="container">
+        <div class="page-header">
+            <h2 id="tables"><strong>Adjustment Voucher Retrieval</strong></h2>
+
+             
+        </div>
+        <table style="width:100%;">
+   
+            <tr>
+                <td>
+                    <h4>Date <asp:Label ID="lblDate" runat="server" Text ="Date"></asp:Label> :</h4>
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <h4>By <asp:Label ID="lblStoreClerkID" runat="server" Text="StoreClerk"></asp:Label> :</h4>
+               
+               </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:GridView ID="dgvAdjustmentVoucher" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover" HeaderStyle-CssClass="3" RowStyle-CssClass="info" AllowPaging="True" >
+                        <Columns>
+                            <asp:BoundField DataField="ItemID" HeaderText="Item ID" />
+                            <asp:BoundField DataField="ItemDescription" HeaderText="Item Code" />
+                            <asp:BoundField DataField="TransItemQuant" HeaderText="Transaction Item Quantity" />
+                            <asp:TemplateField HeaderText="Reason">
+                                <ItemTemplate>
+                                    <asp:TextBox ID="txtReason" runat="server"></asp:TextBox>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+                    <asp:GridView ID="dgvAdjDetails" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover" HeaderStyle-CssClass="3" RowStyle-CssClass="info" AllowPaging="True" >
+                        <Columns>
+                            <asp:BoundField DataField="ADVItemID" HeaderText="Item ID" />
+                            <asp:BoundField DataField="ItemDescription" HeaderText="Item Code" />
+                            <asp:BoundField DataField="ADVQuantAdj" HeaderText="Transaction Item Quantity" />
+                            <asp:BoundField DataField="ADVReason" HeaderText="Reason" />
+                            
+                        </Columns>
+                    </asp:GridView>
+                </td>
+              
+            </tr>
+            <tr>
+                <td>
+
+                    <asp:Button ID="btnSubmit" runat="server" Text="Submit" class="btn btn-primary" OnClick="btnSubmit_Click" />&nbsp;&nbsp;
+                    <button type="button" class="btn btn-info" onclick="this.form.reset()">Reset Form</button>
+                </td>
+            </tr>
+        </table>
+        <br />
+        </div>
+
+    </asp:Content>

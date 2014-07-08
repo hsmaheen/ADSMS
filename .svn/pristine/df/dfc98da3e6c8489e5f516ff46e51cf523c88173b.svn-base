@@ -1,0 +1,111 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using ADSMS.BizLogic;
+using System.Web.Security;
+namespace ADSMS.Presentation.Department
+{
+    public partial class RequestStationery : System.Web.UI.Page
+    {
+        Service_phyo requisition = new Service_phyo();
+        List<object> itm = new List<object>();
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+
+                if (!IsPostBack)
+                {
+                    ddlSearch.DataTextField = "itemDescription";
+                    ddlSearch.DataValueField = "itemID";
+                    itm = requisition.getAllItem();
+                    ddlSearch.DataSource = itm;
+                    ddlSearch.DataBind();
+                }
+                gvRequisition.DataSource = items;
+                gvRequisition.DataBind();
+            }
+            else
+            {
+
+                Response.Redirect("/Presentation/Login.aspx");
+
+            }
+        }
+
+        public ItemCollection items
+        {
+            get
+            {
+                if (Session["cart"] == null)
+
+                    Session["cart"] = new ItemCollection();
+                return (ItemCollection)Session["cart"];
+            }
+            set
+            {
+                Session["cart"] = value;
+            }
+        }
+
+
+        protected void btnAdd_Click(object sender, EventArgs e)
+        {
+            MyItem item = new MyItem();
+            item.ReqItemID = int.Parse(ddlSearch.SelectedValue);
+            item.ItemDescription = ddlSearch.SelectedItem.Text;
+            int qty = 1;
+            qty = (qty <= 0) ? 1 : qty;
+            item.ReqQuantityReq = qty;
+            items.AddItem(item, qty);
+            Session["cart"] = items;
+            gvRequisition.DataSource = items;
+            gvRequisition.DataBind();
+            if (items.Count > 0)
+            {
+                btnComfirm.Visible = true;
+            }
+            else
+            {
+                btnComfirm.Visible = false;
+            }
+        }
+        protected void btnRemove_Click(object sender, CommandEventArgs e)
+        {
+            int id = Convert.ToInt32(e.CommandArgument.ToString());
+            MyItem item = new MyItem();
+
+            items.RemoveItem(id);
+            items.Remove(item);
+
+            gvRequisition.DataSource = items;
+            gvRequisition.DataBind();
+            if (items.Count > 0)
+            {
+                btnComfirm.Visible = true;
+            }
+            else
+            {
+                btnComfirm.Visible = false;
+            }
+        }
+
+        protected void btnComfirm_Click(object sender, EventArgs e)
+        {
+            int eid;
+            int.TryParse(Session["userid"].ToString(), out eid);
+            ItemCollection itm = new ItemCollection();
+            itm = (ItemCollection)Session["cart"];
+            bool flat = requisition.CreteRequisitionAll(eid, itm);
+            if (flat == true)
+            {
+                Session["cart"] = null;
+            }
+            Response.Redirect("RequisitionHistory_Emp.aspx");
+        }
+    }
+}

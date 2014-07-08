@@ -1,0 +1,118 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ADSMS.DataAccess
+{
+    public class RequisitionRepository
+    {
+        stationeryEntities entities;
+        List<requisition> currentRequisitionList;
+        List<object> obj;
+
+        public RequisitionRepository()
+        {
+            entities = new stationeryEntities();
+        }
+
+        public List<object> GetRequisitionList()
+        {
+            try
+            {
+                obj = new List<object>();
+                var query = (from r in entities.requisitions
+                                          join e in entities.employees on r.ReqEmpId equals e.EmployeeID
+                                          select new
+                                          {
+                                              r.ReqID,r.ReqEmpId,r.ReqStatus,r.ReqDate,r.ReqApproveDate,
+                                              r.ReqReason,r.ReqApproveEmpID,r.ReqDepID,e.EmployeeID,e.EmployeeName
+                                          });
+                obj = query.ToList<object> ();
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+        }
+
+        public List<object> GetRequisitionListByStatus(string searchReqStatus)
+        {
+            try
+            {
+                obj = new List<object>();
+                var q = (from r in entities.requisitions
+                         join e in entities.employees on r.ReqEmpId equals e.EmployeeID
+                         where r.ReqStatus == searchReqStatus
+                         select new
+                         {
+                             r.ReqID,
+                             r.ReqEmpId,
+                             r.ReqStatus,
+                             r.ReqDate,
+                             r.ReqApproveDate,
+                             r.ReqReason,
+                             r.ReqApproveEmpID,
+                             r.ReqDepID,
+                             e.EmployeeID,
+                             e.EmployeeName,
+                             e.EmployeeEmail,
+                             e.EmployeeDepId
+                         });
+                obj = q.ToList<object>();
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+        }
+
+        public requisition GetRequisitionDetailsByID(int searchReqID)
+        {
+            try
+            {
+                requisition currentreq=new requisition();
+                currentreq = (from r in entities.requisitions
+                         where r.ReqID == searchReqID
+                         select r).FirstOrDefault();
+                return currentreq;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public void UpdateConfirmRequisition(int ReqIDtoUpdate,string status,string reason,int LoginID)
+        {
+            try
+            {
+                requisition requisition=new DataAccess.requisition();
+                requisition = (from r in entities.requisitions
+                         where r.ReqID == ReqIDtoUpdate
+                         select r).FirstOrDefault();
+
+                if (requisition!=null)
+                {
+                    requisition.ReqStatus = status;
+                    requisition.ReqApproveDate = DateTime.UtcNow;
+                    requisition.ReqReason = reason;
+                    requisition.ReqApproveEmpID = LoginID;
+                    entities.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+        }
+    }
+}

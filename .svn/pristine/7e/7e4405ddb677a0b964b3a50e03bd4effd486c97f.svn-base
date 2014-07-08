@@ -1,0 +1,353 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/Store/Store.Master" AutoEventWireup="true" CodeBehind="ChartGenerationForm.aspx.cs" Inherits="ADSMS.Presentation.ChartGenerationForm" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="../../Design/datepicker.css" rel="stylesheet" />
+    <script src="../../Scripts/globalize.js"></script>
+    <script src="../../Scripts/knockout-3.0.0.js"></script>
+    <script src="../../Scripts/dx.chartjs.js"></script>
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+    <div class="container">
+        <div id="chartContainer">
+        </div>
+
+    </div>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 id="tables">Chart Generation Form</h1>
+        </div>
+        <div class="bs-component">
+            <div class="form-group">
+                <div class="col-lg-2">
+                    <asp:Label ID="categorylbl" runat="server" Text="Category:"></asp:Label>
+                </div>
+                <div class="col-lg-2">
+                    <asp:DropDownList ID="categorylist" AutoPostBack="true" CssClass="form-control" runat="server" AppendDataBoundItems="true" OnSelectedIndexChanged="categorylist_SelectedIndexChanged">
+                        <asp:ListItem Value="0" Text="-Select-" />
+                    </asp:DropDownList>
+                </div>
+
+                <div class="col-lg-2">
+                    <asp:CheckBox ID="categorychkbox" CssClass="col-lg-offset-6" runat="server" />
+
+                </div>
+                <br />
+            </div>
+        </div>
+        <br />
+
+        <div class="bs-component">
+            <div class="form-group">
+                <div class="col-lg-2">
+                    <asp:Label ID="itemlbl" runat="server" Text="Item:"></asp:Label>
+                </div>
+                <div class="col-lg-2">
+                    <asp:DropDownList ID="itemlist" runat="server" CssClass="form-control" AutoPostBack="true" AppendDataBoundItems="true">
+                        <asp:ListItem Value="0" Text="-Select-" />
+                    </asp:DropDownList>
+
+                </div>
+                <div class="col-lg-2">
+                    <asp:CheckBox ID="itemchkbox" CssClass="col-lg-offset-6" runat="server" />
+                </div>
+                <br />
+            </div>
+        </div>
+        <br />
+
+        <div class="bs-component">
+            <div class="form-group">
+                <div class="col-lg-2">
+                    <asp:Label ID="departmentlbl" runat="server" Text="Department:"></asp:Label>
+                </div>
+                <div class="col-lg-2">
+                    <asp:DropDownList ID="departmentlist" CssClas="form-control" runat="server" DataSourceID="DepEnt" DataTextField="DepName" DataValueField="DepID">
+                    </asp:DropDownList>
+
+                    <asp:EntityDataSource ID="DepEnt" runat="server" ConnectionString="name=stationeryEntities" DefaultContainerName="stationeryEntities" EnableFlattening="False" EntitySetName="departments">
+                    </asp:EntityDataSource>
+                </div>
+                <div class="col-lg-2">
+                    <asp:CheckBox ID="departmentchkbox" CssClass="col-lg-offset-6" runat="server" />
+                </div>
+                <br />
+            </div>
+        </div>
+
+        <%-- Month Date Picker--%>
+
+
+        <div class="bs-component">
+            <div class="form-group">
+                <div class="col-lg-2">
+                    <asp:Label ID="Label1" runat="server" Text="1st Month/Year"></asp:Label>
+                </div>
+
+                <div class="col-md-2 date">
+
+                    <input type="text" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+
+        <div class="bs-component">
+            <div class="form-group">
+                <div class="col-lg-2">
+                    <asp:Label ID="Label2" runat="server" Text="2nd Month/Year"></asp:Label>
+                </div>
+
+                <div class="col-md-2 date">
+                    <input type="text" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <br />
+
+         <div class="bs-component">
+            <div class="form-group">
+                <div class="col-lg-2">
+                    <asp:Label ID="Label3" runat="server" Text="3rd Month/Year"></asp:Label>
+                </div>
+
+                <div class="col-md-2 date">
+                    <input type="text" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />  
+        <br />
+
+
+
+
+
+        <div class="form-group">
+            <div class="col-lg-12">
+                <button type="button" class="btn btn-success" id="btn_GCD">Generate Chart</button>&nbsp;&nbsp;
+              <button type="button" class="btn btn-primary" id="btn_EnableDate" >Enable Customizer</button>&nbsp;&nbsp;
+              <button type="button" class="btn btn-success" id="btn_CustomChart">Generate Custom Chart</button>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <br />
+
+    <script>
+        $(function () {
+
+            //----buttons disabler---////
+            $('.date input').prop('disabled', true);
+
+            $("#btn_CustomChart").prop('disabled', true)
+
+            //----buttons disabler---////
+
+            //---button enabler---///
+
+            $("#btn_EnableDate").click(function ()
+            {
+                $('.date input').prop('disabled', false);
+                $("#btn_CustomChart").prop('disabled', false)
+
+            });
+
+            //---button enabler---///
+
+
+
+                
+            $('.date input').datepicker({
+                minViewMode: 1,
+                keyboardNavigation: false
+            });
+
+
+            //--Norma chart Generator--//
+            $("#btn_GCD").click(function () {
+                var CatOnly = 0;
+                var catCheck = 0;
+                var itemcheck = 0;
+                var depcheck = 0;
+                var chartlist = {itemName:0,catName:0,depName:0 }
+
+                var category = parseInt($("#<%=categorylist.ClientID %> option:selected").val());
+                //alert(category);
+
+                var item =  parseInt($("#<%=itemlist.ClientID%> option:selected").val());
+                alert(item);
+                var department =parseInt( $("#<%=departmentlist.ClientID%> option:selected").val());
+                //alert(department);
+
+                //--------getting the checkbox values---------//////
+                if ($('#<%=categorychkbox.ClientID%>').prop('checked')) {
+
+                    catCheck = 1;
+                }
+
+                if ($('#<%=itemchkbox.ClientID%>').prop('checked')) {
+
+                    itemcheck = 1;
+
+                }
+                if ($('#<%=departmentchkbox.ClientID%>').prop('checked')) {
+
+                    depcheck = 1;
+
+                }
+
+
+                //--------end of getting the checkbox values------///////
+
+
+                //Chart for Items the item and date and generate the chart
+                if ((itemcheck == 1) && (depcheck==0) && (catCheck==1))
+                {
+
+                    alert("Category and Item");
+                    chartlist.itemName = item;
+                    chartlist.catName = category;
+                    console.log(chartlist);
+
+                }
+
+                //--Chart for only a category
+                else if ((itemcheck == 0) && (depcheck == 0) && (catCheck == 1))
+                {
+                    //Cat Only
+                 
+                    chartlist.catName = category;
+                    console.log(chartlist);
+                    CatOnly = 1;
+                }
+
+                // creating the chart
+                $.ajax({
+                    type: "POST",
+                    url: "ChartGenerationForm.aspx/getChart",
+                    contentType: "application/json",
+                    data:  JSON.stringify(chartlist),
+                    dataType: "json"
+                }).success(success);
+
+                function success(data) {
+
+                    var checkchart = data.d;
+
+                    //No data for chart generation
+                    if (checkchart.length == 0)
+                    {
+                        var message = "There is no sufficient data to generate a chart!!"
+                        includes("error_Tmpl", { warning: message }, "#chartContainer");
+
+                    }
+
+
+                    else if (CatOnly == 1)
+                    {
+
+
+                        var chartdata = data.d;
+                        console.log(chartdata);
+                        $("#chartContainer").dxPieChart({
+                            size: {
+                                width: 500
+                            },
+                            dataSource: chartdata,
+                            series: [
+                                {
+                                    argumentField: "ItemDescription",
+                                    valueField: "QuantReq",
+                                    label: {
+                                        visible: true,
+                                        connector: {
+                                            visible: true,
+                                            width: 1
+                                        }
+                                    }
+                                }
+                            ],
+                            title: "Most Ordered Items"
+                        });
+                    }
+
+                    //$("#chartContainer").dxPieChart({
+                    //    dataSource: chartdata,
+                    //    title: "Most Ordered Items",
+                    //    legend: {
+                    //        orientation: "horizontal",
+                    //        itemTextPosition: "right",
+                    //        horizontalAlignment: "right",
+                    //        verticalAlignment: "bottom",
+                    //        rowCount: 2
+                    //    },
+                    //    series: [{
+                    //        argumentField: "ItemDescription",
+                    //        valueField: "Qunatity_Delivered",
+                    //        label: {
+                    //            visible: true,
+                    //            font: {
+                    //                size: 16
+                    //            },
+                    //            connector: {
+                    //                visible: true,
+                    //                width: 0.5
+                    //            },
+                    //            position: "columns",
+                    //            customizeText: function (arg) {
+                    //                return arg.valueText + " ( " + arg.percentText + ")";
+                    //            }
+                    //        }
+                    //    }]
+                    //});
+
+                    //$("#chartContainer").dxChart({
+                    //    title: {
+                    //        text: 'List of all Items Ordered by Departments'
+                    //    },
+                    //    tooltip: {
+                    //        enabled: true
+                    //    },
+                    //    dataSource: chartdata,
+                    //    //commonSeriesSettings: {
+                    //    //    label: {
+                    //    //        visible: true,
+                    //    //        connector: {
+                    //    //            visible: true
+                    //    //        }
+                    //    //    }
+                    //    //},
+                    //    series: {
+                    //        argumentField: "CategoryName",
+                    //        valueField: "QuantReq",
+                    //        name: "Items Ordered",
+                    //        type: "bar",
+
+                    //    }
+                    //});
+
+
+                }
+
+            }
+
+            //--Normal chart Generator--//
+            );
+
+
+
+        });
+
+    </script>
+</asp:Content>
+

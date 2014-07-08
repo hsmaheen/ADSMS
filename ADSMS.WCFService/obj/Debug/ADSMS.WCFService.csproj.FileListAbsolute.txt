@@ -1,0 +1,12 @@
+D:\Maheen\AD Project\ADSMS\ADSMS.WCFService\bin\ADSMS.WCFService.dll
+D:\Maheen\AD Project\ADSMS\ADSMS.WCFService\bin\ADSMS.WCFService.pdb
+D:\Maheen\AD Project\ADSMS\ADSMS.WCFService\bin\ADSMS.BizLogic.dll
+D:\Maheen\AD Project\ADSMS\ADSMS.WCFService\bin\ADSMS.DataAccess.dll
+D:\Maheen\AD Project\ADSMS\ADSMS.WCFService\bin\Elmah.dll
+D:\Maheen\AD Project\ADSMS\ADSMS.WCFService\bin\EntityFramework.dll
+D:\Maheen\AD Project\ADSMS\ADSMS.WCFService\bin\ADSMS.BizLogic.pdb
+D:\Maheen\AD Project\ADSMS\ADSMS.WCFService\bin\ADSMS.DataAccess.pdb
+D:\Maheen\AD Project\ADSMS\ADSMS.WCFService\bin\EntityFramework.xml
+D:\Maheen\AD Project\ADSMS\ADSMS.WCFService\obj\Debug\ADSMS.WCFService.csprojResolveAssemblyReference.cache
+D:\Maheen\AD Project\ADSMS\ADSMS.WCFService\obj\Debug\ADSMS.WCFService.dll
+D:\Maheen\AD Project\ADSMS\ADSMS.WCFService\obj\Debug\ADSMS.WCFService.pdb

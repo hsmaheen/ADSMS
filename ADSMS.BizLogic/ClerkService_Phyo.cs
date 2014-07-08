@@ -1,0 +1,151 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ADSMS.DataAccess;
+using System.Net.Mail;
+
+namespace ADSMS.BizLogic
+{
+    public class ClerkService_Phyo
+    {
+        ClerkRepositort_Phyo access = new ClerkRepositort_Phyo();
+
+        public List<category> getAllCategory()
+        {
+            return access.getAllCategory();
+        }
+        public List<item> getAllItemByCid(int cid)
+        {
+            return access.getAllItemByCid(cid);
+        }
+        public List<supplier> getAllSupplierByItmid(int itmid)
+        {
+            return access.getAllSupplierByItmid(itmid);
+        }
+        public double getPriceBySidItmid(int sid, int itmid)
+        {
+            return access.getPriceBySidItmid(sid, itmid);
+        }
+        public int createPurchaseOrder(purchaseorder r)
+        {
+            return access.createPurchaseOrder(r);
+        }
+        public int getSIDByPoid(int poid)
+        {
+            return access.getSIDByPoid(poid);
+        }
+        public int getPOIDBySid(int sid)
+        {
+            return access.getPOIDBySid(sid);
+        }
+        public void createPurchaseOrderDetails(purchaseorderdetail rd)
+        {
+            access.createPurchaseOrderDetails(rd);
+        }
+        ///Purchase Order History
+        public List<object> getAllPurchase()
+        {
+            return access.getAllPurchase();
+        }
+        //Purchase Order Detail
+        public purchaseorder getPurchaseOrderByPOID(int poid)
+        {
+            return access.getPurchaseOrderByPOID(poid);
+        }
+        public List<object> getAllPurchaseOrderDetailByPOID(int poid)
+        {
+            return access.getAllPurchaseOrderDetailByPOID(poid);
+        }
+        public List<purchaseorderdetail> getAllPurchaseOrderDetailStatusByPOID(int poid)
+        {
+            return access.getAllPurchaseOrderDetailStatusByPOID(poid);
+        }
+        public bool UpdatePurchaseOrderDetailStatusApprove(int poid)
+        {
+            return access.UpdatePurchaseOrderDetailStatusApprove(poid);
+        }
+        public List<object> getAllPurchaseStatus(string search)
+        {
+            return access.getAllPurchaseStatus(search);
+        }
+        //email
+        public void sendEmailToSupplier(int eid,int poid)
+        {
+            purchaseorder po = new purchaseorder();
+            po = access.getPurchaseOrderByPOID(poid);
+
+            string ename = access.getENameByEid(eid);
+            List<purchaseorderdetail> detail = new List<purchaseorderdetail>();
+            detail = access.getPurchaseOrderDetailByPoid(poid);
+
+            //string emailID = email;
+            //send email
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress("sa37adt3@gmail.com");
+            //mail.To.Add(new MailAddress(emailID));
+            mail.To.Add(new MailAddress("khinlaiphyoaung@gmail.com"));
+            mail.Subject = "Purchase Order To Supplier :";
+            String Header = "<head>"
+                    + "<title>TODO supply a title</title>"
+                    + "<meta charset=\"UTF-8\">"
+                    + " <meta name=\"viewport\" content=\"width=device-width\">"
+                    + " <link rel=\"stylesheet\" href=\"http://bootswatch.com/flatly/bootstrap.css\">"
+                    + " <link rel=\"stylesheet\" href=\"http://bootswatch.com/assets/css/bootswatch.min.css\">"
+                    + " </head>";
+            String BodyStart = "<body>";
+            String BodyContent = "<div class=\"bs-docs-section\">"
+                    + ""
+                    + "<div class=\"row\">"
+                    + "<div class=\"col-lg-12\">"
+                    + "<div class=\"page-header\">"
+                    + "<h2 id=\"tables\">Purchase Order To Supplier</h2>"
+                    + "</div>"
+                    + "<div class=\"bs-example table-responsive\"><br/>"
+                    + "Employee Name : " + ename + "<br/><br/><br/>"
+                    + "Request Date : " + po.POReqDate.ToShortDateString() + "<br/><br/><br/>"
+                    + "Request Deliver Date : " + po.POReqDeliverDate.ToShortDateString() + "<br/><br/><br/>"
+                    + "<table class=\"table table-striped table-hover \">"
+                    + "<thead>"
+                    + " <tr>"
+                    + "<th>Item ID</th>"
+                    + " <th> Item Description </th>"
+                    + "  <th> Quantity </th>"
+                    + " </tr>"
+                    + " </thead>";
+            String TableContent = "<tbody>";
+            foreach (purchaseorderdetail it in detail)
+            {
+                string itmname = access.getItmNameByItmid(it.POItemID);
+                TableContent += "<tr>";
+                TableContent += "<td>";
+                TableContent += "<td>" + it.POItemID + "</td>";
+                TableContent += "<td>" + itmname + "</td>";
+                TableContent += "<td>" + it.POItemQuant + "</td>";
+                TableContent += "</tr>";
+            }
+
+            mail.Body = Header + BodyStart + BodyContent + TableContent;
+
+            mail.IsBodyHtml = true;
+
+            SmtpClient sc = new SmtpClient();
+            sc.Host = "smtp.gmail.com";
+            sc.Port = 25;
+            sc.Credentials = new System.Net.NetworkCredential("sa37adt3@gmail.com", "12345678!");
+            sc.EnableSsl = true;
+            sc.Send(mail);
+        }
+
+        //For Sotre/CollectionPointDetails.aspx
+        public List<collectionPoint> getAllCollectionPoint()
+        {
+            return access.getAllCollectionPoint();
+        }
+        public bool updateCollectionDateByCPID(int cpid, string date)
+        {
+            return access.updateCollectionDateByCPID(cpid, date);
+        }
+    }
+}

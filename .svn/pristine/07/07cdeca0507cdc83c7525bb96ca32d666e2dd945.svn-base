@@ -1,0 +1,40 @@
+﻿<%@ Page Language="C#" MasterPageFile="~/Presentation/Store/Store.Master"  AutoEventWireup="true" CodeBehind="ViewStockAdjustmentList.aspx.cs" Inherits="ADSMS.Presentation.Store.ViewStockAdjustmentList" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="page-header">
+              <h1 id="tables">Stock Adjustment List</h1>
+            </div>
+        <table style="width:100%;">
+            <tr>
+                <td>
+                    <asp:GridView ID="dgvStockAdjustmentList" runat="server" AutoGenerateColumns="False" CssClass="table table-hover table-striped table-bordered table-responsive" EmptyDataText="No Adjustment History">
+                        <Columns>
+                            <asp:BoundField HeaderText="Serial No" DataField="ADVID" />
+                            <asp:BoundField HeaderText="Date" DataField="ADVDate" />
+                            <asp:BoundField HeaderText="Voucher Code" />
+                            <asp:BoundField HeaderText="Voucher Status" DataField="ADVStatus" />
+                            <asp:BoundField HeaderText="Requested By" DataField="StoreEmpName" />
+                            <asp:BoundField DataField="ApprovedBy" HeaderText="ApprovedBy" />
+                            <asp:HyperLinkField Text="Details" DataNavigateUrlFields="ADVID" DataNavigateUrlFormatString="./UpdateAdjustmentVoucher.aspx?ID={0}"/>
+                        </Columns>
+                        <EmptyDataRowStyle BackColor="#FFCCFF" />
+                    </asp:GridView>
+                </td>
+               
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+              
+            </tr>
+        </table>
+    
+    </div>
+            </div>
+          </div>
+ 
+</asp:Content>

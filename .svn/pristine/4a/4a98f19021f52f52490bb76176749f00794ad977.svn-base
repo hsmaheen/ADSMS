@@ -1,0 +1,217 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.ServiceModel.Web;
+using System.Text;
+using ADSMS.BizLogic;
+using ADSMS.DataAccess;
+using System.Reflection;
+
+namespace ADSMS.WCFService
+{
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
+    // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
+    public class Service : IService
+    {
+        RequisitionService service;
+        public Service()
+        {
+            service = new RequisitionService();
+        }
+
+        #region Select Methods by Seint Santhandar Bo
+        public RequisitionItems[] GetData()
+        {
+            
+            List<ADSMS.DataAccess.RequisitionItems> obj =service.RequisitionItemByCategory();
+           
+            RequisitionItems[] items = new RequisitionItems[obj.Count];
+            int count = 0;
+            foreach (ADSMS.DataAccess.RequisitionItems o in obj)
+            {
+                RequisitionItems item = new RequisitionItems();
+                item.CategoryID = o.CategoryID;
+                item.CategoryName = o.CategoryName;
+                item.Quantity = o.Quantity;
+                
+                items.SetValue(item,count);
+                count++;
+            }
+            return items;
+            
+        }
+        public RequisitionItemDetails[] GetDetailItem()
+        {
+            List<ADSMS.DataAccess.RequisitionItemsDetail> obj = service.RequisitionDetailsItemByCategory("6");
+            
+            RequisitionItemDetails[] items = new RequisitionItemDetails[obj.Count];
+            int count = 0;
+            foreach (ADSMS.DataAccess.RequisitionItemsDetail o in obj)
+            {
+                RequisitionItemDetails item = new RequisitionItemDetails();
+                item.ItemID = o.ItemID.ToString();
+                item.ItemDescription = o.ItemDescription;
+                item.ItemQuant = o.ItemQuant.ToString();
+                item.RequestedQuantity = o.RequestedQuantity;
+
+                items.SetValue(item, count);
+                count++;
+            }
+            return items;
+        }
+        public Item[] GetAllItem()
+        {
+            
+            Service_phyo servicePhyo = new Service_phyo();
+            List<ADSMS.DataAccess.item> obj = servicePhyo.getAllItem2();
+          
+            Item[] items = new Item[obj.Count];
+            int count = 0;
+            foreach (ADSMS.DataAccess.item o in obj)
+            {
+                Item item = new Item();
+                item.ItemID = o.ItemID;
+                item.ItemCatID = o.ItemCatID;
+                item.CategoryDescription = o.category.CategoryName;
+                item.ItemDescription = o.ItemDescription;
+                item.ItemBinID = o.bin.BinNumber;
+                item.ItemQuant = o.ItemQuant ??  default(int);
+                item.ItemReOrderLvl = o.ItemReOrderLvl;
+                item.ItemReOrderQuant = o.ItemReOrderQuant;
+                item.ItemUOM = o.ItemUOM;
+
+                items.SetValue(item, count);
+                count++;
+            }
+            return items;
+        }
+        public RequisitionItemByDepartment[] GetDataItemByDepartment(String itemID)
+        {
+            DepartmentService department = new DepartmentService();
+            var objItemByDepartment = department.getItemByDep(itemID);
+            RequisitionItemByDepartment[] itemList = new RequisitionItemByDepartment[objItemByDepartment.Count];
+            int count = 0;
+            foreach (var obj in objItemByDepartment)
+            {
+                RequisitionItemByDepartment d = new RequisitionItemByDepartment();
+                Type t = obj.GetType();
+                PropertyInfo dep_ID = t.GetProperty("DepID");
+                PropertyInfo item_Description = t.GetProperty("ItemDescription");
+                PropertyInfo dep_Name = t.GetProperty("DepName");
+                PropertyInfo required_Qty = t.GetProperty("Required_Quantity");
+                d.DepID = dep_ID.GetValue(obj, null).ToString();
+                d.DepName = dep_Name.GetValue(obj, null).ToString();
+                d.ItemDescription = item_Description.GetValue(obj, null).ToString();
+                d.Required_Quantity = required_Qty.GetValue(obj, null).ToString();
+
+                itemList.SetValue(d,count);
+                count++;
+   
+            }
+            return itemList;
+        }
+        public PurchaseOrder[] selectPurchaseOrderList()
+        {
+            PurchaseOrderService poService = new PurchaseOrderService();
+            var polist = poService.selectPurchaseOrder();
+            PurchaseOrder[] po_list = new  PurchaseOrder[polist.Count];
+             int count = 0;
+            foreach (var obj in polist)
+            {
+                PurchaseOrder purchaseOrder = new PurchaseOrder();
+                Type t = obj.GetType();
+                PropertyInfo poID = t.GetProperty("POID");
+                PropertyInfo poReqDate = t.GetProperty("POReqDate");
+               // PropertyInfo poApproveDate = t.GetProperty("POApproveDate");
+                PropertyInfo poSupplierCode = t.GetProperty("SupplierCode");
+
+                purchaseOrder.PurchaseOrderID =Convert.ToInt32( poID.GetValue(obj,null));
+                purchaseOrder.PurchaseOrderDate = Convert.ToDateTime(poReqDate.GetValue(obj, null));
+                //purchaseOrder.PurchaseOrderApproveDate = Convert.ToDateTime(poApproveDate.GetValue(obj, null));
+                purchaseOrder.PurchaseOrderSupplierName =Convert.ToString(poSupplierCode.GetValue(obj,null));
+
+                po_list.SetValue(purchaseOrder, count);
+                count++; 
+            }
+            return po_list;
+        }
+        public PurchaseOrderDetail[] selectPurchaseOrderDetails(String id)
+        {
+            PurchaseOrderService poService = new PurchaseOrderService();
+            var poDetail = poService.selectPurchaseOrderDetail(Convert.ToInt32(id));
+            PurchaseOrderDetail[] po_Detail = new  PurchaseOrderDetail[poDetail.Count];
+            int count = 0;
+
+            foreach (var obj in poDetail)
+            {
+                PurchaseOrderDetail d = new PurchaseOrderDetail ();
+                Type t = obj.GetType();
+                PropertyInfo poID = t.GetProperty("POID");
+                PropertyInfo poItemID = t.GetProperty("POItemID");
+                PropertyInfo poItemDesp = t.GetProperty("ItemDescription");
+                PropertyInfo poItemQuant = t.GetProperty("POItemQuant");
+
+                d.PoID = Convert.ToInt32(poID.GetValue(obj, null));
+                d.PoItemID = Convert.ToInt32(poID.GetValue(obj, null));
+                d.ItemDescription = Convert.ToString(poItemDesp.GetValue(obj,null));
+                d.POItemQuantity = Convert.ToInt32(poItemQuant.GetValue(obj, null));
+
+                po_Detail.SetValue(d, count);
+                
+            }
+            return po_Detail;
+
+        }
+        public String loginForMobile(Login _login)
+        {
+            loginData data = new loginData();
+            LoginService_Mobile login = new LoginService_Mobile();
+            String result = login.Login(_login.UserID,_login.Password);
+            //data.Name = result[0].ToString();
+           // data.RoleID = result[1].ToString();
+
+            return result;
+            
+        }
+        #endregion
+
+        #region Insert Methods by Seint San Thandar Bo
+        public bool CreateDisbursement(Disbursement disbursement) {
+
+            try
+            {
+                DepartmentService departmentService = new DepartmentService();
+                Disbursement_M m = new Disbursement_M();
+                m.DepID = disbursement.DepID;
+                m.ItemID = disbursement.ItemID;
+                m.QuantinHand = disbursement.ReqQuant;
+                m.RequiredQuant = disbursement.RequiredQuant;
+                departmentService.savedisb(m);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            
+        }
+
+        #endregion
+
+        #region Update Methods by Seint San Thandar Bo
+        public bool UpdatePurchaseOrder(UpdateData data) {
+
+            PurchaseOrderService poService = new PurchaseOrderService();
+            return poService.updatePurchaseOrderForReceive(data.PoID, data.EmployeeID);
+        }
+        public bool UpdateItem(MyData data)
+        {
+            ItemService itemService = new ItemService();
+            return itemService.UpdateItem(data.ItemID, data.Quantity, data.UserID);
+
+        }
+        #endregion
+    }
+}

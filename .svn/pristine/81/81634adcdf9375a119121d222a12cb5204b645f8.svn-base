@@ -1,0 +1,175 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ADSMS.DataAccess
+{
+    public class RequisitionRepository
+    {
+        stationeryEntities entities;
+        List<requisition> currentRequisitionList;
+        List<object> obj;
+        object curObj;
+
+        public RequisitionRepository()
+        {
+            entities = new stationeryEntities();
+        }
+
+        public object GetReq_Emp_DeptDetailsListByReqId(int ReqId)
+        {
+            try
+            {
+                curObj = new object();
+                var query = (from rq in entities.requisitions
+                             from emp in entities.employees
+                             from dep in entities.departments
+                             where dep.DepID == emp.EmployeeDepId && rq.ReqDepID == dep.DepID && rq.ReqEmpId == emp.EmployeeID 
+                             && rq.ReqID == ReqId
+                             select new
+                             {
+                                 rq.ReqID,
+                                 rq.ReqEmpId,
+                                 rq.ReqStatus,
+                                 rq.ReqDate,
+                                 rq.ReqApproveDate,
+                                 rq.ReqReason,
+                                 rq.ReqApproveEmpID,
+                                 rq.ReqDepID,
+                                 emp.EmployeeID,
+                                 emp.EmployeeName,
+                                 emp.EmployeeEmail,
+                                 dep.DepName,
+                                 dep.DepID
+                             });
+                curObj = query.FirstOrDefault();
+                return curObj;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public List<object> GetRequisitionListForGv(int ReqDeptId)
+        {
+            try
+            {
+                obj = new List<object>();
+                var query = (from rq in entities.requisitions
+                             from emp in entities.employees
+                             from dep in entities.departments
+                             where dep.DepID==emp.EmployeeDepId && rq.ReqDepID==dep.DepID && rq.ReqEmpId==emp.EmployeeID && rq.ReqDepID==ReqDeptId
+                                          select new
+                                          {
+                                              rq.ReqID,
+                                              rq.ReqEmpId,
+                                              rq.ReqStatus,
+                                              rq.ReqDate,
+                                              rq.ReqApproveDate,
+                                              rq.ReqReason,
+                                              rq.ReqApproveEmpID,
+                                              rq.ReqDepID,
+                                              emp.EmployeeID,emp.EmployeeName
+                                          });
+                obj = query.ToList<object> ();
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+        }
+
+        public List<object> GetRequisitionListByStatus(int ReqDeptId, string searchReqStatus)
+        {
+            try
+            {
+                obj = new List<object>();
+                var q = (from rq in entities.requisitions
+                             from emp in entities.employees
+                             from dep in entities.departments
+                             where dep.DepID==emp.EmployeeDepId && rq.ReqDepID==dep.DepID && rq.ReqEmpId==emp.EmployeeID
+                             && rq.ReqDepID == ReqDeptId && rq.ReqStatus == searchReqStatus
+                                          select new
+                                          {
+                                              rq.ReqID,
+                                              rq.ReqEmpId,
+                                              rq.ReqStatus,
+                                              rq.ReqDate,
+                                              rq.ReqApproveDate,
+                                              rq.ReqReason,
+                                              rq.ReqApproveEmpID,
+                                              rq.ReqDepID,
+                                              emp.EmployeeID,emp.EmployeeName
+                                          });
+                obj = q.ToList<object>();
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+        }
+
+        public requisition GetRequisitionDetailsByID(int searchReqID)
+        {
+            try
+            {
+                requisition currentreq=new requisition();
+                currentreq = (from r in entities.requisitions
+                         where r.ReqID == searchReqID
+                         select r).FirstOrDefault();
+                return currentreq;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public void UpdateConfirmRequisition(int ReqIDtoUpdate,string status,string reason,int LoginID)
+        {
+            try
+            {
+                requisition requisition=new DataAccess.requisition();
+                requisition = (from r in entities.requisitions
+                         where r.ReqID == ReqIDtoUpdate
+                         select r).FirstOrDefault();
+                if (requisition!=null)
+                {
+                    requisition.ReqStatus = status;
+                    requisition.ReqApproveDate = DateTime.UtcNow;
+                    requisition.ReqReason = reason;
+                    requisition.ReqApproveEmpID = LoginID;
+                    entities.SaveChanges();
+                }
+
+                List<requisitiondetail> requisitionDetailsList = new List<requisitiondetail>();
+                requisitionDetailsList=(from rd in entities.requisitiondetails
+                         where rd.ReqID == ReqIDtoUpdate
+                         select rd).ToList();
+                if (requisitionDetailsList!=null)
+	            {
+		            foreach (requisitiondetail curdetail in requisitionDetailsList)
+	                {
+                        curdetail.ReqStatus = status;
+                        entities.SaveChanges();
+	                }
+	            }
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+        }
+    }
+}

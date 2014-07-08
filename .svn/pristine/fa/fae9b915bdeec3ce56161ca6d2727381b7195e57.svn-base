@@ -1,0 +1,119 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/Store/Store.Master" AutoEventWireup="true" CodeBehind="Chart-Test.aspx.cs" Inherits="ADSMS.Presentation.Chart_Test" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script src="../Scripts/knockout-3.0.0.js"></script>
+    <script src="../Scripts/globalize.js"></script>
+    <script src="../Scripts/dx.chartjs.js"></script>
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="container">
+
+        <div id="chartContainer"></div>
+    </div>
+
+    <script>
+
+
+        $(function () {
+            $.ajax({
+                type: "POST",
+                url: "Chart-Test.aspx/getChartData",
+                contentType: "application/json",
+                data: {},
+                dataType: "json"
+            }).success(success);
+
+            function success(data)
+            {
+                var chartdata = data.d;
+                console.log(chartdata);
+                $("#chartContainer").dxPieChart({
+                    size: {
+                        width: 500
+                    },
+                    dataSource: chartdata,
+                    series: [
+                        {
+                            argumentField: "ItemDescription",
+                            valueField: "Qunatity_Delivered",
+                            label: {
+                                visible: true,
+                                connector: {
+                                    visible: true,
+                                    width: 1
+                                }
+                            }
+                        }
+                    ],
+                    title: "Most Ordered Items"
+                });
+
+                //$("#chartContainer").dxPieChart({
+                //    dataSource: chartdata,
+                //    title: "Most Ordered Items",
+                //    legend: {
+                //        orientation: "horizontal",
+                //        itemTextPosition: "right",
+                //        horizontalAlignment: "right",
+                //        verticalAlignment: "bottom",
+                //        rowCount: 2
+                //    },
+                //    series: [{
+                //        argumentField: "ItemDescription",
+                //        valueField: "Qunatity_Delivered",
+                //        label: {
+                //            visible: true,
+                //            font: {
+                //                size: 16
+                //            },
+                //            connector: {
+                //                visible: true,
+                //                width: 0.5
+                //            },
+                //            position: "columns",
+                //            customizeText: function (arg) {
+                //                return arg.valueText + " ( " + arg.percentText + ")";
+                //            }
+                //        }
+                //    }]
+                //});
+
+                //$("#chartContainer").dxChart({
+                //    title: {
+                //        text: 'List of all Items Ordered by Departments'
+                //    },
+                //    tooltip: {
+                //        enabled: true
+                //    },
+                //    dataSource: chartdata,
+                //    //commonSeriesSettings: {
+                //    //    label: {
+                //    //        visible: true,
+                //    //        connector: {
+                //    //            visible: true
+                //    //        }
+                //    //    }
+                //    //},
+                //    series: {
+                //        argumentField: "ItemDescription",
+                //        valueField: "Qunatity_Delivered",
+                //        name: "Items Ordered",
+                //        type: "bar",
+                //        color: '#ffa500'
+                //    }
+                //});
+   
+
+            }
+              
+        });
+
+
+
+
+    </script>
+
+</asp:Content>
+

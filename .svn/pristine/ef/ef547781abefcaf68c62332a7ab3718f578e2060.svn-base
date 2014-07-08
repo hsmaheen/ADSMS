@@ -1,0 +1,99 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using ADSMS.BizLogic;
+using ADSMS.DataAccess;
+namespace ADSMS.Presentation.Store
+{
+    public partial class UpdateAdjustmentVoucher : System.Web.UI.Page
+    {
+        String AdjustmentVoucherID
+        {
+            get
+            {
+                if (Request.QueryString["ID"] != null)
+                    return Request.QueryString["ID"];
+                return String.Empty;
+            }
+        }
+        public void FillData()
+        {
+            AdjustmentService adjService = new AdjustmentService();
+            
+            dgvAdjustmentVoucher.Visible = false;
+            dgvAdjustmentVoucher.Enabled = false;
+            btnSubmit.Visible = false;
+            dgvAdjDetails.DataSource = adjService.getAdjustmentVoucherDetail(Convert.ToInt32(AdjustmentVoucherID));
+            dgvAdjDetails.DataBind();
+            dgvAdjDetails.Enabled = false;
+        }
+        public void SelectAdjustmentVoucher()
+        {
+            AdjustmentService adjService = new AdjustmentService();
+            dgvAdjustmentVoucher.DataSource = adjService.getTransactionForAdjVoucher("1") ;
+            dgvAdjustmentVoucher.DataBind();
+            lblDate.Text = DateTime.Today.ToShortDateString();
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if ((HttpContext.Current.User.IsInRole("Store Clerk") || (HttpContext.Current.User.IsInRole("Store Supervisor")) || (HttpContext.Current.User.IsInRole("Store Manager")) != true))
+            {
+                Response.Redirect("/Presentation/Login.aspx");
+
+            }
+
+
+            if (!IsPostBack)
+            {
+                if (AdjustmentVoucherID != string.Empty)
+                    FillData();
+                else
+                    SelectAdjustmentVoucher();
+
+            }
+
+        }
+
+        protected void btnSubmit_Click(object sender, EventArgs e)
+        {
+            AdjustmentService service = new AdjustmentService();
+            adjustmentvoucher adjVoucher = new adjustmentvoucher();
+            adjVoucher.ADVDate = DateTime.Today;
+            adjVoucher.ADVIOrderByEmpID = 1;
+            adjVoucher.ADVApprovedByEMpID = 2;
+            adjVoucher.ADVStatus = "Pending";
+
+            List<adjustmentvoucherdetail> detailList = new List<adjustmentvoucherdetail>();
+
+            foreach (GridViewRow i in dgvAdjustmentVoucher.Rows)
+            {
+                adjustmentvoucherdetail adjVoucher_details = new adjustmentvoucherdetail();
+
+                adjVoucher_details.ADVItemID =Convert.ToInt32( i.Cells[0].Text.ToString());
+                adjVoucher_details.ADVItemUnitCost = 0;
+                adjVoucher_details.ADVQuantAdj = Convert.ToInt32(i.Cells[2].Text.ToString());
+
+                TextBox t = (TextBox)i.FindControl("txtReason");
+
+                adjVoucher_details.ADVReason =t.Text.ToString();
+                adjVoucher_details.ADVItemUnitCost = 0;
+                adjVoucher_details.ADVQuantBefore = 0;
+                adjVoucher_details.ADVQuantAfter = 0;
+                adjVoucher_details.ADVAdjustedCost = 0;
+                detailList.Add(adjVoucher_details);
+            }
+
+
+            service.saveAdjustmentVoucher(adjVoucher, detailList);
+
+            //Send e-mail to supervisor or manager
+            
+           
+        }
+
+    }
+}

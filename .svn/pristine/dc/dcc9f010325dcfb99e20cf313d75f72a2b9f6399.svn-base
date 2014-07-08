@@ -1,0 +1,99 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ADSMS.DataAccess
+{
+    public class StoreRepository
+    {
+        stationeryEntities se = new stationeryEntities();
+
+        public List<object> getItemList()
+        {
+            List<object> ItemList = new List<object>();
+
+            var q = from item in se.items
+                    join ca in se.categories on item.ItemCatID equals ca.CategoryID
+                    join Bin in se.bins on item.ItemBinID equals Bin.BinID
+                    select new { item.ItemID, item.ItemDescription, item.ItemQuant, ca.CategoryName, item.ItemReOrderLvl, item.ItemReOrderQuant, item.ItemUOM, Bin.BinNumber };
+
+            ItemList = q.ToList<object>();
+
+            return ItemList;                         
+            
+        }
+
+        public item GetItem(int itemid)
+        {
+            item item = new item();
+            item = se.items.Where(i => i.ItemID.Equals(itemid)).FirstOrDefault<item>();
+            return item;
+        }
+        public category Getcategory(string CategoryName)
+        {
+            category cate = new category();
+            cate = se.categories.Where(i => i.CategoryID.Equals(CategoryName)).FirstOrDefault<category>();
+            return cate;
+        }
+        public bin GetBin(int BinID)
+        {
+            bin bin = new bin();
+            bin = se.bins.Where(i => i.BinID.Equals(BinID)).FirstOrDefault<bin>();
+            return bin;
+        }
+
+
+
+        public bool UpdateInventoryList(int itemID, string itemdesp, int quant, string cname, int itemReO, int itemReOQ, string uom, int BNo)
+        {
+            bool ans = false;
+            item item = GetItem(itemID);
+            item.ItemDescription = itemdesp;
+            item.ItemQuant = quant;
+            item.ItemReOrderLvl = itemReO;
+            item.ItemReOrderQuant = itemReOQ;
+            item.ItemUOM = uom;
+
+            category ca = Getcategory(cname);
+            ca.CategoryName = cname;
+
+            bin bin = GetBin(BNo);
+
+            try
+            {
+                se.SaveChanges();
+                ans = true;
+
+            }
+            catch (Exception ex)
+            {
+                ans = false;
+ 
+            }
+            return ans;
+        }
+
+
+        //public bool DeleteItem(object delitem)
+        //{
+        //    bool ans=false;
+        //    item newitem = new item();
+        //    newitem = (item)delitem;
+        //    try
+        //    {
+        //        se.items.Remove(newitem);
+        //        se.SaveChanges();
+        //        ans = true;
+        //        return ans;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ans = false;
+        //        return ans;
+        //    }
+        //}
+
+    }                                                                                                                                       
+}

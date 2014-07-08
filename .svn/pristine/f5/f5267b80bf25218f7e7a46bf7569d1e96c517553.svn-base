@@ -1,0 +1,82 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/Store/Store.Master" AutoEventWireup="true" CodeBehind="CreateItems.aspx.cs" Inherits="ADSMS.Presentation.Store.CreateItems" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+
+    <div class="container">
+        <form class="form-horizontal">
+            <fieldset>
+                <legend>Add New Item</legend>
+                <div class="form-group">
+                    <label for="itemCatid" class="col-lg-2 control-label">Item CategoryID</label>
+                    <div class="col-lg-10">
+                        <asp:DropDownList ID="ddl_Category" runat="server" DataSourceID="categoryEnt" DataTextField="CategoryName" DataValueField="CategoryID">
+                        </asp:DropDownList>
+                        <asp:EntityDataSource ID="categoryEnt" runat="server" ConnectionString="name=stationeryEntities" DefaultContainerName="stationeryEntities" EnableFlattening="False" EntitySetName="categories" EntityTypeFilter="category">
+                        </asp:EntityDataSource>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="itemDescription" class="col-lg-2 control-label">Item Description</label>
+                    <div class="col-lg-10">
+                        <asp:TextBox ID="itemdesp" placeholder="ItemDescription" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="itemQuantity" class="col-lg-2 control-label">Item Quantity</label>
+                    <div class="col-lg-10">
+                        <asp:TextBox ID="quant" placeholder="Item Quantity" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+<%--                <div class="form-group">
+                    <label for="categoryname" class="col-lg-2 control-label">Category Name</label>
+                    <div class="col-lg-10">
+                        <asp:TextBox ID="cname" placeholder="Category Name" runat="server"></asp:TextBox>
+                    </div>
+                </div>--%>
+
+                <div class="form-group">
+                    <label for="ItemReOrderLvl" class="col-lg-2 control-label">ReOrder Level</label>
+                    <div class="col-lg-10">
+                        <asp:TextBox ID="ReO" placeholder="ReOrder Level" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="ItemReOrderQuant" class="col-lg-2 control-label">ReOrder Quantity</label>
+                    <div class="col-lg-10">
+                        <asp:TextBox ID="ReoQ" placeholder="ReOrder Quantity" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="ItemUOM" class="col-lg-2 control-label">UOM</label>
+                    <div class="col-lg-10">
+                        <asp:TextBox ID="uom" placeholder="UOM" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="BinNO" class="col-lg-2 control-label">Bin NO</label>
+                    <div class="col-lg-10">
+                        <asp:TextBox ID="BinNo" placeholder="Bin NO" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+          
+                        
+                        <asp:Button ID="cancel" runat="server" Text="Cancel" CssClass="btn-default" PostBackUrl="~/Presentation/Store/InventoryList.aspx" />
+                        <asp:Button ID="submit" runat="server" Text="Submit" CssClass="btn-primary" OnClick="submit_Click" />
+
+                        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+
+                    </div>
+                </div>
+    </div>
+    </fieldset>
+</form>
+</asp:Content>

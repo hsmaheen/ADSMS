@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../../Design/bootstrap.css" rel="stylesheet" />
+    <script src="../../Scripts/jquery-2.1.0.min.js"></script>
+    <script src="../../Scripts/bootstrap.min.js"></script>
+</head>
+<body>
+    <!-- Button trigger modal -->
+    <button class="btn btn-primary btn-lg" id="btn_modal">
+        Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    Hello 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $("#btn_modal").click(function () {
+                $('#myModal').modal('toggle')
+            });
+
+        });
+    </script>
+
+
+</body>
+</html>

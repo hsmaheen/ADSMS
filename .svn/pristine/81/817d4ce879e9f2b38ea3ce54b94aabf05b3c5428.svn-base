@@ -1,0 +1,58 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using ADSMS.BizLogic;
+
+namespace ADSMS.Presentation.Store
+{
+    public partial class StockTransaction : System.Web.UI.Page
+    {
+
+        StoreService ss = new StoreService();
+
+        public void BindGrid()
+        {
+            dgvStockTrans.DataSource = ss.getStockTrans();
+            dgvStockTrans.DataBind();
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+
+                BindGrid();
+            }
+        }
+
+        protected void dgvStockTrans_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            dgvStockTrans.PageIndex = e.NewPageIndex;
+            if (txtSearchbyEmp.Text == "")
+            {
+                BindGrid();
+            }
+            else
+            {
+                SearchByEmp();
+            }
+        }
+
+
+
+        public void SearchByEmp()
+        {
+            dgvStockTrans.DataSource = ss.searchTrans(txtSearchbyEmp.Text);
+            dgvStockTrans.DataBind();
+        }
+
+        protected void searchByEmp_Click(object sender, EventArgs e)
+        {
+            dgvStockTrans.DataSource = ss.searchTrans(txtSearchbyEmp.Text);
+            dgvStockTrans.DataBind();
+        }
+    }
+}

@@ -1,0 +1,52 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ADSMS.DataAccess;
+namespace ADSMS.BizLogic
+{
+    public class AdjustmentService
+    {
+        AdjustmentRepository rep;
+        public AdjustmentService()
+        {
+            rep = new AdjustmentRepository();
+        }
+        public object getAdjustmentVoucherByID(int id)
+        {
+            return rep.selectAdjustmentVoucherByAdjustmentVoucherID(id);
+
+        }
+        public List<object> getAdjustmentVoucherDetail(int adjID)
+        {
+            return rep.selectAdjustmentVoucherDetails(adjID);
+        }
+        public List<object> getAdjustmentVoucher()
+        {
+            return rep.selectAdjustmentVoucher();
+
+        }
+        public List<object> getAllAdjustmentVoucher()
+        {
+            return rep.selectAllAdjustmentVoucher();
+
+        }
+        public List<object> getTransactionForAdjVoucher(String userID)
+        {
+            return rep.selectAdjustmentVoucherToApprove(userID);
+
+        }
+        public bool saveAdjustmentVoucher(adjustmentvoucher a ,List<adjustmentvoucherdetail> d)
+        {
+            return rep.InsertAdjustmentVoucher(a, d);
+        }
+        public void updateAdjustmentVoucher(int adjustmentvoucherID, string status)
+        {
+            rep.UpdateAdjustmentVoucher(adjustmentvoucherID, status);
+
+            //Update TransactionTable
+        }
+    }
+  
+}

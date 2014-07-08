@@ -1,0 +1,72 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using ADSMS.DataAccess;
+using ADSMS.BizLogic;
+
+namespace ADSMS.Presentation.Department
+{
+    public partial class RequisitionList_haead : System.Web.UI.Page
+    {
+        RequisitionService _RequisitionService;
+        List<object> requisitionListObj;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            _RequisitionService = new RequisitionService();
+
+            if (!IsPostBack)
+            {
+                LoadAllGridView();
+            }
+        }
+
+        public void LoadAllGridView()
+        {
+            requisitionListObj = new List<object>();
+            requisitionListObj = _RequisitionService.GetRequisitionList();
+            gvRequisitionList.DataSource = requisitionListObj;
+            gvRequisitionList.DataBind();
+        }
+
+        protected void ddlRequisitionList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            String searchStatus = ddlRequisitionList.SelectedValue;
+
+            if (searchStatus=="All")
+            {
+                LoadAllGridView();
+            }
+            else
+            {
+                requisitionListObj = new List<object>();
+                requisitionListObj=_RequisitionService.GetRequisitionListByStatus(searchStatus);
+                gvRequisitionList.DataSource = requisitionListObj;
+                gvRequisitionList.DataBind();
+            }
+        }
+
+        protected void gvRequisitionList_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvRequisitionList.PageIndex = e.NewPageIndex;
+
+            String searchStatus = ddlRequisitionList.SelectedValue;
+
+            if (searchStatus == "All")
+            {
+                LoadAllGridView();
+            }
+            else
+            {
+                requisitionListObj = new List<object>();
+                requisitionListObj = _RequisitionService.GetRequisitionListByStatus(searchStatus);
+                gvRequisitionList.DataSource = requisitionListObj;
+                gvRequisitionList.DataBind();
+            }
+        }
+
+    }
+}

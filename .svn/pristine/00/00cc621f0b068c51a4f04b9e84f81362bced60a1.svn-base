@@ -1,0 +1,223 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ADSMS.DataAccess;
+using System.Net.Mail;
+
+namespace ADSMS.BizLogic
+{
+    public class Service_phyo
+    {
+        requisition req = new requisition();
+        requisitiondetail reqDetail = new requisitiondetail();
+        Repository_phyo requisition = new Repository_phyo();
+        MyItem itm = new MyItem();
+
+        public List<object> getAllRequisitionByEid(int eid)
+        {
+            return requisition.getAllRequisitionByEid(eid);
+        }
+
+        public List<object> getAllRequisitionStatusByEid(int eid, string search)
+        {
+            return requisition.getAllRequisitionStatusByEid(eid, search);
+        }
+
+        public List<object> getAllItem()
+        {
+            return requisition.getAllItem();
+        }
+        public List<item> getAllItem2()
+        {
+            return requisition.getAllItem2();
+        }
+        public int getItemIDByItemDescription(string iname)
+        {
+            return requisition.getItemIDByItemDescription(iname);
+        }
+
+        public bool CreteRequisitionAll(int eid, ItemCollection items)
+        {
+            int depid = requisition.getDepIdByEid(eid);
+
+            req.ReqEmpId = eid;
+            req.ReqStatus = "pending";
+            req.ReqDate = DateTime.Now;
+            req.ReqDepID = depid;
+
+            int rid= requisition.createRequisition(req);
+
+            foreach (var item in items)
+            {
+                reqDetail.ReqID=rid;
+                reqDetail.ReqItemID=item.ReqItemID;
+                reqDetail.ReqQuantityReq=item.ReqQuantityReq;
+                requisition.createRequisitionDetails(reqDetail);
+            }
+            sendEmailToDepHead(eid,rid);
+            return true;
+        }
+
+        public void DeleteRequisitionAll(int reqId)
+        {
+            requisition.DeleteRequisitionAll(reqId);
+        }
+        public requisition ShowRequisitionDetail(int reqId)
+        {
+            return requisition.ShowRequisitionDetail(reqId);
+        }
+        public List<object> ShowAllRequisitionDetailById(int rid)
+        {
+            return requisition.ShowAllRequisitionDetailById(rid);
+        }
+        public bool getRequisitionByStatus(int reqId)
+        {
+            return requisition.getRequisitionByStatus(reqId);
+        }
+        //Department Representative
+        public department getDNameByEid(int eid)
+        {
+            return requisition.getDNameByEid(eid);
+        }
+
+        public List<object> getAllCollectionItemByDepIdStatusDate(int eid, string status, DateTime date)
+        {
+            return requisition.getAllCollectionItemByDepIdStatusDate(eid, status, date);
+        }
+        public void UpdateDisbursementReceiveDateByDepID(int depid)
+        {
+            requisition.UpdateDisbursementReceiveDateByDepID(depid);
+        }
+        
+        public collectionPoint getAllCollectionPointByDeptID(int deptid)
+        {
+            return requisition.getAllCollectionPointByDeptID(deptid);
+        }
+        //public void sendEmailToDepHead(string email, List<item> lowItems)
+        public void sendEmailToDepHead(int empid,int reqid)
+        {
+            string ename = requisition.getENameByEid(empid);
+            List<requisitiondetail> detail = new List<requisitiondetail>();
+            detail = requisition.getRequisitionDetailByRid(reqid);
+
+            //string emailID = email;
+            //send email
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress("sa37adt3@gmail.com");
+            //mail.To.Add(new MailAddress(emailID));
+            mail.To.Add(new MailAddress("khinsabal.jasmine@gmail.com"));
+            mail.Subject = "Request Stationery For Department :";
+            String Header = "<head>"
+                    + "<title>TODO supply a title</title>"
+                    + "<meta charset=\"UTF-8\">"
+                    + " <meta name=\"viewport\" content=\"width=device-width\">"
+                    + " <link rel=\"stylesheet\" href=\"http://bootswatch.com/flatly/bootstrap.css\">"
+                    + " <link rel=\"stylesheet\" href=\"http://bootswatch.com/assets/css/bootswatch.min.css\">"
+                    + " </head>";
+            String BodyStart = "<body>";
+            String BodyContent = "<div class=\"bs-docs-section\">"
+                    + ""
+                    + "<div class=\"row\">"
+                    + "<div class=\"col-lg-12\">"
+                    + "<div class=\"page-header\">"
+                    + "<h2 id=\"tables\">Requisition Stationery For Department</h2>"
+                    + "</div>"
+                    + "<div class=\"bs-example table-responsive\"><br/>"
+                    + "Employee Name : "+ ename+"<br/><br/><br/>"
+                    + "<table class=\"table table-striped table-hover \">"
+                    + "<thead>"
+                    + " <tr>"
+                    + "<th>Item ID</th>"
+                    + " <th> Item Description </th>"
+                    + "  <th> Quantity </th>"
+                    + " </tr>"
+                    + " </thead>";
+            String TableContent = "<tbody>";
+            foreach (requisitiondetail it in detail)
+            {
+                string itmname=requisition.getItmNameByItmid(it.ReqItemID);
+                TableContent += "<tr>";
+                TableContent += "<td>";
+                TableContent += "<td>" + it.ReqItemID + "</td>";
+                TableContent += "<td>" + itmname + "</td>";
+                TableContent += "<td>" + it.ReqQuantityReq + "</td>";
+                TableContent += "</tr>";
+            }
+
+            mail.Body = Header + BodyStart + BodyContent + TableContent;
+
+            mail.IsBodyHtml = true;
+
+            SmtpClient sc = new SmtpClient();
+            sc.Host = "smtp.gmail.com";
+            sc.Port = 25;
+            sc.Credentials = new System.Net.NetworkCredential("sa37adt3@gmail.com", "12345678!");
+            sc.EnableSsl = true;
+            sc.Send(mail);
+        }
+
+        public void sendEmailToStoreClerk(int empid)
+        {
+            string ename = requisition.getENameByEid(empid);
+            List<disbursementdetail> obj = new List<disbursementdetail>();
+            obj = requisition.getCollectionItemByDepIdStatusDateForEmail(empid, "Ready", DateTime.Today.AddDays(1));
+
+            //string emailID = email;
+            //send email
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress("sa37adt3@gmail.com");
+            //mail.To.Add(new MailAddress(emailID));
+            mail.To.Add(new MailAddress("hsmaheen@gmail.com"));
+            mail.Subject = "Collection Stationery For Department :";
+            String Header = "<head>"
+                    + "<title>TODO supply a title</title>"
+                    + "<meta charset=\"UTF-8\">"
+                    + " <meta name=\"viewport\" content=\"width=device-width\">"
+                    + " <link rel=\"stylesheet\" href=\"http://bootswatch.com/flatly/bootstrap.css\">"
+                    + " <link rel=\"stylesheet\" href=\"http://bootswatch.com/assets/css/bootswatch.min.css\">"
+                    + " </head>";
+            String BodyStart = "<body>";
+            String BodyContent = "<div class=\"bs-docs-section\">"
+                    + ""
+                    + "<div class=\"row\">"
+                    + "<div class=\"col-lg-12\">"
+                    + "<div class=\"page-header\">"
+                    + "<h2 id=\"tables\">Collection Stationery For Department</h2>"
+                    + "</div>"
+                    + "<div class=\"bs-example table-responsive\"><br/>"
+                    + "Employee Name : " + ename + "<br/><br/><br/>"
+                    + "<table class=\"table table-striped table-hover \">"
+                    + "<thead>"
+                    + " <tr>"
+                    + "<th>Item ID</th>"
+                    + " <th> Item Description </th>"
+                    + "  <th>Collect Quantity </th>"
+                    + " </tr>"
+                    + " </thead>";
+            String TableContent = "<tbody>";
+            foreach (disbursementdetail it in obj)
+            {
+                string itmname = requisition.getItmNameByItmid(it.DisbItemID);
+                TableContent += "<tr>";
+                TableContent += "<td>";
+                TableContent += "<td>" + it.DisbItemID + "</td>";
+                TableContent += "<td>" + itmname + "</td>";
+                TableContent += "<td>" + it.DisbItemQuantDelivered + "</td>";
+                TableContent += "</tr>";
+            }
+
+            mail.Body = Header + BodyStart + BodyContent + TableContent;
+
+            mail.IsBodyHtml = true;
+
+            SmtpClient sc = new SmtpClient();
+            sc.Host = "smtp.gmail.com";
+            sc.Port = 25;
+            sc.Credentials = new System.Net.NetworkCredential("sa37adt3@gmail.com", "12345678!");
+            sc.EnableSsl = true;
+            sc.Send(mail);
+        }
+    }
+}

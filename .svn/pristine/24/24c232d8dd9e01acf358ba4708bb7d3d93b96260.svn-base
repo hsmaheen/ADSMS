@@ -1,0 +1,49 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using ADSMS.BizLogic;
+
+namespace ADSMS.Presentation.Store
+{
+    public partial class CreateItems : System.Web.UI.Page
+    {
+        StoreService ss = new StoreService();
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void submit_Click(object sender, EventArgs e)
+        {
+            bool ans = false;
+
+            int c_Catid = Convert.ToInt32(ddl_Category.SelectedValue);
+            string i_desp = itemdesp.Text;
+            int i_quant =Convert.ToInt32(quant.Text);
+           // string i_cname = cname.Text;
+            int i_ReO =Convert.ToInt32(ReO.Text);
+            int i_ReoQ =Convert.ToInt32(ReoQ.Text);
+            string i_uom = uom.Text;
+            string i_BinNo = DropDownList1.SelectedValue;
+
+            ss.AddItem(c_Catid, i_desp, i_quant,i_ReO, i_ReoQ, i_uom, i_BinNo);
+
+            if (ans == false)
+            {
+                //Label1.Text = "Created";
+                Response.Write("Update!!!!!!!!!");
+                Response.Redirect("InventoryList.aspx");
+            }
+
+            else
+            {
+                Response.Write("Failed");
+
+            }
+        }
+    }
+}

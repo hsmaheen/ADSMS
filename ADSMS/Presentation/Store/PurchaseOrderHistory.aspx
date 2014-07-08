@@ -1,0 +1,51 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/Store/Store.Master" AutoEventWireup="true" CodeBehind="PurchaseOrderHistory.aspx.cs" Inherits="ADSMS.Presentation.Store.PurchaseOrderHistory" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-header">
+                    <h1 id="tables">Purchase Order History</h1>
+                   
+                </div>
+                <div style="height:50px;">
+                     Search :  <asp:DropDownList ID="ddlSearch" runat="server" AppendDataBoundItems="true" AutoPostBack="true" OnSelectedIndexChanged="ddlSearch_SelectedIndexChanged" >
+                                <asp:ListItem Value="all" Text="All" />
+                                <asp:ListItem Value="pending" Text="Pending" />
+                                <asp:ListItem Value="approved" Text="Approved" />
+                            </asp:DropDownList>
+                    <br />
+                </div>
+                <div> 
+                     <asp:GridView ID="GridView1" runat="server" EmptyDataText="No Data!" AutoGenerateColumns="False" DataKeyNames="POID"  AllowPaging="True" PageSize="5" CssClass="table table-striped table-hover" 
+                         HeaderStyle-CssClass="danger" RowStyle-CssClass="info" OnPageIndexChanging="GridView1_PageIndexChanging">
+                         <Columns>
+                              <asp:TemplateField HeaderText="No">
+                                                <ItemTemplate>
+                                                    <%# Container.DataItemIndex + 1 %>
+                                                </ItemTemplate>
+                                                <ItemStyle Width="2%" />
+                                            </asp:TemplateField>
+                             <asp:BoundField DataField="SupplierName" HeaderText="SupplierName" SortExpression="POReqDate" />
+                             <asp:BoundField DataField="POReqDate" DataFormatString="{0:dd/MM/yyyy}" HeaderText="POReqDate" SortExpression="ItemDescription" />
+                             <asp:BoundField DataField="POReqDeliverDate" DataFormatString="{0:dd/MM/yyyy}" HeaderText="POReqDeliverDate" SortExpression="POItemQuant" />
+                             <asp:BoundField DataField="ReceiveDate" HeaderText="ReceiveDate" SortExpression="ReceiveDate" DataFormatString="{0:dd/MM/yyyy}" />
+                             <asp:TemplateField HeaderText="Action">
+                                    <ItemTemplate>
+                                        <asp:Button ID="btnDetail" runat="server" CssClass="btn btn-primary btn-xs" Text="Details" 
+                                            PostBackUrl='<%# Eval("POID","~/Presentation/Store/PurchaseOrderDetails.aspx?POID={0}") %>'/>
+                                    </ItemTemplate>
+                                    <HeaderStyle CssClass="danger" />
+                                </asp:TemplateField>
+                         </Columns>
+
+<HeaderStyle CssClass="danger"></HeaderStyle>
+
+<RowStyle CssClass="info"></RowStyle>
+                     </asp:GridView>
+                </div>
+            </div>
+        </div>
+    </div>
+</asp:Content>

@@ -1,0 +1,56 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/Store/Store.Master" AutoEventWireup="true" CodeBehind="CollectionPointDetails.aspx.cs" Inherits="ADSMS.Presentation.Store.CollectionPointDetails" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="container">
+
+        <h1 id="tabs" class="page-header">Collection Point Details</h1>
+        <div id="disb_Details">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#">
+                            <asp:Label ID="lblDName" runat="server" Text="Collection Point" />
+                        </a>
+                    </h4>
+                </div>
+                <div class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="bs-component">
+                                    <asp:GridView ID="gvCollectionPoint" runat="server"   OnRowEditing="gvCollectionPoint_RowEditing" EmptyDataText="No Delivery Stationery"
+                                        CssClass="table table-striped table-hover" OnRowCancelingEdit="gvCollectionPoint_RowCancelingEdit" OnRowUpdating="gvCollectionPoint_RowUpdating" AutoGenerateColumns="false">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="No" HeaderStyle-CssClass="danger">
+                                                <ItemTemplate>
+                                                    <%# Container.DataItemIndex + 1 %>
+                                                </ItemTemplate>
+                                                <ItemStyle Width="2%" />
+                                            </asp:TemplateField>
+                                            <asp:BoundField HeaderStyle-CssClass="danger" ReadOnly="true" HeaderText="CollectionPointID" DataField="CollectionPointID" />
+                                            <asp:BoundField HeaderStyle-CssClass="danger" ReadOnly="true" HeaderText="CollectionPointName" DataField="CollectionPointName" />
+                                            <asp:BoundField HeaderStyle-CssClass="danger" ReadOnly="true" HeaderText="CollectionPointAddress" DataField="CollectionPointAddress" />
+                                            <asp:BoundField HeaderStyle-CssClass="danger" ReadOnly="true" HeaderText="CollectionPointTime" DataField="CollectionPointTime" />
+                                            <asp:TemplateField HeaderText="CollectionPointDate" HeaderStyle-CssClass="danger">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblDate" runat="server" Text='<%# Eval("CollectionPointDate") %>'></asp:Label>
+                                                </ItemTemplate>
+                                                <EditItemTemplate>
+                                                    <asp:Calendar ID="Calendar1" runat="server" SelectedDate='<%# Convert.ToDateTime(Eval("CollectionPointDate")) %>' ></asp:Calendar>
+                                                </EditItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:CommandField HeaderStyle-CssClass="danger" HeaderText="Action" ShowEditButton="True" />
+                                        </Columns>
+                                    </asp:GridView>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</asp:Content>

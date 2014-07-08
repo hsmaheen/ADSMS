@@ -1,0 +1,157 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+using ADSMS.DataAccess;
+using System.Net.Mail;
+
+namespace ADSMS.BizLogic
+{
+    public class DisbursementService_Web
+    {
+        stationeryEntities se = new stationeryEntities();
+        DisbursementRepository_Web drep = new DisbursementRepository_Web();
+
+        /// Method to get dibursement list using status and date
+
+        public List<DepartmentDisbDetails> getDisbbyStatus(string status, DateTime date)
+        {
+            List<DepartmentDisbDetails> finaldisbist = new List<DepartmentDisbDetails>();
+            DateTime checkdate = new DateTime();
+            checkdate = date;
+            finaldisbist = drep.getDisbyStatus(status, checkdate);
+            return finaldisbist;
+
+
+        }
+
+        //Method to check for Low Stock Levels
+        public List<item> checkLowStockLevel(string email)
+        {
+            List<item> lowitems = new List<item>();
+            lowitems = drep.findLowQuantItems();
+            if (lowitems.Count != 0)
+            {
+
+                sendLowStockEmail(email, lowitems);
+                return lowitems;
+
+            }
+            return lowitems;
+
+
+        }
+
+        public void sendLowStockEmail(string email, List<item> lowItems)
+        {
+            string emailID = email;
+            //send email
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress("sa37adt3@gmail.com");
+            mail.To.Add(new MailAddress(emailID));
+            mail.Subject = "Report on Low Stock Levels:";
+            String Header = "<head>"
+                    + "<title>TODO supply a title</title>"
+                    + "<meta charset=\"UTF-8\">"
+                    + " <meta name=\"viewport\" content=\"width=device-width\">"
+                    + " <link rel=\"stylesheet\" href=\"http://bootswatch.com/flatly/bootstrap.css\">"
+                    + " <link rel=\"stylesheet\" href=\"http://bootswatch.com/assets/css/bootswatch.min.css\">"
+                    + " </head>";
+            String BodyStart = "<body>";
+            String BodyContent = "<div class=\"bs-docs-section\">"
+                    + ""
+                    + "<div class=\"row\">"
+                    + "<div class=\"col-lg-12\">"
+                    + "<div class=\"page-header\">"
+                    + "<h2 id=\"tables\">Low Stock Level Report</h2>"
+                    + "/div>"
+                    + "<div class=\"bs-example table-responsive\">"
+                    + "<table class=\"table table-striped table-hover \">"
+                    + "<thead>"
+                    + " <tr>"
+                    + " <th>#</th>"
+                    + "<th>Item ID</th>"
+                    + " <th> Item Description </th>"
+                    + "  <th> Quantity in Hand </th>"
+                    + " <th> Re-Order Level </th>"
+                    + " <th> Re-Order Quantity </th>"
+                    + " </tr>"
+                    + " </thead>";
+            String TableContent = "<tbody>";
+            foreach (item it in lowItems)
+            {
+                TableContent += "<tr>";
+                TableContent += "<td>";
+                TableContent += "<td>" + it.ItemID + "</td>";
+                TableContent += "<td>" + it.ItemDescription + "</td>";
+                TableContent += "<td>" + it.ItemQuant + "</td>";
+                TableContent += "<td>" + it.ItemReOrderLvl + "</td>";
+                TableContent += "<td>" + it.ItemReOrderQuant + "</td>";
+                TableContent += "</tr>";
+            }
+
+            mail.Body = Header + BodyStart + BodyContent + TableContent;
+
+            mail.IsBodyHtml = true;
+
+            SmtpClient sc = new SmtpClient();
+            sc.Host = "smtp.gmail.com";
+            sc.Port = 25;
+            sc.Credentials = new System.Net.NetworkCredential("sa37adt3@gmail.com", "12345678!");
+            sc.EnableSsl = true;
+            sc.Send(mail);
+
+
+
+        }
+
+        public void SendDisbEmail()
+        {
+            List<disbursement> disbList=new List<disbursement>();
+            List<String> emails = new List<string>();
+            MailMessage mail = new MailMessage();
+           
+            //disbursement disb = new disbursement();
+            var q = from d in se.disbursements
+                    where d.DisbStatus == "Ready"
+                    select d;
+            disbList = q.ToList();
+            foreach (disbursement disb in disbList)
+            {
+                employee emp = new employee();
+                 List<employee> emps=new List<employee>();
+                 emps = disb.department.employees.ToList();
+                 foreach (employee e in emps)
+                 {
+                     bool ans = false;
+                     ans = e.EmpIsDepRep ?? default(bool);
+
+                     if (ans ==true)
+                     {
+                         emails.Add(e.EmployeeEmail);
+
+ 
+                     }
+
+ 
+                 }
+                 
+                
+            }
+            var allrecipients = String.Join(",", emails);
+            MailMessage disbmail = new MailMessage();
+            disbmail.To.Add(allrecipients);
+            disbmail.Subject = "Notifications about Stationery Items Disbursement";
+            String msgcontent = "The Stationery Items that your Department requested are ready for Delivery, please Login to the Logic University Stationery Management System for more details";
+            mail.Body = msgcontent;
+
+
+
+
+
+        }
+
+    }
+}

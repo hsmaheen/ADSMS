@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="45af5a92e8b244d19dbf6bdc9c228541" Name="Diagram1">
+        <EntityTypeShape EntityType="stationeryModel.adjustmentvoucher" Width="1.5" PointX="3" PointY="21.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.adjustmentvoucherdetail" Width="1.5" PointX="5.25" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.aspnet_Applications" Width="1.5" PointX="10.75" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.aspnet_Membership" Width="1.5" PointX="16" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.aspnet_Paths" Width="1.5" PointX="13" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.aspnet_PersonalizationAllUsers" Width="1.5" PointX="15.25" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.aspnet_PersonalizationPerUser" Width="1.5" PointX="15.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.aspnet_Profile" Width="1.5" PointX="20.5" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.aspnet_Roles" Width="1.5" PointX="13" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.aspnet_SchemaVersions" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.aspnet_Users" Width="1.5" PointX="18.25" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.aspnet_WebEvent_Events" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.bin" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.category" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.delegation" Width="1.5" PointX="6" PointY="31.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.department" Width="1.5" PointX="3.75" PointY="25.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.disbursement" Width="1.5" PointX="6" PointY="23.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.disbursementdetail" Width="1.5" PointX="5.25" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.employee" Width="1.5" PointX="3.75" PointY="29.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.item" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.itemsupplier" Width="1.5" PointX="8.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.purchaseorder" Width="1.5" PointX="6" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.purchaseorderdetail" Width="1.5" PointX="8.25" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.requisition" Width="1.5" PointX="6" PointY="27.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.requisitiondetail" Width="1.5" PointX="8.25" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.role" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.storeemp" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.supplier" Width="1.5" PointX="3.75" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.sysdiagram" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.user" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.vw_aspnet_Applications" Width="1.5" PointX="9.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.vw_aspnet_MembershipUsers" Width="1.5" PointX="8.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.vw_aspnet_Profiles" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.vw_aspnet_Roles" Width="1.5" PointX="10.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.vw_aspnet_Users" Width="1.5" PointX="12.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.vw_aspnet_UsersInRoles" Width="1.5" PointX="11.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.vw_aspnet_WebPartState_Paths" Width="1.5" PointX="13.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.vw_aspnet_WebPartState_Shared" Width="1.5" PointX="15.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="stationeryModel.vw_aspnet_WebPartState_User" Width="1.5" PointX="15.75" PointY="15.75" IsExpanded="true" />
+        <AssociationConnector Association="stationeryModel.FK_adjustmentvoucher_storeemp" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_adjustmentvoucher_StoreHead" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_adjustmentvoucherdetails_adjustmentvoucher" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_adjustmentvoucherdetails_item" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK__aspnet_Me__Appli__5EBF139D" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK__aspnet_Pa__Appli__17F790F9" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK__aspnet_Ro__Appli__01142BA1" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK__aspnet_Us__Appli__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK__aspnet_Me__UserI__5FB337D6" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK__aspnet_Pe__PathI__1F98B2C1" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK__aspnet_Pe__PathI__25518C17" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK__aspnet_Pe__UserI__2645B050" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK__aspnet_Pr__UserI__75A278F5" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_item_bin" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_item_category" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_delegation_DepHead" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_delegation_employee" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_disbursement_department" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_employee_department" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_requisition_department" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_disbursementdetails_item" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_employee_role" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_requisition_DepheadID" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_requisition_employee" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_purchaseorderdetails_item" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_requisitiondetails_item" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_tender_item" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_tender_supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_purchaseorder_storeemp" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_purchaseorder_supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_purchaseorderdetails_purchaseorder" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_requisitiondetails_requisition" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_storeemp_role" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.FK_users_role" ManuallyRouted="false" />
+        <AssociationConnector Association="stationeryModel.aspnet_UsersInRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="stationeryModel.transaction" Width="1.5" PointX="7.3310735799982556" PointY="11.066801165727341" />
+        <AssociationConnector Association="stationeryModel.FK_transaction_item" />
+        <AssociationConnector Association="stationeryModel.FK_transaction_storeemp" />
+        <EntityTypeShape EntityType="stationeryModel.collectionPoint" Width="1.5" PointX="3.920928247236148" PointY="6.9724567266984172" />
+        <AssociationConnector Association="stationeryModel.FK_collectionPoint_collectionPoint" />
+        <AssociationConnector Association="stationeryModel.FK_department_CollectionPoint" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

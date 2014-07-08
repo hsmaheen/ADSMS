@@ -1,0 +1,84 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using ADSMS.DataAccess;
+using ADSMS.BizLogic;
+
+namespace ADSMS.Presentation.Department
+{
+    public partial class RequisitionList_haead : System.Web.UI.Page
+    {
+        RequisitionService _RequisitionService;
+        EmployeeService _EmployeeService;
+
+        employee currentEmp;
+        List<object> requisitionListObj;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            _RequisitionService = new RequisitionService();
+            _EmployeeService = new EmployeeService();
+
+            if (!IsPostBack)
+            {
+                int LoginId = Convert.ToInt32(Session["userid"].ToString());
+
+                currentEmp = new employee();
+                currentEmp = _EmployeeService.GetEmployeeDetailsByEmpID(LoginId);
+                if (currentEmp!=null)
+                {
+                    int curdeptID = currentEmp.EmployeeDepId ?? default(int);
+                    LoadAllGridView(curdeptID);
+                }
+            }
+        }
+
+        public void LoadAllGridView(int ReqDeptId)
+        {
+            requisitionListObj = new List<object>();
+            requisitionListObj = _RequisitionService.GetRequisitionListForGv(ReqDeptId);
+            gvRequisitionList.DataSource = requisitionListObj;
+            gvRequisitionList.DataBind();
+        }
+
+        public void LoadAllGridViewWithReqStatus()
+        {
+            String searchStatus = ddlRequisitionList.SelectedValue;
+            int LoginId = Convert.ToInt32(Session["userid"].ToString());
+
+            currentEmp = new employee();
+            currentEmp = _EmployeeService.GetEmployeeDetailsByEmpID(LoginId);
+            if (currentEmp != null)
+            {
+                int curdeptID = currentEmp.EmployeeDepId ?? default(int);
+                if (searchStatus == "All")
+                {
+                    LoadAllGridView(curdeptID);
+                }
+                else
+                {
+                    requisitionListObj = new List<object>();
+                    requisitionListObj = _RequisitionService.GetRequisitionListByStatus(curdeptID, searchStatus);
+                    gvRequisitionList.DataSource = requisitionListObj;
+                    gvRequisitionList.DataBind();
+                }
+
+            }
+        }
+
+        protected void ddlRequisitionList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadAllGridViewWithReqStatus();
+        }
+
+        protected void gvRequisitionList_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvRequisitionList.PageIndex = e.NewPageIndex;
+            LoadAllGridViewWithReqStatus();
+        }
+
+    }
+}

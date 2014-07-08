@@ -1,0 +1,123 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/Department/DepRep.Master" AutoEventWireup="true" CodeBehind="ViewCollectionDetails_Rep.aspx.cs" Inherits="ADSMS.Presentation.Department.ViewCollectionDetails_Rep" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+   <div id="totalContent" class="container">
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title" id="myModalLabel">Collection Point Details </h2>
+                </div>
+
+                <div class="container">
+                    <div id="CP_Details">
+                    </div>
+
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btn_Map">View Map</button>
+                </div>
+
+                <div class="container-fluid">
+
+                </div>
+            </div>
+                <div id="map_canvas" style="width:600px;height:400px"; class="container">
+    </div>
+            
+
+        </div>
+    </div>
+        <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title" id="H1">Error </h2>
+                </div>
+
+                <div class="container">
+                    <div id="errmsg" class="container">
+                    </div>
+
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+    </div>
+            
+
+        </div>
+    </div>
+
+
+    <div class="container">
+
+        <h1 id="tabs" class="page-header">View Collection Details</h1>
+
+     <%--   <div id="errmsg">
+
+        </div>--%>
+        <div id="disb_Details">
+            <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse_{{DepID}}"><asp:Label ID="lblDName" runat="server" Text="DeptName" />
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse_{{DepID}}" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="bs-component">
+                                <asp:GridView ID="gvRep" runat="server" EmptyDataText="No Delivery Stationery" CssClass="table table-striped table-hover" AutoGenerateColumns="false" >
+                                    <Columns>
+                                        <asp:TemplateField HeaderText="No" HeaderStyle-CssClass="danger">
+                                                <ItemTemplate>
+                                                    <%# Container.DataItemIndex + 1 %>
+                                                </ItemTemplate>
+                                                <ItemStyle Width="2%" />
+                                            </asp:TemplateField>
+                                        <asp:BoundField HeaderStyle-CssClass="danger" HeaderText="DisbItemID" DataField="DisbItemID" />
+                                        <asp:BoundField HeaderStyle-CssClass="danger" HeaderText="ItemDescription" DataField="ItemDescription" />
+                                        <asp:BoundField HeaderStyle-CssClass="danger" HeaderText="Request Stationery" DataField="DisbItemQuantReq" />
+                                        <asp:BoundField HeaderStyle-CssClass="danger" HeaderText="Receive Stationery" DataField="DisbItemQuantDelivered" />
+                                        <%--<asp:TemplateField HeaderStyle-CssClass="danger" HeaderText="Receive Stationery Quantity">
+                                            <ItemTemplate>
+                                                <asp:TextBox ID="txtReceiveQty" runat="server" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>--%>
+                                    </Columns>
+                                </asp:GridView>
+                                <div  class="span4">
+                                    <b><asp:Label ID="lblAddress" runat="server" Visible="false" /><br /></b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <%--<button type="button" class="btn-sm btn-success" id="btn_ViewCP_{{DepID}}" data-cpid="{{DepID}}">View Collection Point Details</button>
+                <button type="button" class="btn-sm btn-success col-sm-offset-7" id="btn_Confirm_{{DepDisID}}" data-depdibid="{{DepDisID}}">Confirm Quantity</button>--%>
+                <asp:Button ID="btnViewCollectionDetail" class="btn-sm btn-success" Visible="false" runat="server" Text="View Collection Point Details" />
+                <asp:Button ID="btnConfirm" runat="server" class="btn-sm btn-success col-sm-offset-7" Visible="false" Text="Confirm Stationery Collection" OnClick="btnConfirm_Click" />
+            </div>
+        </div>
+        </div>
+
+    </div>
+        </div>
+
+</asp:Content>

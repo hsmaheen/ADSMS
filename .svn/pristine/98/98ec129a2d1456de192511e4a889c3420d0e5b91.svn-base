@@ -1,0 +1,221 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using ADSMS.BizLogic;
+using ADSMS.DataAccess;
+
+namespace ADSMS.Presentation.Department
+{
+    public partial class AuthorityDelegation : System.Web.UI.Page
+    {
+
+        EmployeeService _EmployeeService;
+        DepartmentService _DepartmentService;
+        DelegationService _DelegationService;
+
+        employee currentEmp;
+        department currentDept;
+        delegation Currentdelegation;
+        List<employee> employeeList;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (HttpContext.Current.User.IsInRole("Department Head") != true)
+            {
+                Response.Redirect("/Presentation/Login.aspx");
+
+            }
+
+            _EmployeeService = new EmployeeService();
+            _DepartmentService = new DepartmentService();
+            _DelegationService = new DelegationService();
+
+            if (!IsPostBack)
+            {
+                #region DataBind for ddl with DeptID
+                int LoginId = Convert.ToInt32(Session["userid"].ToString());
+
+                currentEmp = new employee();
+                currentEmp = _EmployeeService.GetEmployeeDetailsByEmpID(LoginId);
+                
+                int curdeptID = currentEmp.EmployeeDepId ?? default(int);
+                employeeList = new List<employee>();
+                employeeList = _EmployeeService.GetEmployeeDetailsByDeptID(curdeptID,LoginId);
+                ddlEmpName.DataSource = employeeList;
+                ddlEmpName.DataBind();
+                #endregion
+
+                searchDelegation();
+            }
+
+            if (IsPostBack)
+            {
+                currentEmp = new employee();
+                currentEmp = _EmployeeService.GetEmployeeDetailsByEmpID(int.Parse(ddlEmpName.SelectedItem.Value));
+
+                if (currentEmp != null)
+                {
+                    txtEmpContact.Text = currentEmp.EmployeeContact.ToString();
+                    txtEmpID.Text = ddlEmpName.SelectedItem.Value;
+                }
+                else
+                {
+                    PanelError.Visible = true;
+                }
+            }
+        }
+
+        public void searchDelegation()
+        {
+            int LoginId = Convert.ToInt32(Session["userid"].ToString());
+
+            currentEmp = new employee();
+            currentEmp = _EmployeeService.GetEmployeeDetailsByEmpID(LoginId);
+
+            Currentdelegation = new delegation();
+            Currentdelegation = _DelegationService.SearchDelegationWithDelgApproveEmpIdNDate(LoginId);
+
+            if (Currentdelegation != null)
+            {
+                PanelSubmit.Visible = true;
+                lblDelegated.Text = " Can change the delegation details.";
+
+                ddlEmpName.SelectedValue = Currentdelegation.DelgEmpID.ToString();
+                txtEmpID.Text = Currentdelegation.DelgEmpID.ToString();
+                //txtEmpContact.Text = currentEmp.EmployeeContact.ToString();
+                fromDateTextBox.Text = Currentdelegation.DelgFromDate.ToShortDateString();
+                toDateTextBox.Text = Currentdelegation.DelgToDate.ToShortDateString();
+                btnResetDelegation.Enabled = true;
+                btnSubmitDeligation.Enabled = true;
+            }
+        }
+
+        protected void EmpName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            loadNew();
+            txtEmpID.Text = ddlEmpName.SelectedItem.Value;
+            fromDateTextBox.Text = "";
+            toDateTextBox.Text = "";
+            btnResetDelegation.Enabled = true;
+            btnSubmitDeligation.Enabled = true;
+
+            int LoginId = Convert.ToInt32(Session["userid"].ToString());
+
+            currentEmp = new employee();
+            currentEmp = _EmployeeService.GetEmployeeDetailsByEmpID(int.Parse(ddlEmpName.SelectedItem.Value));
+
+            Currentdelegation = new delegation();
+            Currentdelegation = _DelegationService.SearchDelegationWithDelgEmpIdNApprovedIDNDate(int.Parse(ddlEmpName.SelectedItem.Value), LoginId);
+
+            if (Currentdelegation != null)
+            {
+                PanelSubmit.Visible = true;
+                lblDelegated.Text = " Can change the delegation details.";
+
+                ddlEmpName.SelectedValue = Currentdelegation.DelgEmpID.ToString();
+                txtEmpID.Text = Currentdelegation.DelgEmpID.ToString();
+                txtEmpContact.Text = currentEmp.EmployeeContact.ToString();
+                fromDateTextBox.Text = Currentdelegation.DelgFromDate.ToShortDateString();
+                toDateTextBox.Text = Currentdelegation.DelgToDate.ToShortDateString();
+                btnResetDelegation.Enabled = true;
+                btnSubmitDeligation.Enabled = true;
+
+            }
+            //if (ddlEmpName.SelectedIndex != 0)
+            //{
+                
+            //}
+        }
+             protected void imgbtnCalendar_Click(object sender, ImageClickEventArgs e)
+        {
+            Calendar1.Visible = true;
+        }
+
+             protected void imgbtnCalendar2_Click(object sender, ImageClickEventArgs e)
+             {
+                 Calendar2.Visible = true;
+             }
+
+        protected void Calendar1_SelectionChanged(object sender, EventArgs e)
+        {
+            fromDateTextBox.Text = Calendar1.SelectedDate.ToShortDateString();
+            Calendar1.Visible = false;
+        }
+
+        protected void Calendar2_SelectionChanged(object sender, EventArgs e)
+        {
+            toDateTextBox.Text = Calendar2.SelectedDate.ToShortDateString();
+            Calendar2.Visible = false;
+        }
+
+        protected void btnSubmitDeligation_Click(object sender, EventArgs e)
+        {
+            int LoginId = Convert.ToInt32(Session["userid"].ToString());
+
+            Currentdelegation = new delegation();
+            Currentdelegation = _DelegationService.SearchDelegationWithDelgApproveEmpIdNDate(LoginId);
+
+            delegation ToUpdateDelegation = new delegation();
+            ToUpdateDelegation.DelgEmpID = int.Parse(ddlEmpName.SelectedItem.Value);
+            ToUpdateDelegation.DelgFromDate = DateTime.Parse(fromDateTextBox.Text);
+            ToUpdateDelegation.DelgToDate = DateTime.Parse(toDateTextBox.Text);
+            ToUpdateDelegation.DelgStatus = "approved";
+            ToUpdateDelegation.DelApproveEmpID = LoginId;
+
+            if (Currentdelegation!=null)
+            {
+                ToUpdateDelegation.DelgID = Currentdelegation.DelgID;
+                _DelegationService.UpdateDelegation(ToUpdateDelegation);
+                loadNew();
+                PanelSubmit.Visible = true;
+            }
+            else
+            {
+                _DelegationService.SaveNewDelegation(ToUpdateDelegation);
+                loadNew();
+                PanelSubmit.Visible = true;
+            }
+
+            //int EmpID = int.Parse(ddlEmpName.SelectedItem.Value);
+            //currentEmp = new employee();
+            //currentEmp = _EmployeeService.GetEmployeeDetailsByEmpID(EmpID);
+
+            //if (currentEmp!=null)
+            //{
+            //    if (currentEmp.EmpIsDepRep==false)
+            //    {
+            //        _EmployeeService.UpdateEmployeeDetailsTobeDeptRep(EmpID,true);
+            //        loadNew();
+            //        PanelSubmit.Visible = true;
+            //    }
+            //    else
+            //    {
+            //        PanelSubmit.Visible = true;
+            //    }
+            //}
+            //else
+            //{
+            //    PanelError.Visible = true;
+            //}
+        }
+
+        protected void btnResetDelegation_Click(object sender, EventArgs e)
+        {
+            loadNew();
+        }
+
+        public void loadNew()
+        {
+            PanelError.Visible = false;
+            PanelSubmit.Visible = false;
+            txtEmpContact.Text = "";
+            txtEmpID.Text = "";
+            fromDateTextBox.Text = "";
+            toDateTextBox.Text = "";
+        }
+
+        }
+    }

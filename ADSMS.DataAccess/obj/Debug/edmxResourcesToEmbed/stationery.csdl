@@ -1,0 +1,1782 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="stationeryModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="stationeryEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="adjustmentvouchers" EntityType="stationeryModel.adjustmentvoucher" />
+    <EntitySet Name="adjustmentvoucherdetails" EntityType="stationeryModel.adjustmentvoucherdetail" />
+    <EntitySet Name="aspnet_Applications" EntityType="stationeryModel.aspnet_Applications" />
+    <EntitySet Name="aspnet_Membership" EntityType="stationeryModel.aspnet_Membership" />
+    <EntitySet Name="aspnet_Paths" EntityType="stationeryModel.aspnet_Paths" />
+    <EntitySet Name="aspnet_PersonalizationAllUsers" EntityType="stationeryModel.aspnet_PersonalizationAllUsers" />
+    <EntitySet Name="aspnet_PersonalizationPerUser" EntityType="stationeryModel.aspnet_PersonalizationPerUser" />
+    <EntitySet Name="aspnet_Profile" EntityType="stationeryModel.aspnet_Profile" />
+    <EntitySet Name="aspnet_Roles" EntityType="stationeryModel.aspnet_Roles" />
+    <EntitySet Name="aspnet_SchemaVersions" EntityType="stationeryModel.aspnet_SchemaVersions" />
+    <EntitySet Name="aspnet_Users" EntityType="stationeryModel.aspnet_Users" />
+    <EntitySet Name="aspnet_WebEvent_Events" EntityType="stationeryModel.aspnet_WebEvent_Events" />
+    <EntitySet Name="bins" EntityType="stationeryModel.bin" />
+    <EntitySet Name="categories" EntityType="stationeryModel.category" />
+    <EntitySet Name="collectionPoints" EntityType="stationeryModel.collectionPoint" />
+    <EntitySet Name="delegations" EntityType="stationeryModel.delegation" />
+    <EntitySet Name="departments" EntityType="stationeryModel.department" />
+    <EntitySet Name="disbursements" EntityType="stationeryModel.disbursement" />
+    <EntitySet Name="disbursementdetails" EntityType="stationeryModel.disbursementdetail" />
+    <EntitySet Name="employees" EntityType="stationeryModel.employee" />
+    <EntitySet Name="items" EntityType="stationeryModel.item" />
+    <EntitySet Name="itemsuppliers" EntityType="stationeryModel.itemsupplier" />
+    <EntitySet Name="purchaseorders" EntityType="stationeryModel.purchaseorder" />
+    <EntitySet Name="purchaseorderdetails" EntityType="stationeryModel.purchaseorderdetail" />
+    <EntitySet Name="requisitions" EntityType="stationeryModel.requisition" />
+    <EntitySet Name="requisitiondetails" EntityType="stationeryModel.requisitiondetail" />
+    <EntitySet Name="roles" EntityType="stationeryModel.role" />
+    <EntitySet Name="storeemps" EntityType="stationeryModel.storeemp" />
+    <EntitySet Name="suppliers" EntityType="stationeryModel.supplier" />
+    <EntitySet Name="sysdiagrams" EntityType="stationeryModel.sysdiagram" />
+    <EntitySet Name="transactions" EntityType="stationeryModel.transaction" />
+    <EntitySet Name="users" EntityType="stationeryModel.user" />
+    <EntitySet Name="vw_aspnet_Applications" EntityType="stationeryModel.vw_aspnet_Applications" />
+    <EntitySet Name="vw_aspnet_MembershipUsers" EntityType="stationeryModel.vw_aspnet_MembershipUsers" />
+    <EntitySet Name="vw_aspnet_Profiles" EntityType="stationeryModel.vw_aspnet_Profiles" />
+    <EntitySet Name="vw_aspnet_Roles" EntityType="stationeryModel.vw_aspnet_Roles" />
+    <EntitySet Name="vw_aspnet_Users" EntityType="stationeryModel.vw_aspnet_Users" />
+    <EntitySet Name="vw_aspnet_UsersInRoles" EntityType="stationeryModel.vw_aspnet_UsersInRoles" />
+    <EntitySet Name="vw_aspnet_WebPartState_Paths" EntityType="stationeryModel.vw_aspnet_WebPartState_Paths" />
+    <EntitySet Name="vw_aspnet_WebPartState_Shared" EntityType="stationeryModel.vw_aspnet_WebPartState_Shared" />
+    <EntitySet Name="vw_aspnet_WebPartState_User" EntityType="stationeryModel.vw_aspnet_WebPartState_User" />
+    <AssociationSet Name="FK_adjustmentvoucher_storeemp" Association="stationeryModel.FK_adjustmentvoucher_storeemp">
+      <End Role="storeemp" EntitySet="storeemps" />
+      <End Role="adjustmentvoucher" EntitySet="adjustmentvouchers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_adjustmentvoucher_StoreHead" Association="stationeryModel.FK_adjustmentvoucher_StoreHead">
+      <End Role="storeemp" EntitySet="storeemps" />
+      <End Role="adjustmentvoucher" EntitySet="adjustmentvouchers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_adjustmentvoucherdetails_adjustmentvoucher" Association="stationeryModel.FK_adjustmentvoucherdetails_adjustmentvoucher">
+      <End Role="adjustmentvoucher" EntitySet="adjustmentvouchers" />
+      <End Role="adjustmentvoucherdetails" EntitySet="adjustmentvoucherdetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_adjustmentvoucherdetails_item" Association="stationeryModel.FK_adjustmentvoucherdetails_item">
+      <End Role="item" EntitySet="items" />
+      <End Role="adjustmentvoucherdetails" EntitySet="adjustmentvoucherdetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Me__Appli__5EBF139D" Association="stationeryModel.FK__aspnet_Me__Appli__5EBF139D">
+      <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
+      <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Pa__Appli__17F790F9" Association="stationeryModel.FK__aspnet_Pa__Appli__17F790F9">
+      <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
+      <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Ro__Appli__01142BA1" Association="stationeryModel.FK__aspnet_Ro__Appli__01142BA1">
+      <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
+      <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Us__Appli__4AB81AF0" Association="stationeryModel.FK__aspnet_Us__Appli__4AB81AF0">
+      <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
+      <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Me__UserI__5FB337D6" Association="stationeryModel.FK__aspnet_Me__UserI__5FB337D6">
+      <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+      <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Pe__PathI__1F98B2C1" Association="stationeryModel.FK__aspnet_Pe__PathI__1F98B2C1">
+      <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
+      <End Role="aspnet_PersonalizationAllUsers" EntitySet="aspnet_PersonalizationAllUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Pe__PathI__25518C17" Association="stationeryModel.FK__aspnet_Pe__PathI__25518C17">
+      <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
+      <End Role="aspnet_PersonalizationPerUser" EntitySet="aspnet_PersonalizationPerUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Pe__UserI__2645B050" Association="stationeryModel.FK__aspnet_Pe__UserI__2645B050">
+      <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+      <End Role="aspnet_PersonalizationPerUser" EntitySet="aspnet_PersonalizationPerUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Pr__UserI__75A278F5" Association="stationeryModel.FK__aspnet_Pr__UserI__75A278F5">
+      <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+      <End Role="aspnet_Profile" EntitySet="aspnet_Profile" />
+    </AssociationSet>
+    <AssociationSet Name="FK_item_bin" Association="stationeryModel.FK_item_bin">
+      <End Role="bin" EntitySet="bins" />
+      <End Role="item" EntitySet="items" />
+    </AssociationSet>
+    <AssociationSet Name="FK_item_category" Association="stationeryModel.FK_item_category">
+      <End Role="category" EntitySet="categories" />
+      <End Role="item" EntitySet="items" />
+    </AssociationSet>
+    <AssociationSet Name="FK_collectionPoint_collectionPoint" Association="stationeryModel.FK_collectionPoint_collectionPoint">
+      <End Role="collectionPoint" EntitySet="collectionPoints" />
+      <End Role="collectionPoint1" EntitySet="collectionPoints" />
+    </AssociationSet>
+    <AssociationSet Name="FK_department_CollectionPoint" Association="stationeryModel.FK_department_CollectionPoint">
+      <End Role="collectionPoint" EntitySet="collectionPoints" />
+      <End Role="department" EntitySet="departments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_delegation_DepHead" Association="stationeryModel.FK_delegation_DepHead">
+      <End Role="employee" EntitySet="employees" />
+      <End Role="delegation" EntitySet="delegations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_delegation_employee" Association="stationeryModel.FK_delegation_employee">
+      <End Role="employee" EntitySet="employees" />
+      <End Role="delegation" EntitySet="delegations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_disbursement_department" Association="stationeryModel.FK_disbursement_department">
+      <End Role="department" EntitySet="departments" />
+      <End Role="disbursement" EntitySet="disbursements" />
+    </AssociationSet>
+    <AssociationSet Name="FK_employee_department" Association="stationeryModel.FK_employee_department">
+      <End Role="department" EntitySet="departments" />
+      <End Role="employee" EntitySet="employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_requisition_department" Association="stationeryModel.FK_requisition_department">
+      <End Role="department" EntitySet="departments" />
+      <End Role="requisition" EntitySet="requisitions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_disbursementdetails_item" Association="stationeryModel.FK_disbursementdetails_item">
+      <End Role="item" EntitySet="items" />
+      <End Role="disbursementdetails" EntitySet="disbursementdetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_employee_role" Association="stationeryModel.FK_employee_role">
+      <End Role="role" EntitySet="roles" />
+      <End Role="employee" EntitySet="employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_requisition_DepheadID" Association="stationeryModel.FK_requisition_DepheadID">
+      <End Role="employee" EntitySet="employees" />
+      <End Role="requisition" EntitySet="requisitions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_requisition_employee" Association="stationeryModel.FK_requisition_employee">
+      <End Role="employee" EntitySet="employees" />
+      <End Role="requisition" EntitySet="requisitions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_purchaseorderdetails_item" Association="stationeryModel.FK_purchaseorderdetails_item">
+      <End Role="item" EntitySet="items" />
+      <End Role="purchaseorderdetails" EntitySet="purchaseorderdetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_requisitiondetails_item" Association="stationeryModel.FK_requisitiondetails_item">
+      <End Role="item" EntitySet="items" />
+      <End Role="requisitiondetails" EntitySet="requisitiondetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tender_item" Association="stationeryModel.FK_tender_item">
+      <End Role="item" EntitySet="items" />
+      <End Role="itemsupplier" EntitySet="itemsuppliers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_transaction_item" Association="stationeryModel.FK_transaction_item">
+      <End Role="item" EntitySet="items" />
+      <End Role="transaction" EntitySet="transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tender_supplier" Association="stationeryModel.FK_tender_supplier">
+      <End Role="supplier" EntitySet="suppliers" />
+      <End Role="itemsupplier" EntitySet="itemsuppliers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_purchaseorder_storeemp" Association="stationeryModel.FK_purchaseorder_storeemp">
+      <End Role="storeemp" EntitySet="storeemps" />
+      <End Role="purchaseorder" EntitySet="purchaseorders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_purchaseorder_supplier" Association="stationeryModel.FK_purchaseorder_supplier">
+      <End Role="supplier" EntitySet="suppliers" />
+      <End Role="purchaseorder" EntitySet="purchaseorders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_purchaseorderdetails_purchaseorder" Association="stationeryModel.FK_purchaseorderdetails_purchaseorder">
+      <End Role="purchaseorder" EntitySet="purchaseorders" />
+      <End Role="purchaseorderdetails" EntitySet="purchaseorderdetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_requisitiondetails_requisition" Association="stationeryModel.FK_requisitiondetails_requisition">
+      <End Role="requisition" EntitySet="requisitions" />
+      <End Role="requisitiondetails" EntitySet="requisitiondetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_storeemp_role" Association="stationeryModel.FK_storeemp_role">
+      <End Role="role" EntitySet="roles" />
+      <End Role="storeemp" EntitySet="storeemps" />
+    </AssociationSet>
+    <AssociationSet Name="FK_users_role" Association="stationeryModel.FK_users_role">
+      <End Role="role" EntitySet="roles" />
+      <End Role="users" EntitySet="users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_transaction_storeemp" Association="stationeryModel.FK_transaction_storeemp">
+      <End Role="storeemp" EntitySet="storeemps" />
+      <End Role="transaction" EntitySet="transactions" />
+    </AssociationSet>
+    <AssociationSet Name="aspnet_UsersInRoles" Association="stationeryModel.aspnet_UsersInRoles">
+      <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
+      <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+    </AssociationSet>
+    <FunctionImport Name="aspnet_AnyDataInTables" ReturnType="Collection(String)">
+      <Parameter Name="TablesToCheck" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Applications_CreateApplication">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="ApplicationId" Mode="InOut" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_CheckSchemaVersion">
+      <Parameter Name="Feature" Mode="In" Type="String" />
+      <Parameter Name="CompatibleSchemaVersion" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Membership_ChangePasswordQuestionAndAnswer">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="NewPasswordQuestion" Mode="In" Type="String" />
+      <Parameter Name="NewPasswordAnswer" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Membership_CreateUser">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+      <Parameter Name="PasswordSalt" Mode="In" Type="String" />
+      <Parameter Name="Email" Mode="In" Type="String" />
+      <Parameter Name="PasswordQuestion" Mode="In" Type="String" />
+      <Parameter Name="PasswordAnswer" Mode="In" Type="String" />
+      <Parameter Name="IsApproved" Mode="In" Type="Boolean" />
+      <Parameter Name="CurrentTimeUtc" Mode="In" Type="DateTime" />
+      <Parameter Name="CreateDate" Mode="In" Type="DateTime" />
+      <Parameter Name="UniqueEmail" Mode="In" Type="Int32" />
+      <Parameter Name="PasswordFormat" Mode="In" Type="Int32" />
+      <Parameter Name="UserId" Mode="InOut" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Membership_FindUsersByEmail">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="EmailToMatch" Mode="In" Type="String" />
+      <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Membership_FindUsersByName">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserNameToMatch" Mode="In" Type="String" />
+      <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Membership_GetAllUsers">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Membership_GetNumberOfUsersOnline">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="MinutesSinceLastInActive" Mode="In" Type="Int32" />
+      <Parameter Name="CurrentTimeUtc" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Membership_GetPassword" ReturnType="Collection(stationeryModel.aspnet_Membership_GetPassword_Result)">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="MaxInvalidPasswordAttempts" Mode="In" Type="Int32" />
+      <Parameter Name="PasswordAttemptWindow" Mode="In" Type="Int32" />
+      <Parameter Name="CurrentTimeUtc" Mode="In" Type="DateTime" />
+      <Parameter Name="PasswordAnswer" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Membership_GetPasswordWithFormat" ReturnType="Collection(stationeryModel.aspnet_Membership_GetPasswordWithFormat_Result)">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="UpdateLastLoginActivityDate" Mode="In" Type="Boolean" />
+      <Parameter Name="CurrentTimeUtc" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Membership_GetUserByEmail" ReturnType="Collection(String)">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="Email" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Membership_GetUserByName" ReturnType="Collection(stationeryModel.aspnet_Membership_GetUserByName_Result)">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="CurrentTimeUtc" Mode="In" Type="DateTime" />
+      <Parameter Name="UpdateLastActivity" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Membership_GetUserByUserId" ReturnType="Collection(stationeryModel.aspnet_Membership_GetUserByUserId_Result)">
+      <Parameter Name="UserId" Mode="In" Type="Guid" />
+      <Parameter Name="CurrentTimeUtc" Mode="In" Type="DateTime" />
+      <Parameter Name="UpdateLastActivity" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Membership_ResetPassword">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="NewPassword" Mode="In" Type="String" />
+      <Parameter Name="MaxInvalidPasswordAttempts" Mode="In" Type="Int32" />
+      <Parameter Name="PasswordAttemptWindow" Mode="In" Type="Int32" />
+      <Parameter Name="PasswordSalt" Mode="In" Type="String" />
+      <Parameter Name="CurrentTimeUtc" Mode="In" Type="DateTime" />
+      <Parameter Name="PasswordFormat" Mode="In" Type="Int32" />
+      <Parameter Name="PasswordAnswer" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Membership_SetPassword">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="NewPassword" Mode="In" Type="String" />
+      <Parameter Name="PasswordSalt" Mode="In" Type="String" />
+      <Parameter Name="CurrentTimeUtc" Mode="In" Type="DateTime" />
+      <Parameter Name="PasswordFormat" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Membership_UnlockUser">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Membership_UpdateUser">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="Email" Mode="In" Type="String" />
+      <Parameter Name="Comment" Mode="In" Type="String" />
+      <Parameter Name="IsApproved" Mode="In" Type="Boolean" />
+      <Parameter Name="LastLoginDate" Mode="In" Type="DateTime" />
+      <Parameter Name="LastActivityDate" Mode="In" Type="DateTime" />
+      <Parameter Name="UniqueEmail" Mode="In" Type="Int32" />
+      <Parameter Name="CurrentTimeUtc" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Membership_UpdateUserInfo">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="IsPasswordCorrect" Mode="In" Type="Boolean" />
+      <Parameter Name="UpdateLastLoginActivityDate" Mode="In" Type="Boolean" />
+      <Parameter Name="MaxInvalidPasswordAttempts" Mode="In" Type="Int32" />
+      <Parameter Name="PasswordAttemptWindow" Mode="In" Type="Int32" />
+      <Parameter Name="CurrentTimeUtc" Mode="In" Type="DateTime" />
+      <Parameter Name="LastLoginDate" Mode="In" Type="DateTime" />
+      <Parameter Name="LastActivityDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Paths_CreatePath">
+      <Parameter Name="ApplicationId" Mode="In" Type="Guid" />
+      <Parameter Name="Path" Mode="In" Type="String" />
+      <Parameter Name="PathId" Mode="InOut" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Personalization_GetApplicationId">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="ApplicationId" Mode="InOut" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_PersonalizationAdministration_DeleteAllState">
+      <Parameter Name="AllUsersScope" Mode="In" Type="Boolean" />
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="Count" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_PersonalizationAdministration_FindState">
+      <Parameter Name="AllUsersScope" Mode="In" Type="Boolean" />
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+      <Parameter Name="Path" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="InactiveSinceDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_PersonalizationAdministration_GetCountOfState">
+      <Parameter Name="Count" Mode="InOut" Type="Int32" />
+      <Parameter Name="AllUsersScope" Mode="In" Type="Boolean" />
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="Path" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="InactiveSinceDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_PersonalizationAdministration_ResetSharedState">
+      <Parameter Name="Count" Mode="InOut" Type="Int32" />
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="Path" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_PersonalizationAdministration_ResetUserState">
+      <Parameter Name="Count" Mode="InOut" Type="Int32" />
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="InactiveSinceDate" Mode="In" Type="DateTime" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="Path" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_PersonalizationAllUsers_GetPageSettings" ReturnType="Collection(Binary)">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="Path" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_PersonalizationAllUsers_ResetPageSettings">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="Path" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_PersonalizationAllUsers_SetPageSettings">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="Path" Mode="In" Type="String" />
+      <Parameter Name="PageSettings" Mode="In" Type="Binary" />
+      <Parameter Name="CurrentTimeUtc" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_PersonalizationPerUser_GetPageSettings" ReturnType="Collection(Binary)">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="Path" Mode="In" Type="String" />
+      <Parameter Name="CurrentTimeUtc" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_PersonalizationPerUser_ResetPageSettings">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="Path" Mode="In" Type="String" />
+      <Parameter Name="CurrentTimeUtc" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_PersonalizationPerUser_SetPageSettings">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="Path" Mode="In" Type="String" />
+      <Parameter Name="PageSettings" Mode="In" Type="Binary" />
+      <Parameter Name="CurrentTimeUtc" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Profile_DeleteInactiveProfiles" ReturnType="Collection(Int32)">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="ProfileAuthOptions" Mode="In" Type="Int32" />
+      <Parameter Name="InactiveSinceDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Profile_DeleteProfiles" ReturnType="Collection(Int32)">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserNames" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Profile_GetNumberOfInactiveProfiles" ReturnType="Collection(Int32)">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="ProfileAuthOptions" Mode="In" Type="Int32" />
+      <Parameter Name="InactiveSinceDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Profile_GetProfiles">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="ProfileAuthOptions" Mode="In" Type="Int32" />
+      <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+      <Parameter Name="UserNameToMatch" Mode="In" Type="String" />
+      <Parameter Name="InactiveSinceDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Profile_GetProperties" ReturnType="Collection(stationeryModel.aspnet_Profile_GetProperties_Result)">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="CurrentTimeUtc" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Profile_SetProperties">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="PropertyNames" Mode="In" Type="String" />
+      <Parameter Name="PropertyValuesString" Mode="In" Type="String" />
+      <Parameter Name="PropertyValuesBinary" Mode="In" Type="Binary" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="IsUserAnonymous" Mode="In" Type="Boolean" />
+      <Parameter Name="CurrentTimeUtc" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_RegisterSchemaVersion">
+      <Parameter Name="Feature" Mode="In" Type="String" />
+      <Parameter Name="CompatibleSchemaVersion" Mode="In" Type="String" />
+      <Parameter Name="IsCurrentVersion" Mode="In" Type="Boolean" />
+      <Parameter Name="RemoveIncompatibleSchema" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Roles_CreateRole">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="RoleName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Roles_DeleteRole">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="RoleName" Mode="In" Type="String" />
+      <Parameter Name="DeleteOnlyIfRoleIsEmpty" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Roles_GetAllRoles" ReturnType="Collection(String)">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Roles_RoleExists">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="RoleName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Setup_RemoveAllRoleMembers">
+      <Parameter Name="name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Setup_RestorePermissions">
+      <Parameter Name="name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_UnRegisterSchemaVersion">
+      <Parameter Name="Feature" Mode="In" Type="String" />
+      <Parameter Name="CompatibleSchemaVersion" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Users_CreateUser">
+      <Parameter Name="ApplicationId" Mode="In" Type="Guid" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="IsUserAnonymous" Mode="In" Type="Boolean" />
+      <Parameter Name="LastActivityDate" Mode="In" Type="DateTime" />
+      <Parameter Name="UserId" Mode="InOut" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_Users_DeleteUser">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="TablesToDeleteFrom" Mode="In" Type="Int32" />
+      <Parameter Name="NumTablesDeletedFrom" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_UsersInRoles_AddUsersToRoles" ReturnType="Collection(String)">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserNames" Mode="In" Type="String" />
+      <Parameter Name="RoleNames" Mode="In" Type="String" />
+      <Parameter Name="CurrentTimeUtc" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_UsersInRoles_FindUsersInRole" ReturnType="Collection(String)">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="RoleName" Mode="In" Type="String" />
+      <Parameter Name="UserNameToMatch" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_UsersInRoles_GetRolesForUser" ReturnType="Collection(String)">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_UsersInRoles_GetUsersInRoles" ReturnType="Collection(String)">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="RoleName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_UsersInRoles_IsUserInRole">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="RoleName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_UsersInRoles_RemoveUsersFromRoles" ReturnType="Collection(stationeryModel.aspnet_UsersInRoles_RemoveUsersFromRoles_Result)">
+      <Parameter Name="ApplicationName" Mode="In" Type="String" />
+      <Parameter Name="UserNames" Mode="In" Type="String" />
+      <Parameter Name="RoleNames" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="aspnet_WebEvent_LogEvent">
+      <Parameter Name="EventId" Mode="In" Type="String" />
+      <Parameter Name="EventTimeUtc" Mode="In" Type="DateTime" />
+      <Parameter Name="EventTime" Mode="In" Type="DateTime" />
+      <Parameter Name="EventType" Mode="In" Type="String" />
+      <Parameter Name="EventSequence" Mode="In" Type="Decimal" />
+      <Parameter Name="EventOccurrence" Mode="In" Type="Decimal" />
+      <Parameter Name="EventCode" Mode="In" Type="Int32" />
+      <Parameter Name="EventDetailCode" Mode="In" Type="Int32" />
+      <Parameter Name="Message" Mode="In" Type="String" />
+      <Parameter Name="ApplicationPath" Mode="In" Type="String" />
+      <Parameter Name="ApplicationVirtualPath" Mode="In" Type="String" />
+      <Parameter Name="MachineName" Mode="In" Type="String" />
+      <Parameter Name="RequestUrl" Mode="In" Type="String" />
+      <Parameter Name="ExceptionType" Mode="In" Type="String" />
+      <Parameter Name="Details" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="getAllRequests" ReturnType="Collection(stationeryModel.getAllRequests_Result)">
+      <Parameter Name="Status" Mode="In" Type="String" />
+      <Parameter Name="Date" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="getCategory" ReturnType="Collection(stationeryModel.getCategory_Result)">
+      <Parameter Name="CatID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="getChartbyCategoryandItem" ReturnType="Collection(stationeryModel.getChartbyCategoryandItem_Result)">
+      <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+      <Parameter Name="CatID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="getChartbyItem" ReturnType="Collection(stationeryModel.getChartbyItem_Result)">
+      <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+      <Parameter Name="CatID" Mode="In" Type="Int32" />
+      <Parameter Name="ItemID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="getChartForDepByCategory" ReturnType="Collection(stationeryModel.getChartForDepByCategory_Result)">
+      <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+      <Parameter Name="DepID" Mode="In" Type="Int32" />
+      <Parameter Name="CatID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="getChartForDepByCategoryOnly" ReturnType="Collection(stationeryModel.getChartForDepByCategoryOnly_Result)">
+      <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+      <Parameter Name="DepID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="getCPointbyDepID" ReturnType="Collection(stationeryModel.getCPointbyDepID_Result)">
+      <Parameter Name="DepID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="getDepForDisb" ReturnType="Collection(stationeryModel.getDepForDisb_Result)">
+      <Parameter Name="Date" Mode="In" Type="DateTime" />
+      <Parameter Name="Status" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="getDepOrderByMonth" ReturnType="Collection(stationeryModel.getDepOrderByMonth_Result)">
+      <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="getDisbItemsByDep" ReturnType="Collection(stationeryModel.getDisbItemsByDep_Result)">
+      <Parameter Name="DepID" Mode="In" Type="Int32" />
+      <Parameter Name="DisbStatus" Mode="In" Type="String" />
+      <Parameter Name="Date" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="getReqbyDep" ReturnType="Collection(stationeryModel.getReqbyDep_Result)">
+      <Parameter Name="ItemID" Mode="In" Type="Int32" />
+      <Parameter Name="Date" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(stationeryModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(stationeryModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="getDepForDisb1" ReturnType="Collection(stationeryModel.CustomDepartmentDisb)">
+      <Parameter Name="Date" Mode="In" Type="DateTime" />
+      <Parameter Name="Status" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="getDepOrderByMonth1" ReturnType="Collection(stationeryModel.CustomDepOrder)">
+      <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="adjustmentvoucher">
+    <Key>
+      <PropertyRef Name="ADVID" />
+    </Key>
+    <Property Name="ADVID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="ADVIOrderByEmpID" Type="Int32" Nullable="false" />
+    <Property Name="ADVDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ADVStatus" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ADVApprovedByEMpID" Type="Int32" />
+    <NavigationProperty Name="storeemp" Relationship="stationeryModel.FK_adjustmentvoucher_storeemp" FromRole="adjustmentvoucher" ToRole="storeemp" />
+    <NavigationProperty Name="storeemp1" Relationship="stationeryModel.FK_adjustmentvoucher_StoreHead" FromRole="adjustmentvoucher" ToRole="storeemp" />
+    <NavigationProperty Name="adjustmentvoucherdetails" Relationship="stationeryModel.FK_adjustmentvoucherdetails_adjustmentvoucher" FromRole="adjustmentvoucher" ToRole="adjustmentvoucherdetails" />
+  </EntityType>
+  <EntityType Name="adjustmentvoucherdetail">
+    <Key>
+      <PropertyRef Name="ADVID" />
+      <PropertyRef Name="ADVItemID" />
+    </Key>
+    <Property Name="ADVID" Type="Int32" Nullable="false" />
+    <Property Name="ADVItemID" Type="Int32" Nullable="false" />
+    <Property Name="ADVQuantAdj" Type="Int32" Nullable="false" />
+    <Property Name="ADVReason" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="ADVItemUnitCost" Type="Int32" Nullable="false" />
+    <Property Name="ADVQuantBefore" Type="Int32" Nullable="false" />
+    <Property Name="ADVQuantAfter" Type="Int32" Nullable="false" />
+    <Property Name="ADVAdjustedCost" Type="Double" Nullable="false" />
+    <NavigationProperty Name="adjustmentvoucher" Relationship="stationeryModel.FK_adjustmentvoucherdetails_adjustmentvoucher" FromRole="adjustmentvoucherdetails" ToRole="adjustmentvoucher" />
+    <NavigationProperty Name="item" Relationship="stationeryModel.FK_adjustmentvoucherdetails_item" FromRole="adjustmentvoucherdetails" ToRole="item" />
+  </EntityType>
+  <EntityType Name="aspnet_Applications">
+    <Key>
+      <PropertyRef Name="ApplicationId" />
+    </Key>
+    <Property Name="ApplicationName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="LoweredApplicationName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="aspnet_Membership" Relationship="stationeryModel.FK__aspnet_Me__Appli__5EBF139D" FromRole="aspnet_Applications" ToRole="aspnet_Membership" />
+    <NavigationProperty Name="aspnet_Paths" Relationship="stationeryModel.FK__aspnet_Pa__Appli__17F790F9" FromRole="aspnet_Applications" ToRole="aspnet_Paths" />
+    <NavigationProperty Name="aspnet_Roles" Relationship="stationeryModel.FK__aspnet_Ro__Appli__01142BA1" FromRole="aspnet_Applications" ToRole="aspnet_Roles" />
+    <NavigationProperty Name="aspnet_Users" Relationship="stationeryModel.FK__aspnet_Us__Appli__4AB81AF0" FromRole="aspnet_Applications" ToRole="aspnet_Users" />
+  </EntityType>
+  <EntityType Name="aspnet_Membership">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+    <Property Name="UserId" Type="Guid" Nullable="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+    <Property Name="PasswordFormat" Type="Int32" Nullable="false" />
+    <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+    <Property Name="MobilePIN" Type="String" MaxLength="16" Unicode="true" FixedLength="false" />
+    <Property Name="Email" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="LoweredEmail" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="PasswordQuestion" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="PasswordAnswer" Type="String" MaxLength="128" Unicode="true" FixedLength="false" />
+    <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+    <Property Name="IsLockedOut" Type="Boolean" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastLoginDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastPasswordChangedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastLockoutDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FailedPasswordAttemptCount" Type="Int32" Nullable="false" />
+    <Property Name="FailedPasswordAttemptWindowStart" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FailedPasswordAnswerAttemptCount" Type="Int32" Nullable="false" />
+    <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Comment" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="aspnet_Applications" Relationship="stationeryModel.FK__aspnet_Me__Appli__5EBF139D" FromRole="aspnet_Membership" ToRole="aspnet_Applications" />
+    <NavigationProperty Name="aspnet_Users" Relationship="stationeryModel.FK__aspnet_Me__UserI__5FB337D6" FromRole="aspnet_Membership" ToRole="aspnet_Users" />
+  </EntityType>
+  <EntityType Name="aspnet_Paths">
+    <Key>
+      <PropertyRef Name="PathId" />
+    </Key>
+    <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+    <Property Name="PathId" Type="Guid" Nullable="false" />
+    <Property Name="Path" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="LoweredPath" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="aspnet_Applications" Relationship="stationeryModel.FK__aspnet_Pa__Appli__17F790F9" FromRole="aspnet_Paths" ToRole="aspnet_Applications" />
+    <NavigationProperty Name="aspnet_PersonalizationAllUsers" Relationship="stationeryModel.FK__aspnet_Pe__PathI__1F98B2C1" FromRole="aspnet_Paths" ToRole="aspnet_PersonalizationAllUsers" />
+    <NavigationProperty Name="aspnet_PersonalizationPerUser" Relationship="stationeryModel.FK__aspnet_Pe__PathI__25518C17" FromRole="aspnet_Paths" ToRole="aspnet_PersonalizationPerUser" />
+  </EntityType>
+  <EntityType Name="aspnet_PersonalizationAllUsers">
+    <Key>
+      <PropertyRef Name="PathId" />
+    </Key>
+    <Property Name="PathId" Type="Guid" Nullable="false" />
+    <Property Name="PageSettings" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="aspnet_Paths" Relationship="stationeryModel.FK__aspnet_Pe__PathI__1F98B2C1" FromRole="aspnet_PersonalizationAllUsers" ToRole="aspnet_Paths" />
+  </EntityType>
+  <EntityType Name="aspnet_PersonalizationPerUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="PathId" Type="Guid" />
+    <Property Name="UserId" Type="Guid" />
+    <Property Name="PageSettings" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="aspnet_Paths" Relationship="stationeryModel.FK__aspnet_Pe__PathI__25518C17" FromRole="aspnet_PersonalizationPerUser" ToRole="aspnet_Paths" />
+    <NavigationProperty Name="aspnet_Users" Relationship="stationeryModel.FK__aspnet_Pe__UserI__2645B050" FromRole="aspnet_PersonalizationPerUser" ToRole="aspnet_Users" />
+  </EntityType>
+  <EntityType Name="aspnet_Profile">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Guid" Nullable="false" />
+    <Property Name="PropertyNames" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="PropertyValuesString" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="PropertyValuesBinary" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="aspnet_Users" Relationship="stationeryModel.FK__aspnet_Pr__UserI__75A278F5" FromRole="aspnet_Profile" ToRole="aspnet_Users" />
+  </EntityType>
+  <EntityType Name="aspnet_Roles">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+    <Property Name="RoleId" Type="Guid" Nullable="false" />
+    <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="LoweredRoleName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="aspnet_Applications" Relationship="stationeryModel.FK__aspnet_Ro__Appli__01142BA1" FromRole="aspnet_Roles" ToRole="aspnet_Applications" />
+    <NavigationProperty Name="aspnet_Users" Relationship="stationeryModel.aspnet_UsersInRoles" FromRole="aspnet_Roles" ToRole="aspnet_Users" />
+  </EntityType>
+  <EntityType Name="aspnet_SchemaVersions">
+    <Key>
+      <PropertyRef Name="Feature" />
+      <PropertyRef Name="CompatibleSchemaVersion" />
+    </Key>
+    <Property Name="Feature" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+    <Property Name="CompatibleSchemaVersion" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+    <Property Name="IsCurrentVersion" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="aspnet_Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+    <Property Name="UserId" Type="Guid" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="LoweredUserName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="MobileAlias" Type="String" MaxLength="16" Unicode="true" FixedLength="false" />
+    <Property Name="IsAnonymous" Type="Boolean" Nullable="false" />
+    <Property Name="LastActivityDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="aspnet_Applications" Relationship="stationeryModel.FK__aspnet_Us__Appli__4AB81AF0" FromRole="aspnet_Users" ToRole="aspnet_Applications" />
+    <NavigationProperty Name="aspnet_Membership" Relationship="stationeryModel.FK__aspnet_Me__UserI__5FB337D6" FromRole="aspnet_Users" ToRole="aspnet_Membership" />
+    <NavigationProperty Name="aspnet_PersonalizationPerUser" Relationship="stationeryModel.FK__aspnet_Pe__UserI__2645B050" FromRole="aspnet_Users" ToRole="aspnet_PersonalizationPerUser" />
+    <NavigationProperty Name="aspnet_Profile" Relationship="stationeryModel.FK__aspnet_Pr__UserI__75A278F5" FromRole="aspnet_Users" ToRole="aspnet_Profile" />
+    <NavigationProperty Name="aspnet_Roles" Relationship="stationeryModel.aspnet_UsersInRoles" FromRole="aspnet_Users" ToRole="aspnet_Roles" />
+  </EntityType>
+  <EntityType Name="aspnet_WebEvent_Events">
+    <Key>
+      <PropertyRef Name="EventId" />
+    </Key>
+    <Property Name="EventId" Type="String" Nullable="false" MaxLength="32" Unicode="false" FixedLength="true" />
+    <Property Name="EventTimeUtc" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EventTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EventType" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="EventSequence" Type="Decimal" Nullable="false" Precision="19" Scale="0" />
+    <Property Name="EventOccurrence" Type="Decimal" Nullable="false" Precision="19" Scale="0" />
+    <Property Name="EventCode" Type="Int32" Nullable="false" />
+    <Property Name="EventDetailCode" Type="Int32" Nullable="false" />
+    <Property Name="Message" Type="String" MaxLength="1024" Unicode="true" FixedLength="false" />
+    <Property Name="ApplicationPath" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="ApplicationVirtualPath" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="MachineName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="RequestUrl" Type="String" MaxLength="1024" Unicode="true" FixedLength="false" />
+    <Property Name="ExceptionType" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="Details" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="bin">
+    <Key>
+      <PropertyRef Name="BinID" />
+    </Key>
+    <Property Name="BinID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="BinNumber" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="items" Relationship="stationeryModel.FK_item_bin" FromRole="bin" ToRole="item" />
+  </EntityType>
+  <EntityType Name="category">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="CategoryID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="items" Relationship="stationeryModel.FK_item_category" FromRole="category" ToRole="item" />
+  </EntityType>
+  <EntityType Name="collectionPoint">
+    <Key>
+      <PropertyRef Name="CollectionPointID" />
+    </Key>
+    <Property Name="CollectionPointID" Type="Int32" Nullable="false" />
+    <Property Name="CollectionPointName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="CollectionPointAddress" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="CollectionPointTime" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="CollectionPointDate" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="collectionPoint1" Relationship="stationeryModel.FK_collectionPoint_collectionPoint" FromRole="collectionPoint" ToRole="collectionPoint1" />
+    <NavigationProperty Name="collectionPoint2" Relationship="stationeryModel.FK_collectionPoint_collectionPoint" FromRole="collectionPoint1" ToRole="collectionPoint" />
+    <NavigationProperty Name="departments" Relationship="stationeryModel.FK_department_CollectionPoint" FromRole="collectionPoint" ToRole="department" />
+  </EntityType>
+  <EntityType Name="delegation">
+    <Key>
+      <PropertyRef Name="DelgID" />
+    </Key>
+    <Property Name="DelgID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="DelgEmpID" Type="Int32" Nullable="false" />
+    <Property Name="DelgFromDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DelgToDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DelgStatus" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="DelApproveEmpID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="employee" Relationship="stationeryModel.FK_delegation_DepHead" FromRole="delegation" ToRole="employee" />
+    <NavigationProperty Name="employee1" Relationship="stationeryModel.FK_delegation_employee" FromRole="delegation" ToRole="employee" />
+  </EntityType>
+  <EntityType Name="department">
+    <Key>
+      <PropertyRef Name="DepID" />
+    </Key>
+    <Property Name="DepID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="DepName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="DepContactName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="DepContactNumber" Type="Int32" Nullable="false" />
+    <Property Name="DepFax" Type="Int32" Nullable="false" />
+    <Property Name="DepCollectionPointID" Type="Int32" Nullable="false" />
+    <Property Name="DepRepName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="DepHeadName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="collectionPoint" Relationship="stationeryModel.FK_department_CollectionPoint" FromRole="department" ToRole="collectionPoint" />
+    <NavigationProperty Name="disbursements" Relationship="stationeryModel.FK_disbursement_department" FromRole="department" ToRole="disbursement" />
+    <NavigationProperty Name="employees" Relationship="stationeryModel.FK_employee_department" FromRole="department" ToRole="employee" />
+    <NavigationProperty Name="requisitions" Relationship="stationeryModel.FK_requisition_department" FromRole="department" ToRole="requisition" />
+  </EntityType>
+  <EntityType Name="disbursement">
+    <Key>
+      <PropertyRef Name="DisbID" />
+    </Key>
+    <Property Name="DisbID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="DisbDepID" Type="Int32" Nullable="false" />
+    <Property Name="DisbStatus" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="DisbReceiveDate" Type="DateTime" Precision="3" />
+    <Property Name="DisbCreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="department" Relationship="stationeryModel.FK_disbursement_department" FromRole="disbursement" ToRole="department" />
+  </EntityType>
+  <EntityType Name="disbursementdetail">
+    <Key>
+      <PropertyRef Name="DisbID" />
+      <PropertyRef Name="DisbItemID" />
+    </Key>
+    <Property Name="DisbID" Type="Int32" Nullable="false" />
+    <Property Name="DisbItemID" Type="Int32" Nullable="false" />
+    <Property Name="DisbItemQuantReq" Type="Int32" Nullable="false" />
+    <Property Name="DisbItemQuantDelivered" Type="Int32" />
+    <NavigationProperty Name="item" Relationship="stationeryModel.FK_disbursementdetails_item" FromRole="disbursementdetails" ToRole="item" />
+  </EntityType>
+  <EntityType Name="employee">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="EmployeeEmail" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="EmployeeContact" Type="Int32" Nullable="false" />
+    <Property Name="EmployeeRoleID" Type="Int32" Nullable="false" />
+    <Property Name="EmployeeDepId" Type="Int32" />
+    <Property Name="EmpIsDepRep" Type="Boolean" />
+    <NavigationProperty Name="delegations" Relationship="stationeryModel.FK_delegation_DepHead" FromRole="employee" ToRole="delegation" />
+    <NavigationProperty Name="delegations1" Relationship="stationeryModel.FK_delegation_employee" FromRole="employee" ToRole="delegation" />
+    <NavigationProperty Name="department" Relationship="stationeryModel.FK_employee_department" FromRole="employee" ToRole="department" />
+    <NavigationProperty Name="role" Relationship="stationeryModel.FK_employee_role" FromRole="employee" ToRole="role" />
+    <NavigationProperty Name="requisitions" Relationship="stationeryModel.FK_requisition_DepheadID" FromRole="employee" ToRole="requisition" />
+    <NavigationProperty Name="requisitions1" Relationship="stationeryModel.FK_requisition_employee" FromRole="employee" ToRole="requisition" />
+  </EntityType>
+  <EntityType Name="item">
+    <Key>
+      <PropertyRef Name="ItemID" />
+    </Key>
+    <Property Name="ItemID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="ItemCatID" Type="Int32" Nullable="false" />
+    <Property Name="ItemDescription" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="ItemReOrderLvl" Type="Int32" Nullable="false" />
+    <Property Name="ItemReOrderQuant" Type="Int32" Nullable="false" />
+    <Property Name="ItemUOM" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ItemBinID" Type="Int32" Nullable="false" />
+    <Property Name="ItemQuant" Type="Int32" />
+    <NavigationProperty Name="adjustmentvoucherdetails" Relationship="stationeryModel.FK_adjustmentvoucherdetails_item" FromRole="item" ToRole="adjustmentvoucherdetails" />
+    <NavigationProperty Name="bin" Relationship="stationeryModel.FK_item_bin" FromRole="item" ToRole="bin" />
+    <NavigationProperty Name="category" Relationship="stationeryModel.FK_item_category" FromRole="item" ToRole="category" />
+    <NavigationProperty Name="disbursementdetails" Relationship="stationeryModel.FK_disbursementdetails_item" FromRole="item" ToRole="disbursementdetails" />
+    <NavigationProperty Name="purchaseorderdetails" Relationship="stationeryModel.FK_purchaseorderdetails_item" FromRole="item" ToRole="purchaseorderdetails" />
+    <NavigationProperty Name="requisitiondetails" Relationship="stationeryModel.FK_requisitiondetails_item" FromRole="item" ToRole="requisitiondetails" />
+    <NavigationProperty Name="itemsuppliers" Relationship="stationeryModel.FK_tender_item" FromRole="item" ToRole="itemsupplier" />
+    <NavigationProperty Name="transactions" Relationship="stationeryModel.FK_transaction_item" FromRole="item" ToRole="transaction" />
+  </EntityType>
+  <EntityType Name="itemsupplier">
+    <Key>
+      <PropertyRef Name="SupplierID" />
+      <PropertyRef Name="ItemID" />
+    </Key>
+    <Property Name="SupplierID" Type="Int32" Nullable="false" />
+    <Property Name="ItemID" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Double" Nullable="false" />
+    <Property Name="SupplierRank" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="item" Relationship="stationeryModel.FK_tender_item" FromRole="itemsupplier" ToRole="item" />
+    <NavigationProperty Name="supplier" Relationship="stationeryModel.FK_tender_supplier" FromRole="itemsupplier" ToRole="supplier" />
+  </EntityType>
+  <EntityType Name="purchaseorder">
+    <Key>
+      <PropertyRef Name="POID" />
+    </Key>
+    <Property Name="POID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="POSuppID" Type="Int32" Nullable="false" />
+    <Property Name="POEmpID" Type="Int32" Nullable="false" />
+    <Property Name="POReqDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="PODeliverAddress" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="POReqDeliverDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="PORecieveDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="storeemp" Relationship="stationeryModel.FK_purchaseorder_storeemp" FromRole="purchaseorder" ToRole="storeemp" />
+    <NavigationProperty Name="supplier" Relationship="stationeryModel.FK_purchaseorder_supplier" FromRole="purchaseorder" ToRole="supplier" />
+    <NavigationProperty Name="purchaseorderdetails" Relationship="stationeryModel.FK_purchaseorderdetails_purchaseorder" FromRole="purchaseorder" ToRole="purchaseorderdetails" />
+  </EntityType>
+  <EntityType Name="purchaseorderdetail">
+    <Key>
+      <PropertyRef Name="POID" />
+      <PropertyRef Name="POItemID" />
+    </Key>
+    <Property Name="POID" Type="Int32" Nullable="false" />
+    <Property Name="POItemID" Type="Int32" Nullable="false" />
+    <Property Name="POItemQuant" Type="Int32" Nullable="false" />
+    <Property Name="POStatus" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="item" Relationship="stationeryModel.FK_purchaseorderdetails_item" FromRole="purchaseorderdetails" ToRole="item" />
+    <NavigationProperty Name="purchaseorder" Relationship="stationeryModel.FK_purchaseorderdetails_purchaseorder" FromRole="purchaseorderdetails" ToRole="purchaseorder" />
+  </EntityType>
+  <EntityType Name="requisition">
+    <Key>
+      <PropertyRef Name="ReqID" />
+    </Key>
+    <Property Name="ReqID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="ReqEmpId" Type="Int32" Nullable="false" />
+    <Property Name="ReqStatus" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ReqDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ReqApproveDate" Type="DateTime" Precision="3" />
+    <Property Name="ReqReason" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="ReqApproveEmpID" Type="Int32" />
+    <Property Name="ReqDepID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="department" Relationship="stationeryModel.FK_requisition_department" FromRole="requisition" ToRole="department" />
+    <NavigationProperty Name="employee" Relationship="stationeryModel.FK_requisition_DepheadID" FromRole="requisition" ToRole="employee" />
+    <NavigationProperty Name="employee1" Relationship="stationeryModel.FK_requisition_employee" FromRole="requisition" ToRole="employee" />
+    <NavigationProperty Name="requisitiondetails" Relationship="stationeryModel.FK_requisitiondetails_requisition" FromRole="requisition" ToRole="requisitiondetails" />
+  </EntityType>
+  <EntityType Name="requisitiondetail">
+    <Key>
+      <PropertyRef Name="ReqID" />
+      <PropertyRef Name="ReqItemID" />
+    </Key>
+    <Property Name="ReqID" Type="Int32" Nullable="false" />
+    <Property Name="ReqItemID" Type="Int32" Nullable="false" />
+    <Property Name="ReqQuantityReq" Type="Int32" Nullable="false" />
+    <Property Name="ReqStatus" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="item" Relationship="stationeryModel.FK_requisitiondetails_item" FromRole="requisitiondetails" ToRole="item" />
+    <NavigationProperty Name="requisition" Relationship="stationeryModel.FK_requisitiondetails_requisition" FromRole="requisitiondetails" ToRole="requisition" />
+  </EntityType>
+  <EntityType Name="role">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="employees" Relationship="stationeryModel.FK_employee_role" FromRole="role" ToRole="employee" />
+    <NavigationProperty Name="storeemps" Relationship="stationeryModel.FK_storeemp_role" FromRole="role" ToRole="storeemp" />
+    <NavigationProperty Name="users" Relationship="stationeryModel.FK_users_role" FromRole="role" ToRole="users" />
+  </EntityType>
+  <EntityType Name="storeemp">
+    <Key>
+      <PropertyRef Name="StoreEmpID" />
+    </Key>
+    <Property Name="StoreEmpID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="StoreEmpName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="StoreEmpContact" Type="Int32" Nullable="false" />
+    <Property Name="StoreEmpEmail" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="StoreEmpRoleID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="adjustmentvouchers" Relationship="stationeryModel.FK_adjustmentvoucher_storeemp" FromRole="storeemp" ToRole="adjustmentvoucher" />
+    <NavigationProperty Name="adjustmentvouchers1" Relationship="stationeryModel.FK_adjustmentvoucher_StoreHead" FromRole="storeemp" ToRole="adjustmentvoucher" />
+    <NavigationProperty Name="purchaseorders" Relationship="stationeryModel.FK_purchaseorder_storeemp" FromRole="storeemp" ToRole="purchaseorder" />
+    <NavigationProperty Name="role" Relationship="stationeryModel.FK_storeemp_role" FromRole="storeemp" ToRole="role" />
+    <NavigationProperty Name="transactions" Relationship="stationeryModel.FK_transaction_storeemp" FromRole="storeemp" ToRole="transaction" />
+  </EntityType>
+  <EntityType Name="supplier">
+    <Key>
+      <PropertyRef Name="SupplierID" />
+    </Key>
+    <Property Name="SupplierID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="SupplierCode" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="SupplierName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="SupplierContactName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="SupplierContactNumber" Type="Int32" Nullable="false" />
+    <Property Name="SupplierContactAddress" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="SupplierFax" Type="Int32" Nullable="false" />
+    <Property Name="SupplierGSTRegNumber" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="SupplierEmail" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="SupplierCollectionPointID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="itemsuppliers" Relationship="stationeryModel.FK_tender_supplier" FromRole="supplier" ToRole="itemsupplier" />
+    <NavigationProperty Name="purchaseorders" Relationship="stationeryModel.FK_purchaseorder_supplier" FromRole="supplier" ToRole="purchaseorder" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="transaction">
+    <Key>
+      <PropertyRef Name="TransID" />
+    </Key>
+    <Property Name="TransID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="TransItemID" Type="Int32" Nullable="false" />
+    <Property Name="TransDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TransReason" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="TransItemQuant" Type="Int32" Nullable="false" />
+    <Property Name="TransItemBalance" Type="Int32" Nullable="false" />
+    <Property Name="TransCode" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="TransactionType" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="TranUserID" Type="Int32" />
+    <NavigationProperty Name="item" Relationship="stationeryModel.FK_transaction_item" FromRole="transaction" ToRole="item" />
+    <NavigationProperty Name="storeemp" Relationship="stationeryModel.FK_transaction_storeemp" FromRole="transaction" ToRole="storeemp" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="role" Relationship="stationeryModel.FK_users_role" FromRole="users" ToRole="role" />
+  </EntityType>
+  <EntityType Name="vw_aspnet_Applications">
+    <Key>
+      <PropertyRef Name="ApplicationName" />
+      <PropertyRef Name="LoweredApplicationName" />
+      <PropertyRef Name="ApplicationId" />
+    </Key>
+    <Property Name="ApplicationName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="LoweredApplicationName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="vw_aspnet_MembershipUsers">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="PasswordFormat" />
+      <PropertyRef Name="IsApproved" />
+      <PropertyRef Name="IsLockedOut" />
+      <PropertyRef Name="CreateDate" />
+      <PropertyRef Name="LastLoginDate" />
+      <PropertyRef Name="LastPasswordChangedDate" />
+      <PropertyRef Name="LastLockoutDate" />
+      <PropertyRef Name="FailedPasswordAttemptCount" />
+      <PropertyRef Name="FailedPasswordAttemptWindowStart" />
+      <PropertyRef Name="FailedPasswordAnswerAttemptCount" />
+      <PropertyRef Name="FailedPasswordAnswerAttemptWindowStart" />
+      <PropertyRef Name="ApplicationId" />
+      <PropertyRef Name="UserName" />
+      <PropertyRef Name="IsAnonymous" />
+      <PropertyRef Name="LastActivityDate" />
+    </Key>
+    <Property Name="UserId" Type="Guid" Nullable="false" />
+    <Property Name="PasswordFormat" Type="Int32" Nullable="false" />
+    <Property Name="MobilePIN" Type="String" MaxLength="16" Unicode="true" FixedLength="false" />
+    <Property Name="Email" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="LoweredEmail" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="PasswordQuestion" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="PasswordAnswer" Type="String" MaxLength="128" Unicode="true" FixedLength="false" />
+    <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+    <Property Name="IsLockedOut" Type="Boolean" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastLoginDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastPasswordChangedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastLockoutDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FailedPasswordAttemptCount" Type="Int32" Nullable="false" />
+    <Property Name="FailedPasswordAttemptWindowStart" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FailedPasswordAnswerAttemptCount" Type="Int32" Nullable="false" />
+    <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Comment" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="MobileAlias" Type="String" MaxLength="16" Unicode="true" FixedLength="false" />
+    <Property Name="IsAnonymous" Type="Boolean" Nullable="false" />
+    <Property Name="LastActivityDate" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="vw_aspnet_Profiles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="LastUpdatedDate" />
+    </Key>
+    <Property Name="UserId" Type="Guid" Nullable="false" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DataSize" Type="Int32" />
+  </EntityType>
+  <EntityType Name="vw_aspnet_Roles">
+    <Key>
+      <PropertyRef Name="ApplicationId" />
+      <PropertyRef Name="RoleId" />
+      <PropertyRef Name="RoleName" />
+      <PropertyRef Name="LoweredRoleName" />
+    </Key>
+    <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+    <Property Name="RoleId" Type="Guid" Nullable="false" />
+    <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="LoweredRoleName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="vw_aspnet_Users">
+    <Key>
+      <PropertyRef Name="ApplicationId" />
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="UserName" />
+      <PropertyRef Name="LoweredUserName" />
+      <PropertyRef Name="IsAnonymous" />
+      <PropertyRef Name="LastActivityDate" />
+    </Key>
+    <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+    <Property Name="UserId" Type="Guid" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="LoweredUserName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="MobileAlias" Type="String" MaxLength="16" Unicode="true" FixedLength="false" />
+    <Property Name="IsAnonymous" Type="Boolean" Nullable="false" />
+    <Property Name="LastActivityDate" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="vw_aspnet_UsersInRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="Guid" Nullable="false" />
+    <Property Name="RoleId" Type="Guid" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vw_aspnet_WebPartState_Paths">
+    <Key>
+      <PropertyRef Name="ApplicationId" />
+      <PropertyRef Name="PathId" />
+      <PropertyRef Name="Path" />
+      <PropertyRef Name="LoweredPath" />
+    </Key>
+    <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+    <Property Name="PathId" Type="Guid" Nullable="false" />
+    <Property Name="Path" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="LoweredPath" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="vw_aspnet_WebPartState_Shared">
+    <Key>
+      <PropertyRef Name="PathId" />
+      <PropertyRef Name="LastUpdatedDate" />
+    </Key>
+    <Property Name="PathId" Type="Guid" Nullable="false" />
+    <Property Name="DataSize" Type="Int32" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="vw_aspnet_WebPartState_User">
+    <Key>
+      <PropertyRef Name="LastUpdatedDate" />
+    </Key>
+    <Property Name="PathId" Type="Guid" />
+    <Property Name="UserId" Type="Guid" />
+    <Property Name="DataSize" Type="Int32" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <Association Name="FK_adjustmentvoucher_storeemp">
+    <End Role="storeemp" Type="stationeryModel.storeemp" Multiplicity="1" />
+    <End Role="adjustmentvoucher" Type="stationeryModel.adjustmentvoucher" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="storeemp">
+        <PropertyRef Name="StoreEmpID" />
+      </Principal>
+      <Dependent Role="adjustmentvoucher">
+        <PropertyRef Name="ADVIOrderByEmpID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_adjustmentvoucher_StoreHead">
+    <End Role="storeemp" Type="stationeryModel.storeemp" Multiplicity="0..1" />
+    <End Role="adjustmentvoucher" Type="stationeryModel.adjustmentvoucher" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="storeemp">
+        <PropertyRef Name="StoreEmpID" />
+      </Principal>
+      <Dependent Role="adjustmentvoucher">
+        <PropertyRef Name="ADVApprovedByEMpID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_adjustmentvoucherdetails_adjustmentvoucher">
+    <End Role="adjustmentvoucher" Type="stationeryModel.adjustmentvoucher" Multiplicity="1" />
+    <End Role="adjustmentvoucherdetails" Type="stationeryModel.adjustmentvoucherdetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="adjustmentvoucher">
+        <PropertyRef Name="ADVID" />
+      </Principal>
+      <Dependent Role="adjustmentvoucherdetails">
+        <PropertyRef Name="ADVID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_adjustmentvoucherdetails_item">
+    <End Role="item" Type="stationeryModel.item" Multiplicity="1" />
+    <End Role="adjustmentvoucherdetails" Type="stationeryModel.adjustmentvoucherdetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="item">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="adjustmentvoucherdetails">
+        <PropertyRef Name="ADVItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Me__Appli__5EBF139D">
+    <End Role="aspnet_Applications" Type="stationeryModel.aspnet_Applications" Multiplicity="1" />
+    <End Role="aspnet_Membership" Type="stationeryModel.aspnet_Membership" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Applications">
+        <PropertyRef Name="ApplicationId" />
+      </Principal>
+      <Dependent Role="aspnet_Membership">
+        <PropertyRef Name="ApplicationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Pa__Appli__17F790F9">
+    <End Role="aspnet_Applications" Type="stationeryModel.aspnet_Applications" Multiplicity="1" />
+    <End Role="aspnet_Paths" Type="stationeryModel.aspnet_Paths" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Applications">
+        <PropertyRef Name="ApplicationId" />
+      </Principal>
+      <Dependent Role="aspnet_Paths">
+        <PropertyRef Name="ApplicationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Ro__Appli__01142BA1">
+    <End Role="aspnet_Applications" Type="stationeryModel.aspnet_Applications" Multiplicity="1" />
+    <End Role="aspnet_Roles" Type="stationeryModel.aspnet_Roles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Applications">
+        <PropertyRef Name="ApplicationId" />
+      </Principal>
+      <Dependent Role="aspnet_Roles">
+        <PropertyRef Name="ApplicationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Us__Appli__4AB81AF0">
+    <End Role="aspnet_Applications" Type="stationeryModel.aspnet_Applications" Multiplicity="1" />
+    <End Role="aspnet_Users" Type="stationeryModel.aspnet_Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Applications">
+        <PropertyRef Name="ApplicationId" />
+      </Principal>
+      <Dependent Role="aspnet_Users">
+        <PropertyRef Name="ApplicationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Me__UserI__5FB337D6">
+    <End Role="aspnet_Users" Type="stationeryModel.aspnet_Users" Multiplicity="1" />
+    <End Role="aspnet_Membership" Type="stationeryModel.aspnet_Membership" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="aspnet_Membership">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Pe__PathI__1F98B2C1">
+    <End Role="aspnet_Paths" Type="stationeryModel.aspnet_Paths" Multiplicity="1" />
+    <End Role="aspnet_PersonalizationAllUsers" Type="stationeryModel.aspnet_PersonalizationAllUsers" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Paths">
+        <PropertyRef Name="PathId" />
+      </Principal>
+      <Dependent Role="aspnet_PersonalizationAllUsers">
+        <PropertyRef Name="PathId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Pe__PathI__25518C17">
+    <End Role="aspnet_Paths" Type="stationeryModel.aspnet_Paths" Multiplicity="0..1" />
+    <End Role="aspnet_PersonalizationPerUser" Type="stationeryModel.aspnet_PersonalizationPerUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Paths">
+        <PropertyRef Name="PathId" />
+      </Principal>
+      <Dependent Role="aspnet_PersonalizationPerUser">
+        <PropertyRef Name="PathId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Pe__UserI__2645B050">
+    <End Role="aspnet_Users" Type="stationeryModel.aspnet_Users" Multiplicity="0..1" />
+    <End Role="aspnet_PersonalizationPerUser" Type="stationeryModel.aspnet_PersonalizationPerUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="aspnet_PersonalizationPerUser">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Pr__UserI__75A278F5">
+    <End Role="aspnet_Users" Type="stationeryModel.aspnet_Users" Multiplicity="1" />
+    <End Role="aspnet_Profile" Type="stationeryModel.aspnet_Profile" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="aspnet_Profile">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_item_bin">
+    <End Role="bin" Type="stationeryModel.bin" Multiplicity="1" />
+    <End Role="item" Type="stationeryModel.item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="bin">
+        <PropertyRef Name="BinID" />
+      </Principal>
+      <Dependent Role="item">
+        <PropertyRef Name="ItemBinID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_item_category">
+    <End Role="category" Type="stationeryModel.category" Multiplicity="1" />
+    <End Role="item" Type="stationeryModel.item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category">
+        <PropertyRef Name="CategoryID" />
+      </Principal>
+      <Dependent Role="item">
+        <PropertyRef Name="ItemCatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_collectionPoint_collectionPoint">
+    <End Role="collectionPoint" Type="stationeryModel.collectionPoint" Multiplicity="1" />
+    <End Role="collectionPoint1" Type="stationeryModel.collectionPoint" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="collectionPoint">
+        <PropertyRef Name="CollectionPointID" />
+      </Principal>
+      <Dependent Role="collectionPoint1">
+        <PropertyRef Name="CollectionPointID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_department_CollectionPoint">
+    <End Role="collectionPoint" Type="stationeryModel.collectionPoint" Multiplicity="1" />
+    <End Role="department" Type="stationeryModel.department" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="collectionPoint">
+        <PropertyRef Name="CollectionPointID" />
+      </Principal>
+      <Dependent Role="department">
+        <PropertyRef Name="DepCollectionPointID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_delegation_DepHead">
+    <End Role="employee" Type="stationeryModel.employee" Multiplicity="1" />
+    <End Role="delegation" Type="stationeryModel.delegation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="delegation">
+        <PropertyRef Name="DelApproveEmpID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_delegation_employee">
+    <End Role="employee" Type="stationeryModel.employee" Multiplicity="1" />
+    <End Role="delegation" Type="stationeryModel.delegation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="delegation">
+        <PropertyRef Name="DelgEmpID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_disbursement_department">
+    <End Role="department" Type="stationeryModel.department" Multiplicity="1" />
+    <End Role="disbursement" Type="stationeryModel.disbursement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="department">
+        <PropertyRef Name="DepID" />
+      </Principal>
+      <Dependent Role="disbursement">
+        <PropertyRef Name="DisbDepID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_employee_department">
+    <End Role="department" Type="stationeryModel.department" Multiplicity="0..1" />
+    <End Role="employee" Type="stationeryModel.employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="department">
+        <PropertyRef Name="DepID" />
+      </Principal>
+      <Dependent Role="employee">
+        <PropertyRef Name="EmployeeDepId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_requisition_department">
+    <End Role="department" Type="stationeryModel.department" Multiplicity="1" />
+    <End Role="requisition" Type="stationeryModel.requisition" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="department">
+        <PropertyRef Name="DepID" />
+      </Principal>
+      <Dependent Role="requisition">
+        <PropertyRef Name="ReqDepID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_disbursementdetails_item">
+    <End Role="item" Type="stationeryModel.item" Multiplicity="1" />
+    <End Role="disbursementdetails" Type="stationeryModel.disbursementdetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="item">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="disbursementdetails">
+        <PropertyRef Name="DisbItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_employee_role">
+    <End Role="role" Type="stationeryModel.role" Multiplicity="1" />
+    <End Role="employee" Type="stationeryModel.employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="role">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="employee">
+        <PropertyRef Name="EmployeeRoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_requisition_DepheadID">
+    <End Role="employee" Type="stationeryModel.employee" Multiplicity="0..1" />
+    <End Role="requisition" Type="stationeryModel.requisition" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="requisition">
+        <PropertyRef Name="ReqApproveEmpID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_requisition_employee">
+    <End Role="employee" Type="stationeryModel.employee" Multiplicity="1" />
+    <End Role="requisition" Type="stationeryModel.requisition" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="requisition">
+        <PropertyRef Name="ReqEmpId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_purchaseorderdetails_item">
+    <End Role="item" Type="stationeryModel.item" Multiplicity="1" />
+    <End Role="purchaseorderdetails" Type="stationeryModel.purchaseorderdetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="item">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="purchaseorderdetails">
+        <PropertyRef Name="POItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_requisitiondetails_item">
+    <End Role="item" Type="stationeryModel.item" Multiplicity="1" />
+    <End Role="requisitiondetails" Type="stationeryModel.requisitiondetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="item">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="requisitiondetails">
+        <PropertyRef Name="ReqItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tender_item">
+    <End Role="item" Type="stationeryModel.item" Multiplicity="1" />
+    <End Role="itemsupplier" Type="stationeryModel.itemsupplier" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="item">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="itemsupplier">
+        <PropertyRef Name="ItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_transaction_item">
+    <End Role="item" Type="stationeryModel.item" Multiplicity="1" />
+    <End Role="transaction" Type="stationeryModel.transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="item">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="transaction">
+        <PropertyRef Name="TransItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tender_supplier">
+    <End Role="supplier" Type="stationeryModel.supplier" Multiplicity="1" />
+    <End Role="itemsupplier" Type="stationeryModel.itemsupplier" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="supplier">
+        <PropertyRef Name="SupplierID" />
+      </Principal>
+      <Dependent Role="itemsupplier">
+        <PropertyRef Name="SupplierID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_purchaseorder_storeemp">
+    <End Role="storeemp" Type="stationeryModel.storeemp" Multiplicity="1" />
+    <End Role="purchaseorder" Type="stationeryModel.purchaseorder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="storeemp">
+        <PropertyRef Name="StoreEmpID" />
+      </Principal>
+      <Dependent Role="purchaseorder">
+        <PropertyRef Name="POEmpID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_purchaseorder_supplier">
+    <End Role="supplier" Type="stationeryModel.supplier" Multiplicity="1" />
+    <End Role="purchaseorder" Type="stationeryModel.purchaseorder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="supplier">
+        <PropertyRef Name="SupplierID" />
+      </Principal>
+      <Dependent Role="purchaseorder">
+        <PropertyRef Name="POSuppID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_purchaseorderdetails_purchaseorder">
+    <End Role="purchaseorder" Type="stationeryModel.purchaseorder" Multiplicity="1" />
+    <End Role="purchaseorderdetails" Type="stationeryModel.purchaseorderdetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="purchaseorder">
+        <PropertyRef Name="POID" />
+      </Principal>
+      <Dependent Role="purchaseorderdetails">
+        <PropertyRef Name="POID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_requisitiondetails_requisition">
+    <End Role="requisition" Type="stationeryModel.requisition" Multiplicity="1" />
+    <End Role="requisitiondetails" Type="stationeryModel.requisitiondetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="requisition">
+        <PropertyRef Name="ReqID" />
+      </Principal>
+      <Dependent Role="requisitiondetails">
+        <PropertyRef Name="ReqID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_storeemp_role">
+    <End Role="role" Type="stationeryModel.role" Multiplicity="1" />
+    <End Role="storeemp" Type="stationeryModel.storeemp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="role">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="storeemp">
+        <PropertyRef Name="StoreEmpRoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_users_role">
+    <End Role="role" Type="stationeryModel.role" Multiplicity="1" />
+    <End Role="users" Type="stationeryModel.user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="role">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="users">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_transaction_storeemp">
+    <End Role="storeemp" Type="stationeryModel.storeemp" Multiplicity="0..1" />
+    <End Role="transaction" Type="stationeryModel.transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="storeemp">
+        <PropertyRef Name="StoreEmpID" />
+      </Principal>
+      <Dependent Role="transaction">
+        <PropertyRef Name="TranUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="aspnet_UsersInRoles">
+    <End Role="aspnet_Roles" Type="stationeryModel.aspnet_Roles" Multiplicity="*" />
+    <End Role="aspnet_Users" Type="stationeryModel.aspnet_Users" Multiplicity="*" />
+  </Association>
+  <ComplexType Name="aspnet_Membership_GetPassword_Result">
+    <Property Type="String" Name="Column1" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="Column2" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="aspnet_Membership_GetPasswordWithFormat_Result">
+    <Property Type="String" Name="Column1" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="Column2" Nullable="true" />
+    <Property Type="String" Name="Column3" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="Column4" Nullable="true" />
+    <Property Type="Int32" Name="Column5" Nullable="true" />
+    <Property Type="Boolean" Name="Column6" Nullable="true" />
+    <Property Type="DateTime" Name="Column7" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="Column8" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="aspnet_Membership_GetUserByName_Result">
+    <Property Type="String" Name="Email" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="PasswordQuestion" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="Comment" Nullable="true" MaxLength="Max" />
+    <Property Type="Boolean" Name="IsApproved" Nullable="false" />
+    <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="LastLoginDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="LastActivityDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="LastPasswordChangedDate" Nullable="false" Precision="23" />
+    <Property Type="Guid" Name="UserId" Nullable="false" />
+    <Property Type="Boolean" Name="IsLockedOut" Nullable="false" />
+    <Property Type="DateTime" Name="LastLockoutDate" Nullable="false" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="aspnet_Membership_GetUserByUserId_Result">
+    <Property Type="String" Name="Email" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="PasswordQuestion" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="Comment" Nullable="true" MaxLength="Max" />
+    <Property Type="Boolean" Name="IsApproved" Nullable="false" />
+    <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="LastLoginDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="LastActivityDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="LastPasswordChangedDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UserName" Nullable="false" MaxLength="256" />
+    <Property Type="Boolean" Name="IsLockedOut" Nullable="false" />
+    <Property Type="DateTime" Name="LastLockoutDate" Nullable="false" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="aspnet_Profile_GetProperties_Result">
+    <Property Type="String" Name="PropertyNames" Nullable="false" MaxLength="Max" />
+    <Property Type="String" Name="PropertyValuesString" Nullable="false" MaxLength="Max" />
+    <Property Type="Binary" Name="PropertyValuesBinary" Nullable="false" MaxLength="Max" />
+  </ComplexType>
+  <ComplexType Name="aspnet_UsersInRoles_RemoveUsersFromRoles_Result">
+    <Property Type="String" Name="Column1" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="getAllRequests_Result">
+    <Property Type="Int32" Name="ItemID" Nullable="false" />
+    <Property Type="String" Name="ItemDescription" Nullable="false" MaxLength="100" />
+    <Property Type="Int32" Name="Order_Quantity" Nullable="true" />
+    <Property Type="Int32" Name="ItemQuant" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getCategory_Result">
+    <Property Type="Int32" Name="CategoryID" Nullable="false" />
+    <Property Type="String" Name="CategoryName" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="getChartbyCategoryandItem_Result">
+    <Property Type="String" Name="ItemDescription" Nullable="false" MaxLength="100" />
+    <Property Type="Int32" Name="QuantReq" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getChartbyItem_Result">
+    <Property Type="String" Name="ItemDescription" Nullable="false" MaxLength="100" />
+    <Property Type="Int32" Name="QuantReq" Nullable="true" />
+    <Property Type="DateTime" Name="DisbCreateDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="DepName" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="getChartForDepByCategory_Result">
+    <Property Type="String" Name="CategoryName" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="QuantReq" Nullable="true" />
+    <Property Type="DateTime" Name="DisbCreateDate" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="getChartForDepByCategoryOnly_Result">
+    <Property Type="String" Name="CategoryName" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="QuantReq" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getCPointbyDepID_Result">
+    <Property Type="String" Name="EmployeeName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="CollectionPointName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="DepName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="CollectionPointAddress" Nullable="false" />
+    <Property Type="Int32" Name="EmployeeContact" Nullable="false" />
+    <Property Type="String" Name="CollectionPointDate" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CollectionPointTime" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="getDepForDisb_Result">
+    <Property Type="Int32" Name="DepID" Nullable="false" />
+    <Property Type="String" Name="DepName" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="DisbID" Nullable="false" />
+    <Property Type="String" Name="CollectionPointName" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="DisbCreateDate" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="getDepOrderByMonth_Result">
+    <Property Type="String" Name="DepName" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="QuantDelivered" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getDisbItemsByDep_Result">
+    <Property Type="Int32" Name="DisbItemID" Nullable="false" />
+    <Property Type="String" Name="ItemDescription" Nullable="false" MaxLength="100" />
+    <Property Type="Int32" Name="DisbItemQuantReq" Nullable="false" />
+    <Property Type="Int32" Name="DisbItemQuantDelivered" Nullable="true" />
+    <Property Type="Int32" Name="ItemQuant" Nullable="true" />
+    <Property Type="String" Name="DisbStatus" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="getReqbyDep_Result">
+    <Property Type="Int32" Name="DepID" Nullable="false" />
+    <Property Type="String" Name="ItemDescription" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="DepName" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="Required_Quantity" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="CustomDepartmentDisb">
+    <Property Type="Int32" Name="DepID" Nullable="false" />
+    <Property Type="String" Name="DepName" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="DisbID" Nullable="false" />
+    <Property Type="String" Name="CollectionPointName" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="DisbCreateDate" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="CustomDepOrder">
+    <Property Type="String" Name="DepName" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="QuantDelivered" Nullable="true" />
+  </ComplexType>
+</Schema>

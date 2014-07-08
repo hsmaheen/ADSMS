@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ADSMS.DataAccess;
+
+namespace ADSMS.DataAccess
+{
+    public class ItemRepository
+    {
+        stationeryEntities entities = new stationeryEntities();
+
+        public List<item> GetItemListByReqID(int searchReqID)
+        {
+            try
+            {
+                List<item> currentItemList = new List<item>();
+                currentItemList = (from rd in entities.requisitiondetails
+                              join i in entities.items on rd.ReqItemID equals i.ItemID
+                              where rd.ReqID == searchReqID
+                              select i).ToList();
+                return currentItemList;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+    }
+}

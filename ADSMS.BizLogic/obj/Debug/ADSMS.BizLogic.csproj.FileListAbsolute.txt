@@ -1,0 +1,12 @@
+D:\Maheen\AD Project\ADSMS\ADSMS.BizLogic\bin\Debug\ADSMS.BizLogic.dll.config
+D:\Maheen\AD Project\ADSMS\ADSMS.BizLogic\bin\Debug\ADSMS.BizLogic.dll
+D:\Maheen\AD Project\ADSMS\ADSMS.BizLogic\bin\Debug\ADSMS.BizLogic.pdb
+D:\Maheen\AD Project\ADSMS\ADSMS.BizLogic\bin\Debug\ADSMS.DataAccess.dll
+D:\Maheen\AD Project\ADSMS\ADSMS.BizLogic\bin\Debug\EntityFramework.dll
+D:\Maheen\AD Project\ADSMS\ADSMS.BizLogic\bin\Debug\EntityFramework.SqlServer.dll
+D:\Maheen\AD Project\ADSMS\ADSMS.BizLogic\bin\Debug\ADSMS.DataAccess.pdb
+D:\Maheen\AD Project\ADSMS\ADSMS.BizLogic\bin\Debug\EntityFramework.xml
+D:\Maheen\AD Project\ADSMS\ADSMS.BizLogic\bin\Debug\EntityFramework.SqlServer.xml
+D:\Maheen\AD Project\ADSMS\ADSMS.BizLogic\obj\Debug\ADSMS.BizLogic.csprojResolveAssemblyReference.cache
+D:\Maheen\AD Project\ADSMS\ADSMS.BizLogic\obj\Debug\ADSMS.BizLogic.dll
+D:\Maheen\AD Project\ADSMS\ADSMS.BizLogic\obj\Debug\ADSMS.BizLogic.pdb

@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using ADSMS.BizLogic;
+using ADSMS.DataAccess;
+namespace ADSMS.Presentation.Store
+{
+    public partial class ViewStockAdjustmentList : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                acceptAdjustmentVoucher();
+            }
+        }
+
+        void acceptAdjustmentVoucher()
+        {
+            AdjustmentService service = new AdjustmentService();
+            dgvStockAdjustmentList.DataSource = service.getAdjustmentVoucher();
+            dgvStockAdjustmentList.DataBind();
+           
+        }
+    }
+}

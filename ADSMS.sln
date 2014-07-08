@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADSMS", "ADSMS\ADSMS.csproj", "{E0BB0D83-0188-4802-AB92-BB9B2F3D945E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADSMS.BizLogic", "ADSMS.BizLogic\ADSMS.BizLogic.csproj", "{FD9FA019-22E5-4ACC-A317-158C43DC337C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADSMS.DataAccess", "ADSMS.DataAccess\ADSMS.DataAccess.csproj", "{6765D18E-A1B7-4B1A-91FC-A20AF5F06EDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADSMS.WCFService", "ADSMS.WCFService\ADSMS.WCFService.csproj", "{D83F6857-DD76-4357-93D5-714ED0ECE0AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D70395D6-B2FF-4079-B5F0-24356D8C1231}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E0BB0D83-0188-4802-AB92-BB9B2F3D945E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0BB0D83-0188-4802-AB92-BB9B2F3D945E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0BB0D83-0188-4802-AB92-BB9B2F3D945E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0BB0D83-0188-4802-AB92-BB9B2F3D945E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD9FA019-22E5-4ACC-A317-158C43DC337C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD9FA019-22E5-4ACC-A317-158C43DC337C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD9FA019-22E5-4ACC-A317-158C43DC337C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD9FA019-22E5-4ACC-A317-158C43DC337C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6765D18E-A1B7-4B1A-91FC-A20AF5F06EDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6765D18E-A1B7-4B1A-91FC-A20AF5F06EDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6765D18E-A1B7-4B1A-91FC-A20AF5F06EDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6765D18E-A1B7-4B1A-91FC-A20AF5F06EDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D83F6857-DD76-4357-93D5-714ED0ECE0AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D83F6857-DD76-4357-93D5-714ED0ECE0AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D83F6857-DD76-4357-93D5-714ED0ECE0AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D83F6857-DD76-4357-93D5-714ED0ECE0AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		VisualSVNWorkingCopyRoot = .
+	EndGlobalSection
+EndGlobal

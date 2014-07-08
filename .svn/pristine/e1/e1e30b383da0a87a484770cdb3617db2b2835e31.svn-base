@@ -1,0 +1,34 @@
+﻿  using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ADSMS.DataAccess;
+
+namespace ADSMS.BizLogic
+{
+    public class RequisitionService
+    {
+        RequisitionRepository _requisitionRepository = new RequisitionRepository();
+
+        public List<object> GetRequisitionList()
+        {
+            return _requisitionRepository.GetRequisitionList();
+        }
+
+        public List<object> GetRequisitionListByStatus(string searchReqStatus)
+        {
+            return _requisitionRepository.GetRequisitionListByStatus(searchReqStatus);
+        }
+
+        public requisition GetRequisitionDetailsByReqID(int searchReqID)
+        {
+            return _requisitionRepository.GetRequisitionDetailsByID(searchReqID);
+        }
+
+        public void UpdateConfirmRequisition(int ReqIDtoUpdate,string status,string reason,int LoginID)
+        {
+            _requisitionRepository.UpdateConfirmRequisition(ReqIDtoUpdate,status,reason,LoginID);   
+        }
+    }
+}

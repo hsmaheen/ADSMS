@@ -1,0 +1,115 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/Department/Department.Master" AutoEventWireup="true" CodeBehind="StationeryCollectionDetails_head.aspx.cs" Inherits="ADSMS.Presentation.Department.StationeryCollectionDetails_head" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+     <div class="container">
+        <div class="page-header">
+            <h1 id="tables">Stationery Collection Details</h1>
+        </div>
+            <div class="jumbotron">
+
+             <div class="bs-component">
+                    <div class="form-group">
+                        <div class="col-lg-3">
+                        <asp:Label ID="departmentNamelbl" runat="server" Text="Department Name:"></asp:Label>
+                            </div>
+                        <div class="col-lg-2">
+
+                            <asp:DropDownList ID="departmentNameddl" runat="server" DataSourceID="departmentName" DataTextField="DepName" DataValueField="DepName"></asp:DropDownList>
+
+                            <asp:EntityDataSource ID="departmentName" runat="server" ConnectionString="name=stationeryEntities" DefaultContainerName="stationeryEntities" EnableFlattening="False" EntitySetName="departments" EntityTypeFilter="department" Select="it.[DepName]">
+                            </asp:EntityDataSource>
+
+                        </div>
+                        <br />
+                        </div>
+                 </div>
+
+                    <div class="bs-component">
+                        <div class="form-group">
+                            <div class="col-lg-3">
+                            <asp:Label ID="contactNamelbl" runat="server" Text="Department Contact's Name:"></asp:Label>
+                                </div>
+                            <div class="col-lg-2">
+                                
+                                <asp:DropDownList ID="contactNameddl" runat="server" DataSourceID="DeptContactName" DataTextField="DepContactName" DataValueField="DepContactName"></asp:DropDownList>
+                                
+                                <asp:EntityDataSource ID="DeptContactName" runat="server" ConnectionString="name=stationeryEntities" DefaultContainerName="stationeryEntities" EnableFlattening="False" EntitySetName="departments" EntityTypeFilter="department" Select="it.[DepContactName]">
+                                </asp:EntityDataSource>
+                                
+                            </div>
+                        </div>
+                        <br />
+                        </div>
+
+                    <div class="bs-component">
+                            <div class="form-group">
+                                <div class="col-lg-3">
+                            <asp:Label ID="deptcontactNumberlbl" runat="server" Text="Department's Contact Number:"></asp:Label>
+                                </div>
+                               <div class="col-lg-2"> 
+                                   <asp:DropDownList ID="deptcontactNumberddl" runat="server" DataSourceID="DeptContactNumber" DataTextField="DepContactNumber" DataValueField="DepContactNumber">
+                                   </asp:DropDownList>
+                                   <asp:EntityDataSource ID="DeptContactNumber" runat="server" ConnectionString="name=stationeryEntities" DefaultContainerName="stationeryEntities" EnableFlattening="False" EntitySetName="departments" EntityTypeFilter="department" Select="it.[DepContactNumber]">
+                                   </asp:EntityDataSource>
+                                </div>
+                            </div>
+                         <br />
+                        </div>
+
+                         <div class="bs-component">
+                            <div class="form-group">
+                                <div class="col-lg-3">
+                            <asp:Label ID="deptcontactDesignationlbl" runat="server" Text="Department's Contact Designation:"></asp:Label>
+                                </div>
+                               <div class="col-lg-2"> 
+                                   <asp:DropDownList ID="deptcontactDesignationddl" runat="server"></asp:DropDownList>
+                          
+                                </div>
+                            </div>
+                         <br /><br />
+                        </div>
+                            
+                              <div class="bs-component">
+                            <div class="form-group">
+                                <div class="col-lg-3">
+                                <asp:Label ID="choosedeptreplbl" runat="server" Text="Choose Department Representative:"></asp:Label>
+                                    </div>
+                                <div class="col-lg-2">       
+                      
+                                    <asp:DropDownList ID="deptrepddl" runat="server">
+                                    </asp:DropDownList>
+                      
+                                </div>
+                            </div>
+                            <br />
+                                  <br />
+         </div>
+                            <div class="bs-component">
+                            <div class="form-group">
+                                <div class="col-lg-3">
+                                <asp:Label ID="choosecollectionpoint" runat="server" Text="Collection Point:"></asp:Label>
+                                    </div>
+                                <div class="col-lg-2">        
+                                    <asp:DropDownList ID="collectionPointddl" runat="server" DataSourceID="collectionPoint" DataTextField="CollectionPointName" DataValueField="CollectionPointName">
+                                    </asp:DropDownList>
+                      
+                                    <asp:EntityDataSource ID="collectionPoint" runat="server" ConnectionString="name=stationeryEntities" DefaultContainerName="stationeryEntities" EnableFlattening="False" EntitySetName="collectionPoints" EntityTypeFilter="collectionPoint" Select="it.[CollectionPointName]">
+                                    </asp:EntityDataSource>
+                                </div>
+                            </div>
+                            <br /><br />
+         </div>
+
+                        <div class="form-group">
+          <div class="col-lg-offset-2">
+              <button type="button" class="btn btn-primary">Submit Form</button> &nbsp&nbsp;&nbsp;
+              <button type="button" class="btn btn-success" onclick="this.form.reset()">Reset Form</button>
+</div>
+            </div>
+  </div>
+           </div>
+         
+</asp:Content>

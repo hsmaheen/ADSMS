@@ -1,0 +1,49 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ADSMS.DataAccess;
+
+namespace ADSMS.BizLogic
+{
+   public class StoreService
+    {
+       StoreRepository sr = new StoreRepository();
+
+       public List<object> getItemList()
+       {
+           List<object> Item = new List<object>();
+           Item = sr.getItemList();
+           return Item;
+       }
+
+       public bool UpdateInventoryList(int itemID, string itemdesp, int quant, string cname, int itemReO, int itemReOQ, string uom, int BNo)
+       {
+           bool ans = false;
+           ans=sr.UpdateInventoryList(itemID, itemdesp, quant, cname, itemReO, itemReOQ, uom, BNo);
+           return ans;
+
+       }
+
+
+
+       //public object getItem(string id)
+       //{
+       //    object item=new object();
+       //    int itemid=Convert.ToInt32(id);
+       //    item=sr.GetItem(itemid);
+       //    return item;
+
+
+       //}
+       //public bool deleteItem(object item)
+       //{
+       //    bool ans = false;
+       //    ans = sr.DeleteItem(item);
+       //    return ans;
+           
+       //}
+
+    }
+}

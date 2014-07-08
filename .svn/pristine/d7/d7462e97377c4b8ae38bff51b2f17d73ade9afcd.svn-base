@@ -1,0 +1,292 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/Store/Store.Master" AutoEventWireup="true" CodeBehind="ChartGeneration_Custom.aspx.cs" Inherits="ADSMS.Presentation.ChartGeneration_Custom" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="../../Design/datepicker.css" rel="stylesheet" />
+    <script src="../../Scripts/globalize.js"></script>
+    <script src="../../Scripts/knockout-3.0.0.js"></script>
+    <script src="../../Scripts/dx.chartjs.js"></script>
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+    <div class="container">
+        <div id="chartContainer">
+        </div>
+
+    </div>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 id="tables">Chart Generation Form</h1>
+        </div>
+ 
+        <%-- Month Date Picker--%>
+
+
+        <div class="bs-component">
+            <div class="form-group">
+                <div class="col-lg-2">
+                    <asp:Label ID="Label1" runat="server" Text="1st Month/Year"></asp:Label>
+                </div>
+
+                <div class="col-md-2 date">
+
+                    <input type="text" required class="form-control" id="date1" />
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+
+        <div class="bs-component">
+            <div class="form-group">
+                <div class="col-lg-2">
+                    <asp:Label ID="Label2" runat="server" Text="2nd Month/Year"></asp:Label>
+                </div>
+
+                <div class="col-md-2 date">
+                    <input type="text" required class="form-control"  id="date2" />
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <br />
+
+        <div class="bs-component">
+            <div class="form-group">
+                <div class="col-lg-2">
+                    <asp:Label ID="Label3" runat="server" Text="3rd Month/Year"></asp:Label>
+                </div>
+
+                <div class="col-md-2 date">
+                    <input type="text" required class="form-control" id="date3" />
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+
+
+
+
+
+        <div class="form-group">
+            <div class="col-lg-12">
+              <button type="button" class="btn btn-success col-md-offset-2" id="btn_CustomChart">Generate Custom Chart</button>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <br />
+
+    <script>
+        $(function () {
+
+
+            $('.date input').datepicker({
+                format: "dd/mm/yy",
+                minViewMode: 1,
+                keyboardNavigation: false
+            });
+
+            //----buttons disabler---////
+            //$('.date input').prop('disabled', true);
+
+       
+
+            //----buttons disabler---////
+
+            //---button enabler---///
+
+
+            $("#btn_CustomChart").prop('disabled', false)
+
+
+
+            //---button enabler---///
+
+
+
+
+          
+
+
+            //Generate Custom Chart
+            $("#btn_CustomChart").click(function () {
+
+                var months = ["January", "February", "March", "April", "May", "June",
+               "July", "August", "September", "October", "November", "December"];
+
+                var dates = { date: [] }
+                //getting the month
+                var month1 = months[$("#date1").datepicker('getDate').getMonth()];
+                var month2 = months[$("#date2").datepicker('getDate').getMonth()];
+                var month3 = months[$("#date3").datepicker('getDate').getMonth()];
+
+                if (month1 == month2)
+                {
+                    alert("Please make sure all months are different");
+                }
+                else if (month2 == month3)
+                {
+                    alert("Please make sure all months are different");
+                }
+                else if (month1 == month3) {
+                    alert("Please make sure all months are different");
+
+                }
+                else {
+
+
+
+                    var date1 = $("#date1").val();
+                    var date2 = $("#date2").val();
+                    var date3 = $("#date3").val();
+                    dates.date[0] = date1;
+                    dates.date[1] = date2;
+                    dates.date[2] = date3;
+
+
+                    $.ajax({
+                        type: "POST",
+                        url: "ChartGeneration_Custom.aspx/getCustomChart",
+                        contentType: "application/json",
+                        data: JSON.stringify(dates),
+                        dataType: "json"
+                    }).success(customsuccess);
+
+                    function customsuccess(data) {
+
+                        var dataSource = data.d;
+                        console.log(dataSource);
+                        $("#chartContainer").dxChart({
+                            dataSource: dataSource,
+                            commonSeriesSettings: {
+                                argumentField: "depName",
+                                type: "bar",
+                                hoverMode: "allArgumentPoints",
+                                selectionMode: "allArgumentPoints",
+                                label: {
+                                    visible: true,
+                                    format: "fixedPoint",
+                                    precision: 0
+                                }
+                            },
+                            series: [
+                                { valueField: "Month1", name: month1 },
+                                { valueField: "Month2", name: month2 },
+                                { valueField: "Month3", name: month3 }
+                            ],
+                            title: "Totoal Number of Products Ordered by All Departments",
+                            legend: {
+                                verticalAlignment: "bottom",
+                                horizontalAlignment: "center"
+                            },
+                            pointClick: function (point) {
+                                this.select();
+                            }
+                        });
+
+
+
+                    }
+
+
+
+
+                    //                var dataSource = [
+                    //    { state: "School of Sciece", Month1: 45, Month2: 60, Month3: 61 },
+                    //   { state: "School of Computing", Month1: 45, Month2: 345.851, Month3: 44.904 },
+                    //   { state: "School of Business", Month1: 33.721, Month2: 11.851, Month3: 34.904 },
+                    //{ state: "School of System Sciences", Month1: 45.721, Month2: 45.851, Month3: 545.904 }
+
+                    //                ];
+
+
+
+
+
+
+
+
+                    //    console.log(data.d);
+                    //    var chartdata = data.d[2];
+                    //    //$("#chartContainer").dxChart({
+                    //    //    title: {
+                    //    //        text: 'Quantity of Items Ordered by Departments'
+                    //    //    },
+                    //    //    tooltip: {
+                    //    //        enabled: true
+                    //    //    },
+                    //    //    dataSource: chartdata,
+                    //    //    //commonSeriesSettings: {
+                    //    //    //    label: {
+                    //    //    //        visible: true,
+                    //    //    //        connector: {
+                    //    //    //            visible: true
+                    //    //    //        }
+                    //    //    //    }
+                    //    //    //},
+                    //    //    series: {
+                    //    //        argumentField: "DepName",
+                    //    //        valueField: "QuantDelivered",
+                    //    //        type: "bar",
+
+                    //    //    }
+                    //    //});
+                    //    $("#chartContainer").dxChart({
+                    //        dataSource: chartdata,
+                    //        commonSeriesSettings: {
+                    //            argumentField: "DisbCreateDate",
+                    //            type: "bar",
+                    //            hoverMode: "allArgumentPoints",
+                    //            selectionMode: "allArgumentPoints",
+                    //            label: {
+                    //                visible: true,
+                    //                format: "fixedPoint",
+                    //                precision: 0
+                    //            }
+                    //        },
+                    //        series: [
+                    //            { valueField: "DepName", name: "Department Name" },
+                    //            { valueField: "QuantDelivered", name: "Quant" },
+                    //        ],
+                    //        title: "Great Lakes Gross State Product",
+                    //        legend: {
+                    //            verticalAlignment: "bottom",
+                    //            horizontalAlignment: "center"
+                    //        },
+                    //        pointClick: function (point) {
+                    //            this.select();
+                    //        }
+                    //    });
+
+                    //}
+                }
+
+
+
+
+
+
+                });
+
+
+
+                //--Norma chart Generator--//
+
+                //--Normal chart Generator--//
+            
+
+
+            
+        });
+
+    </script>
+
+</asp:Content>

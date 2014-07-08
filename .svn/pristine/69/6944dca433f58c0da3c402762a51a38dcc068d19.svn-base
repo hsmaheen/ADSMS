@@ -1,0 +1,472 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Data.Entity.Validation;
+using System.Data.Entity.Infrastructure;
+using System.Web;
+using System.Diagnostics;
+
+namespace ADSMS.DataAccess
+{
+    public class DepartmentRepository
+    {
+
+        stationeryEntities se = new stationeryEntities();
+        DateTime checkdate = new DateTime();
+
+        public List<object> getDeptList()
+        {
+
+
+            List<object> deptList = new List<object>();
+            var q = from dept in se.departments
+                    join cp in se.collectionPoints
+                        on dept.DepCollectionPointID equals cp.CollectionPointID
+                    select new { dept.DepID, dept.DepContactName, dept.DepContactNumber, dept.DepFax, cp.CollectionPointName };
+
+            deptList = q.ToList<object>();
+
+            return deptList;
+        }
+
+        //---method to get requisition list
+        public List<object> getRequests()
+        {
+
+
+
+            checkdate = DateTime.Today;
+            //checkdate = DateTime.Today.AddDays(2);
+            List<Object> rlist = new List<Object>();
+            var q = from rd in se.requisitiondetails
+                    from req in se.requisitions
+                    from i in se.items
+                    from b in se.bins
+                    where
+                  rd.ReqStatus == "approved" &&
+                  req.ReqApproveDate < checkdate &&
+                 rd.requisition.ReqStatus != null &&
+                 i.ItemID == rd.ReqItemID &&
+                 rd.ReqID == req.ReqID &&
+                 i.ItemBinID==b.BinID
+                    group new { i, rd } by new
+                    {
+                        i.ItemID,
+                        i.ItemDescription,
+                        b.BinNumber,
+                        i.ItemQuant
+                    } into g
+                    select new
+                    {
+                        ItemID = (System.Int32)g.Key.ItemID,
+                        g.Key.BinNumber,
+                        g.Key.ItemDescription,
+                        Order_Quantity = (System.Int32)g.Sum(p => p.rd.ReqQuantityReq),
+                        ItemQuant = (System.Int32)g.Key.ItemQuant
+                        
+                    };
+
+            rlist = q.ToList<Object>();
+            return rlist;
+
+        }
+
+        public department GetdepartmentDetailsByDeptID(int searchDeptID)
+        {
+            try
+            {
+                department CurrentDept = new department();
+
+                CurrentDept = (from r in se.departments
+                               where r.DepID == searchDeptID
+                               select r).FirstOrDefault();
+                return CurrentDept;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public List<object> GetItembyDep(int itemiD)
+        {
+
+            checkdate = DateTime.Today;
+            //checkdate = DateTime.Today.AddDays(2);
+            List<object> depitems = new List<object>();
+            depitems = se.getReqbyDep(itemiD, checkdate).ToList<object>();
+            return depitems;
+
+        }
+
+
+        //method to manage outstanding requests
+        public void CheckForOutStanding(Disbursement_M disbl)
+        {
+            List<requisitiondetail> rdlist = new List<requisitiondetail>();
+            checkdate = DateTime.Today; //checking requestions brfore today
+            //checkdate = DateTime.Today.AddDays(2);
+            requisitiondetail rcheck = new requisitiondetail();
+            //checking
+            requisition rq = new requisition();
+            var m = from r in se.requisitiondetails
+                    where
+                    r.ReqItemID == disbl.ItemID &&
+                    r.requisition.ReqDepID == disbl.DepID &&
+                    r.requisition.ReqApproveDate < checkdate
+                    select r;
+            rdlist = m.ToList();
+            rcheck = m.FirstOrDefault();
+            foreach (requisitiondetail rd in rdlist)
+            {
+                //if (rd.requisition.ReqReason == "outstanding")
+                //{
+                //    //rd.ReqStatus = "confirmed";
+                //    //se.SaveChanges();
+                //    //totalcount = totalcount + rd.ReqQuantityReq;
+                //    outstandingReqList.Add(rd);
+
+                //}
+                //else
+                //{
+                //    normalReqList.Add(rd);
+                //    //changing the status to confirmed
+                //    //rd.ReqStatus = "confirmed";
+                //    //se.SaveChanges();
+                //    //totalcount = totalcount + rd.ReqQuantityReq; //getting the count of items ordered by the dep
+                //}
+                rd.ReqStatus = "confirmed";
+                try
+                {
+                    se.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    string error;
+                    if (ex.InnerException != null)
+                    {
+                        Exception ex1;
+                        ex1 = ex.InnerException;
+                        error = ex1.InnerException.StackTrace;
+
+
+                    }
+                    else
+                    {
+                        string error1;
+                        error1 = ex.InnerException.Message;
+ 
+                    }
+
+                    
+                    
+                }
+            }
+            if (disbl.QuantinHand < disbl.RequiredQuant)
+            {
+                int outstanding = disbl.RequiredQuant - disbl.QuantinHand;
+                requisition outreq = new requisition();
+                requisitiondetail outreqdet = new requisitiondetail();
+
+                //creating an oustanding request automatically
+                outreq.ReqApproveEmpID = rcheck.requisition.ReqApproveEmpID;
+                outreq.ReqApproveDate = rcheck.requisition.ReqApproveDate; // come back here to make sure your logic is right
+                outreq.ReqStatus = "outstanding";
+                outreq.ReqDate = rcheck.requisition.ReqDate;
+                outreq.ReqDepID = rcheck.requisition.ReqDepID;
+                outreq.ReqEmpId = rcheck.requisition.ReqEmpId;
+                outreq.ReqReason = "outstanding";
+                try
+                {
+                    se.requisitions.Add(outreq);
+                    se.SaveChanges();
+                }
+                catch (DbEntityValidationException dbEx)
+                {
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                        }
+                    }
+                }
+
+
+                //creating an autogenerated requestdetails for that particular item
+                outreqdet.ReqID = outreq.ReqID;
+                outreqdet.ReqItemID = disbl.ItemID;
+                outreqdet.ReqQuantityReq = outstanding;
+                outreqdet.ReqStatus = "approved";
+                try
+                {
+                    se.requisitiondetails.Add(outreqdet);
+                    se.SaveChanges();
+                }
+                catch (DbEntityValidationException dbEx)
+                {
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                        }
+                    }
+                }
+            }
+        }
+
+        public bool     saveDisblist(Disbursement_M disbl,int userid)
+        {
+            bool ans = false;
+            List<requisitiondetail> rdlist = new List<requisitiondetail>();
+            //requisitiondetail rd =new requisitiondetail();
+            disbursementdetail disbdet = new disbursementdetail();
+            disbursement disb = new disbursement();
+            checkdate = DateTime.Today;
+            string status = "Ready";
+
+            //checking whether the disb-list already exists
+
+
+            var q = from d in se.disbursements
+                    where d.DisbDepID == disbl.DepID &&
+                    d.DisbStatus == status
+                    select d;
+            disb = q.FirstOrDefault();
+
+
+            //if disb-list already exits
+
+            if (disb != null)
+            {
+                item newitem = new item();
+                newitem = se.items.Find(disbl.ItemID);
+
+                disbursementdetail ddetail = new disbursementdetail();
+                var a = from dd in se.disbursementdetails
+                        where dd.DisbID == disb.DisbID &&
+                        dd.DisbItemID == disbl.ItemID
+                        select dd;
+                ddetail = a.FirstOrDefault();
+                if (ddetail != null)
+                {
+                    if (disbl.RequiredQuant >= ddetail.DisbItemQuantReq)
+                    {
+                        ddetail.DisbItemQuantReq = ddetail.DisbItemQuantReq + disbl.RequiredQuant;
+                        ddetail.DisbItemQuantDelivered = ddetail.DisbItemQuantDelivered + disbl.QuantinHand;
+
+                    }
+                    else
+                    {
+
+                        ddetail.DisbItemQuantDelivered = ddetail.DisbItemQuantDelivered + disbl.QuantinHand;
+                    }
+
+                    try
+                    {
+                        se.SaveChanges();
+                        newitem.ItemQuant = newitem.ItemQuant - ( disbl.RequiredQuant-disbl.QuantinHand);
+
+                        createTransaction(disbl, newitem,userid);
+
+                        CheckForOutStanding(disbl);
+                        ans = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        ans = false;
+
+                    }
+                    //check for outstanding request
+
+
+                }
+                else
+                {
+                    disbursementdetail newdd = new disbursementdetail();
+                    newdd.DisbID = disb.DisbID;
+                    newdd.DisbItemID = disbl.ItemID;
+                    newdd.DisbItemQuantDelivered = disbl.QuantinHand;
+                    newdd.DisbItemQuantReq = disbl.RequiredQuant;
+                    try
+                    {
+                        se.disbursementdetails.Add(newdd);
+                        se.SaveChanges();
+                        newitem.ItemQuant = newitem.ItemQuant - (disbl.RequiredQuant - disbl.QuantinHand);
+
+                        //saving transaction
+                        createTransaction(disbl, newitem,userid);
+
+                        CheckForOutStanding(disbl);
+                        ans = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        ans = false;
+
+                    }
+
+                }
+                return ans;
+
+
+            }
+            else
+            {
+                // creating a new disbursement
+                ans = createDisbursement(disbl,userid);
+
+
+            }
+            return ans;
+        }
+
+
+        public bool createDisbursement(Disbursement_M disbl,int userid)
+        {
+            bool ans = false;
+            List<requisitiondetail> rdlist = new List<requisitiondetail>();
+            //requisitiondetail rd =new requisitiondetail();
+            disbursementdetail disbdet = new disbursementdetail();
+            disbursement disb = new disbursement();
+            item newitem = new item();
+
+            //
+            newitem = se.items.Find(disbl.ItemID);
+
+
+
+
+
+
+            //creating a new disbursement
+            disbursement disb1 = new disbursement();
+            disb1.DisbDepID = disbl.DepID;
+            disb1.DisbStatus = "Ready";
+            disb1.DisbReceiveDate = null;
+            disb1.DisbCreateDate = DateTime.Today;
+            se.disbursements.Add(disb1);
+            se.SaveChanges();
+
+            //creating a Disbursement details
+
+            disbdet.DisbID = disb1.DisbID;
+            disbdet.DisbItemID = disbl.ItemID;
+            disbdet.DisbItemQuantDelivered = disbl.QuantinHand;
+            disbdet.DisbItemQuantReq = disbl.RequiredQuant;
+
+            try
+            {
+                se.disbursementdetails.Add(disbdet);
+                se.SaveChanges();
+
+                newitem.ItemQuant = newitem.ItemQuant - disbl.QuantinHand;
+                se.SaveChanges();
+
+                createTransaction(disbl, newitem, userid);
+
+                ans = true;
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                    }
+                }
+            }
+
+            if (ans == true)
+            {
+                CheckForOutStanding(disbl);
+                ans = true;
+            }
+            return ans;
+        }
+
+        public bool createTransaction(Disbursement_M disbl, item newitem,int userid)
+        {
+
+            bool ans = false;
+            //Save In transaction
+            transaction t = new transaction();
+            t.TransDate = DateTime.Today;
+            t.TransItemID = disbl.ItemID;
+            t.TransItemQuant = disbl.RequiredQuant;
+            t.TransItemBalance = newitem.ItemQuant ?? default (int);
+            t.TransReason = "Retrived For Department " + disbl.DepID;
+            t.TransactionType = "out";
+            t.TranUserID = userid;
+            t.TransCode = "RTR";
+            try
+            {
+                se.transactions.Add(t);
+                se.SaveChanges();
+                ans = true;
+            }
+            catch
+            {
+                ans = false;
+
+
+            }
+            return ans;
+        }
+
+
+
+
+        public void UpdateDepartment(department currentDepartment)
+        {
+            try
+            {
+                department CurrentDept = new department();
+
+                CurrentDept = (from r in se.departments
+                               where r.DepID == currentDepartment.DepID
+                               select r).FirstOrDefault();
+
+                CurrentDept.DepID = currentDepartment.DepID;
+                CurrentDept.DepName = currentDepartment.DepName;
+                CurrentDept.DepContactName = currentDepartment.DepContactName;
+                CurrentDept.DepContactNumber = currentDepartment.DepContactNumber;
+                CurrentDept.DepFax = currentDepartment.DepFax;
+                CurrentDept.DepCollectionPointID = currentDepartment.DepCollectionPointID;
+                CurrentDept.DepRepName = currentDepartment.DepRepName;
+                CurrentDept.DepHeadName = currentDepartment.DepHeadName;
+                se.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public void UpdateDeptRapNameById(int currentDepartmentId, string DeptRapName)
+        {
+            try
+            {
+                department CurrentDept = new department();
+
+                CurrentDept = (from r in se.departments
+                               where r.DepID == currentDepartmentId
+                               select r).FirstOrDefault();
+
+                CurrentDept.DepRepName = DeptRapName;
+                se.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+    }
+}

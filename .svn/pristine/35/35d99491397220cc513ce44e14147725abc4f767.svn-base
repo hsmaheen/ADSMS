@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=169433
+  -->
+<configuration>
+  <configSections>
+    <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+    <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false"/>
+  </configSections>
+  <appSettings>
+    <add key="ChartImageHandler" value="storage=file;timeout=20;dir=c:\TempImageFiles\;" />
+  </appSettings>
+  <system.webServer>
+    <validation validateIntegratedModeConfiguration="false" />
+    <handlers>
+      <remove name="ChartImageHandler" />
+      <add name="ChartImageHandler" preCondition="integratedMode" verb="GET,HEAD,POST"
+        path="ChartImg.axd" type="System.Web.UI.DataVisualization.Charting.ChartHttpHandler, System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    </handlers>
+  </system.webServer>
+  <system.web>
+    <httpHandlers>
+      <add path="ChartImg.axd" verb="GET,HEAD,POST" type="System.Web.UI.DataVisualization.Charting.ChartHttpHandler, System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
+        validate="false" />
+    </httpHandlers>
+    <pages>
+      <controls>
+        <add tagPrefix="asp" namespace="System.Web.UI.DataVisualization.Charting"
+          assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+      </controls>
+    </pages>
+    <compilation debug="true" targetFramework="4.5">
+      <assemblies>
+        <add assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"/>
+      </assemblies>
+    </compilation>
+    <httpRuntime targetFramework="4.5"/>
+  </system.web>
+  <connectionStrings>
+    <add name="sentity" connectionString="data source=10.10.3.165;Initial Catalog=stationery;persist security info=True;user id=sa;password=sa37team_3;"
+      providerName="System.Data.EntityClient" />
+    <add name="stationeryEntities" connectionString="metadata=res://*/stationery.csdl|res://*/stationery.ssdl|res://*/stationery.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=10.10.3.165;initial catalog=stationery;persist security info=True;user id=sa;password=sa37team_3;MultipleActiveResultSets=True;App=EntityFramework&quot;"
+      providerName="System.Data.EntityClient" />
+    <add name="stationeryConnectionString" connectionString="Data Source=10.10.3.165;Initial Catalog=stationery;Persist Security Info=True;User ID=sa;Password=sa37team_3;MultipleActiveResultSets=True;Application Name=EntityFramework"
+      providerName="System.Data.SqlClient" />
+  </connectionStrings>
+  <system.web>
+    <!-- Configure the Sql Membership Provider -->
+    <authentication mode="Forms">
+      <forms loginUrl="/Presentation/Login.aspx" timeout="2880"/>
+    </authentication>
+    <membership defaultProvider="SqlMembershipProvider" userIsOnlineTimeWindow="15">
+      <providers>
+        <clear/>
+        <add name="SqlMembershipProvider" type="System.Web.Security.SqlMembershipProvider" connectionStringName="sentity" applicationName="/" enablePasswordRetrieval="false" enablePasswordReset="false" requiresQuestionAndAnswer="false" requiresUniqueEmail="true" passwordFormat="Hashed"/>
+      </providers>
+    </membership>
+    <!-- Configure the Sql Role Provider -->
+    <roleManager enabled="true" defaultProvider="SqlRoleProvider">
+      <providers>
+        <add name="SqlRoleProvider" type="System.Web.Security.SqlRoleProvider,System.Web,                   Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" connectionStringName="sentity" applicationName="/"/>
+      </providers>
+    </roleManager>
+  </system.web>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.SqlConnectionFactory, EntityFramework"/>
+    <providers>
+      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer"/>
+    </providers>
+  </entityFramework>
+</configuration>

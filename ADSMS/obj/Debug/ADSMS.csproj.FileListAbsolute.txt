@@ -1,0 +1,16 @@
+D:\Maheen\AD Project\ADSMS\ADSMS\bin\ADSMS.dll
+D:\Maheen\AD Project\ADSMS\ADSMS\bin\ADSMS.pdb
+D:\Maheen\AD Project\ADSMS\ADSMS\bin\ADSMS.BizLogic.dll
+D:\Maheen\AD Project\ADSMS\ADSMS\bin\ADSMS.DataAccess.dll
+D:\Maheen\AD Project\ADSMS\ADSMS\bin\EntityFramework.dll
+D:\Maheen\AD Project\ADSMS\ADSMS\bin\EntityFramework.SqlServer.dll
+D:\Maheen\AD Project\ADSMS\ADSMS\bin\FastMember.dll
+D:\Maheen\AD Project\ADSMS\ADSMS\bin\ADSMS.BizLogic.pdb
+D:\Maheen\AD Project\ADSMS\ADSMS\bin\ADSMS.DataAccess.pdb
+D:\Maheen\AD Project\ADSMS\ADSMS\bin\EntityFramework.xml
+D:\Maheen\AD Project\ADSMS\ADSMS\bin\EntityFramework.SqlServer.xml
+D:\Maheen\AD Project\ADSMS\ADSMS\bin\FastMember.pdb
+D:\Maheen\AD Project\ADSMS\ADSMS\bin\FastMember.xml
+D:\Maheen\AD Project\ADSMS\ADSMS\obj\Debug\ADSMS.csprojResolveAssemblyReference.cache
+D:\Maheen\AD Project\ADSMS\ADSMS\obj\Debug\ADSMS.dll
+D:\Maheen\AD Project\ADSMS\ADSMS\obj\Debug\ADSMS.pdb

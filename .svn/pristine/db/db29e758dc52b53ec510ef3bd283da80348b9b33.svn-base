@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ADSMS.DataAccess;
+
+namespace ADSMS.BizLogic
+{
+    public class ClerkService_Phyo
+    {
+        ClerkRepositort_Phyo access = new ClerkRepositort_Phyo();
+
+        public List<category> getAllCategory()
+        {
+            return access.getAllCategory();
+        }
+        public List<item> getAllItemByCid(int cid)
+        {
+            return access.getAllItemByCid(cid);
+        }
+        public List<supplier> getAllSupplierByItmid(int itmid)
+        {
+            return access.getAllSupplierByItmid(itmid);
+        }
+        public double getPriceBySidItmid(int sid, int itmid)
+        {
+            return access.getPriceBySidItmid(sid, itmid);
+        }
+    }
+}

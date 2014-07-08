@@ -1,0 +1,124 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using ADSMS.BizLogic;
+using ADSMS.DataAccess;
+namespace ADSMS.Presentation.Store
+{
+    public partial class UpdateAdjustmentVoucher : System.Web.UI.Page
+    {
+        String AdjustmentVoucherID
+        {
+            get
+            {
+                if (Request.QueryString["ID"] != null)
+                    return Request.QueryString["ID"];
+                return String.Empty;
+            }
+        }
+        public void FillData()
+        {
+            AdjustmentService adjService = new AdjustmentService();
+            
+            dgvAdjustmentVoucher.Visible = false;
+            dgvAdjustmentVoucher.Enabled = false;
+            btnSubmit.Visible = false;
+            dgvAdjDetails.DataSource = adjService.getAdjustmentVoucherDetail(Convert.ToInt32(AdjustmentVoucherID));
+            
+            dgvAdjDetails.DataBind();
+            dgvAdjDetails.Enabled = false;
+        }
+        public void SelectAdjustmentVoucher()
+        {
+            int i = Convert.ToInt32(Session["userid"].ToString());
+            AdjustmentService adjService = new AdjustmentService();
+            dgvAdjustmentVoucher.DataSource = adjService.getTransactionForAdjVoucher(i.ToString()) ;
+            dgvAdjustmentVoucher.DataBind();
+           
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+           
+            
+
+            if (!IsPostBack)
+            {
+                try
+                {
+                    if (AdjustmentVoucherID != string.Empty)
+                        FillData();
+                    else
+                        SelectAdjustmentVoucher();
+                    if (dgvAdjustmentVoucher.Rows.Count <= 0)
+                    {
+                        btnSubmit.Visible = false;
+                        btnSubmit.Enabled = false;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    Label1.Text = "Unexpected error occurs .Please contact to your admin";
+                }
+            }
+
+        }
+
+        protected void btnSubmit_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                AdjustmentService service = new AdjustmentService();
+                adjustmentvoucher adjVoucher = new adjustmentvoucher();
+                
+                adjVoucher.ADVDate = DateTime.Today;
+                int userID = Convert.ToInt32(Session["userid"].ToString());
+                adjVoucher.ADVIOrderByEmpID = userID;
+               // adjVoucher.ADVApprovedByEMpID = 2;
+                adjVoucher.ADVStatus = "Pending";
+                double totalPrice = 0;
+                List<adjustmentvoucherdetail> detailList = new List<adjustmentvoucherdetail>();
+
+                foreach (GridViewRow i in dgvAdjustmentVoucher.Rows)
+                {
+                    adjustmentvoucherdetail adjVoucher_details = new adjustmentvoucherdetail();
+                    adjVoucher_details.ADVID = Convert.ToInt32(i.Cells[6].Text.ToString());
+                    adjVoucher_details.ADVItemID = Convert.ToInt32(i.Cells[0].Text.ToString());
+                    adjVoucher_details.ADVItemUnitCost = 0;
+                    adjVoucher_details.ADVQuantAdj = Convert.ToInt32(i.Cells[2].Text.ToString());
+
+
+                    TextBox t = (TextBox)i.FindControl("txtReason");
+                    int itemafter = Convert.ToInt32(i.Cells[5].Text.ToString());
+                    int quantbefore = itemafter + adjVoucher_details.ADVQuantAdj;
+                    adjVoucher_details.ADVReason = t.Text.ToString();
+                    adjVoucher_details.ADVItemUnitCost = Convert.ToInt32(i.Cells[3].Text.ToString());
+                    adjVoucher_details.ADVQuantBefore = quantbefore;
+                    adjVoucher_details.ADVQuantAfter = Convert.ToInt32(i.Cells[5].Text.ToString());
+                    adjVoucher_details.ADVAdjustedCost = Convert.ToInt32(i.Cells[4].Text.ToString());
+
+                    detailList.Add(adjVoucher_details);
+
+                    totalPrice = totalPrice + adjVoucher_details.ADVAdjustedCost;
+                }
+
+
+                service.saveAdjustmentVoucher(adjVoucher, detailList ,totalPrice);
+
+                Response.Redirect("ViewStockAdjustmentList.aspx");
+               
+
+            }
+            catch (Exception ex)
+            {
+                Label1.Text = "Un expected error occurs! please contact to admin";
+            }
+            
+           
+        }
+
+    }
+}

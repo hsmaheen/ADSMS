@@ -1,0 +1,270 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using ADSMS.BizLogic;
+using ADSMS.DataAccess;
+using System.Web.Security;
+
+namespace ADSMS.Presentation.Department
+{
+    public partial class AuthorityDelegation : System.Web.UI.Page
+    {
+
+        protected string FromDate { get; set; }
+        protected string ToDate { get; set; }
+
+        int Fromyear, Frommonth, Fromday;
+        int Toyear, Tomonth, Today;
+
+        EmployeeService _EmployeeService;
+        DepartmentService _DepartmentService;
+        DelegationService _DelegationService;
+
+        employee currentEmp;
+        department currentDept;
+        delegation Currentdelegation;
+        List<employee> employeeList;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            bool isTempHead = false;
+            RegistrationService rser = new RegistrationService();
+            string userId = HttpContext.Current.User.Identity.Name;
+            isTempHead=rser.IsTempDepHead(userId);
+
+            if ((HttpContext.Current.User.IsInRole("Department Head") != true) && (isTempHead != true))
+            {
+                Response.Redirect("/Presentation/Login.aspx");
+
+            }
+
+
+            _EmployeeService = new EmployeeService();
+            _DepartmentService = new DepartmentService();
+            _DelegationService = new DelegationService();
+
+            if (!IsPostBack)
+            {
+                #region DataBind for ddl with DeptID
+                int LoginId = Convert.ToInt32(Session["userid"].ToString());
+
+                currentEmp = new employee();
+                currentEmp = _EmployeeService.GetEmployeeDetailsByEmpID(LoginId);
+
+                int curdeptID = currentEmp.EmployeeDepId ?? default(int);
+                employeeList = new List<employee>();
+                employeeList = _EmployeeService.GetEmployeeDetailsByDeptID(curdeptID, LoginId);
+                ddlEmpName.DataSource = employeeList;
+                ddlEmpName.DataBind();
+                #endregion
+
+                searchDelegation();
+            }
+
+            //if (IsPostBack)
+            //{
+            //    currentEmp = new employee();
+            //    currentEmp = _EmployeeService.GetEmployeeDetailsByEmpID(int.Parse(ddlEmpName.SelectedItem.Value));
+
+            //    if (currentEmp != null)
+            //    {
+            //        txtEmpContact.Text = currentEmp.EmployeeContact.ToString();
+            //        txtEmpID.Text = ddlEmpName.SelectedItem.Value;
+            //    }
+            //    else
+            //    {
+            //        PanelError.Visible = true;
+            //    }
+            //}
+        }
+
+        public void searchDelegation()
+        {
+            int LoginId = Convert.ToInt32(Session["userid"].ToString());
+
+            currentEmp = new employee();
+            currentEmp = _EmployeeService.GetEmployeeDetailsByEmpID(LoginId);
+
+            Currentdelegation = new delegation();
+            Currentdelegation = _DelegationService.SearchDelegationWithDelgApproveEmpId_Status_Date(LoginId, "approved");
+
+            if (Currentdelegation != null)
+            {
+                PanelSubmit.Visible = true;
+                lblDelegated.Text = " Can change the delegation details.";
+
+                ddlEmpName.SelectedValue = Currentdelegation.DelgEmpID.ToString();
+                txtEmpID.Text = Currentdelegation.DelgEmpID.ToString();
+                currentEmp = new employee();
+                currentEmp = _EmployeeService.GetEmployeeDetailsByEmpID(Currentdelegation.DelgEmpID);
+                txtEmpContact.Text = currentEmp.EmployeeContact.ToString();
+                this.FromDate = Currentdelegation.DelgFromDate.ToString("MM/dd/yyyy");
+                this.ToDate = Currentdelegation.DelgToDate.ToString("MM/dd/yyyy");
+                btnResetDelegation.Enabled = true;
+                btnSubmitDeligation.Enabled = true;
+            }
+            else
+            {
+                btnResetDelegation.Enabled = false;
+                btnSubmitDeligation.Enabled = false;
+            }
+        }
+
+        protected void EmpName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            currentEmp = new employee();
+            currentEmp = _EmployeeService.GetEmployeeDetailsByEmpID(int.Parse(ddlEmpName.SelectedItem.Value));
+
+            if (currentEmp != null)
+            {
+                txtEmpContact.Text = currentEmp.EmployeeContact.ToString();
+                txtEmpID.Text = ddlEmpName.SelectedItem.Value;
+            }
+            else
+            {
+                PanelError.Visible = true;
+            }
+            //loadNew();
+            txtEmpID.Text = ddlEmpName.SelectedItem.Value;
+            this.FromDate="";
+            this.ToDate = "";
+            PanelError.Visible = false;
+            PanelSubmit.Visible = false;
+            btnResetDelegation.Enabled = true;
+            btnSubmitDeligation.Enabled = true;
+
+            int LoginId = Convert.ToInt32(Session["userid"].ToString());
+
+            currentEmp = new employee();
+            currentEmp = _EmployeeService.GetEmployeeDetailsByEmpID(int.Parse(ddlEmpName.SelectedItem.Value));
+
+            Currentdelegation = new delegation();
+            Currentdelegation = _DelegationService.SearchDelegationWithDelgEmpId_ApprovedID_Status_Date(int.Parse(ddlEmpName.SelectedItem.Value), LoginId,"approved");
+
+            if (Currentdelegation != null)
+            {
+                PanelSubmit.Visible = true;
+                lblDelegated.Text = " Can change the delegation details.";
+
+                ddlEmpName.SelectedValue = Currentdelegation.DelgEmpID.ToString();
+                txtEmpID.Text = Currentdelegation.DelgEmpID.ToString();
+                txtEmpContact.Text = currentEmp.EmployeeContact.ToString();
+                this.FromDate = Currentdelegation.DelgFromDate.ToString("MM/dd/yyyy");
+                this.ToDate = Currentdelegation.DelgToDate.ToString("MM/dd/yyyy");
+                btnResetDelegation.Enabled = true;
+                btnSubmitDeligation.Enabled = true;
+
+            }
+        }
+
+        #region Comment
+        //protected void imgbtnCalendar_Click(object sender, ImageClickEventArgs e)
+        //{
+        //    Calendar1.Visible = true;
+        //}
+
+        //protected void imgbtnCalendar2_Click(object sender, ImageClickEventArgs e)
+        //{
+        //    Calendar2.Visible = true;
+        //}
+
+        //protected void Calendar1_SelectionChanged(object sender, EventArgs e)
+        //{
+        //    fromDateTextBox.Text = Calendar1.SelectedDate.ToShortDateString();
+        //    Calendar1.Visible = false;
+        //}
+
+        //protected void Calendar2_SelectionChanged(object sender, EventArgs e)
+        //{
+        //    toDateTextBox.Text = Calendar2.SelectedDate.ToShortDateString();
+        //    Calendar2.Visible = false;
+        //}
+        #endregion
+
+        protected void btnSubmitDeligation_Click(object sender, EventArgs e)
+        {
+            int LoginId = Convert.ToInt32(Session["userid"].ToString());
+
+            Currentdelegation = new delegation();
+            Currentdelegation = _DelegationService.SearchDelegationWithDelgEmpId_ApprovedID_Status_Date(int.Parse(ddlEmpName.SelectedValue),LoginId,"approved");
+
+            delegation ToUpdateDelegation = new delegation();
+            ToUpdateDelegation.DelgEmpID = int.Parse(ddlEmpName.SelectedItem.Value);
+
+            string fromdate_txt = Page.Request.Form["dpd1"].ToString();
+            String[] FromDateArr = fromdate_txt.Split('/');
+            Fromyear = Int32.Parse(FromDateArr[2]);
+            Frommonth = Int32.Parse(FromDateArr[0]);
+            Fromday = Int32.Parse(FromDateArr[1]);
+            DateTime FromDateTime = new DateTime(Fromyear, Frommonth, Fromday);
+            ToUpdateDelegation.DelgFromDate = FromDateTime;
+
+            string todate_txt = Page.Request.Form["dpd2"].ToString();
+            String[] ToDateArr = todate_txt.Split('/');
+            Toyear = Int32.Parse(ToDateArr[2]);
+            Tomonth = Int32.Parse(ToDateArr[0]);
+            Today = Int32.Parse(ToDateArr[1]);
+            DateTime ToDateTime = new DateTime(Toyear, Tomonth, Today);
+            ToUpdateDelegation.DelgToDate = ToDateTime;
+
+            ToUpdateDelegation.DelgStatus = "approved";
+            ToUpdateDelegation.DelApproveEmpID = LoginId;
+
+            if (Currentdelegation != null)
+            {
+                ToUpdateDelegation.DelgID = Currentdelegation.DelgID;
+                _DelegationService.UpdateDelegation(ToUpdateDelegation);
+                loadNew();
+                lblDelegated.Text = "";
+                PanelSubmit.Visible = true;
+                btnResetDelegation.Enabled = false;
+                btnSubmitDeligation.Enabled = false;
+            }
+            else
+            {
+                _DelegationService.SaveNewDelegation(ToUpdateDelegation);
+                loadNew();
+                lblDelegated.Text = "";
+                PanelSubmit.Visible = true;
+                btnResetDelegation.Enabled = false;
+                btnSubmitDeligation.Enabled = false;
+            }
+        }
+
+        protected void btnResetDelegation_Click(object sender, EventArgs e)
+        {
+            int LoginId = Convert.ToInt32(Session["userid"].ToString());
+
+            Currentdelegation = new delegation();
+            Currentdelegation = _DelegationService.SearchDelegationWithDelgEmpId_ApprovedID_Status_Date(int.Parse(ddlEmpName.SelectedValue), LoginId, "approved");
+
+            delegation ToUpdateDelegation = new delegation();
+
+            ToUpdateDelegation.DelgID = Currentdelegation.DelgID;
+            ToUpdateDelegation.DelApproveEmpID = Currentdelegation.DelApproveEmpID;
+            ToUpdateDelegation.DelgEmpID = Currentdelegation.DelgEmpID;
+            ToUpdateDelegation.DelgFromDate = Currentdelegation.DelgFromDate;
+            ToUpdateDelegation.DelgToDate = Currentdelegation.DelgToDate;
+            ToUpdateDelegation.DelgStatus = "cancel";
+
+            _DelegationService.UpdateDelegation(ToUpdateDelegation);
+            loadNew();
+            PanelCancel.Visible = true;
+            btnResetDelegation.Enabled = false;
+            btnSubmitDeligation.Enabled = false;
+        }
+
+        public void loadNew()
+        {
+            PanelError.Visible = false;
+            PanelSubmit.Visible = false;
+            txtEmpContact.Text = "";
+            txtEmpID.Text = "";
+            this.FromDate = "";
+            this.ToDate = "";
+        }
+    }
+}

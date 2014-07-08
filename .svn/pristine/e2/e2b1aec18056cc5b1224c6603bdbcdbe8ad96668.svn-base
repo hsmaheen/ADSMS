@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ADSMS.DataAccess;
+using ADSMS.BizLogic;
+
+namespace ADSMS.BizLogic
+{
+    public class DelegationService
+    {
+        DelegateRepository_Jas _DelegationRepository = new DelegateRepository_Jas();
+
+        public delegation SearchDelegationWithDelgApproveEmpIdNDate(int ApprovedEmpId)
+        {
+            return _DelegationRepository.SearchDelegationWithDelgApproveEmpIdNDate(ApprovedEmpId);
+        }
+
+        public delegation SearchDelegationWithDelgEmpIdNApprovedIDNDate(int DelgEmpID,int ApprovedId)
+        {
+            return _DelegationRepository.SearchDelegationWithDelgEmpIdNApprovedIDNDate(DelgEmpID,ApprovedId);
+        }
+
+        public void SaveNewDelegation(delegation curdel)
+        {
+            _DelegationRepository.SaveNewDelegation(curdel);
+        }
+
+        public void UpdateDelegation(delegation ToUpdateDelegation)
+        {
+            _DelegationRepository.UpdateDelegation(ToUpdateDelegation);
+        }
+    }
+}

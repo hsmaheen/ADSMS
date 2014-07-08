@@ -1,0 +1,106 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using ADSMS.BizLogic;
+
+
+namespace ADSMS.Presentation.Store
+{
+    public partial class InventoryList : System.Web.UI.Page
+    {
+        StoreService ss = new StoreService();
+        private void BindGrid()
+        {
+           
+            itemView.DataSource = ss.getItemList();
+            itemView.DataBind();
+
+        }
+
+
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+
+                BindGrid();
+            }
+
+        }
+
+        protected void itemView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+           itemView.PageIndex = e.NewPageIndex;
+            BindGrid();
+        }
+
+
+        protected void itemView_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            itemView.EditIndex = e.NewEditIndex;
+            BindGrid();
+        }
+
+        protected void itemView_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            itemView.EditIndex = -1;
+            BindGrid();
+        }
+
+        protected void itemView_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            bool ans = false;
+            string i_itemid = itemView.Rows[e.RowIndex].Cells[0].Text;
+            string i_itemdesp = itemView.Rows[e.RowIndex].Cells[1].Text;
+            string i_itemqua = itemView.Rows[e.RowIndex].Cells[2].Text;
+            string c_cname = itemView.Rows[e.RowIndex].Cells[3].Text;
+            string i_req = itemView.Rows[e.RowIndex].Cells[4].Text;
+            string i_reqQ = itemView.Rows[e.RowIndex].Cells[5].Text;
+            string i_uom = itemView.Rows[e.RowIndex].Cells[6].Text;
+            string b_Bin = itemView.Rows[e.RowIndex].Cells[7].Text;
+
+            ans=ss.UpdateInventoryList(Convert.ToInt32(i_itemid), i_itemdesp, Convert.ToInt32(i_itemqua), c_cname, Convert.ToInt32(i_req),Convert.ToInt32(i_reqQ), i_uom,Convert.ToInt32( b_Bin));
+            if (ans == true)
+            {
+                itemView.EditIndex = -1;
+                BindGrid();
+                lbl_status.Text = "Updated";
+ 
+            }
+            else
+            {
+                lbl_status.Text = "cannot be updated";
+
+            }
+
+          
+        }
+
+        
+        
+
+        //protected void itemView_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        //{
+        //    bool ans = false;
+        //    object delitem = new object();
+        //    string item = itemView.Rows[e.RowIndex].Cells[1].Text;
+        //    delitem=ss.getItem(item);
+ 
+        //    ans=ss.deleteItem(delitem);
+        //    if (ans ==true)
+        //    {
+        //        BindGrid();
+        //    }
+        //    else
+
+        //    {
+        //        lbl_status.Text = "Item could not be deleted";
+ 
+        //    }
+        //}
+    }
+}

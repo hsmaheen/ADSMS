@@ -1,0 +1,141 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using ADSMS.BizLogic;
+using System.Web.Security;
+
+namespace ADSMS.Presentation
+{
+    public partial class Register : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            RegistrationService re = new RegistrationService();
+            List<object> roles = new  List<object>();
+            List<object> departments = new List<object>();
+            if (!IsPostBack)
+            {
+                roles = re.getallroles();
+                departments = re.getalldep();
+                ddl_Role.DataTextField = "RoleName";
+                ddl_Role.DataValueField = "RoleName";
+                ddl_Role.DataSource = roles;
+                ddl_Role.DataBind();
+
+                ddl_Department.DataTextField = "DepName";
+                ddl_Department.DataValueField = "DepName";
+                ddl_Department.DataSource = departments;
+                ddl_Department.DataBind();
+            }
+
+        }
+
+        protected void CreateUser_Click(object sender, EventArgs e)
+        {
+
+            RegistrationService re = new RegistrationService();
+
+
+
+            ////Creating the user in our database
+            string username = txt_Username.Text;
+            string contact = txt_ContactNumber.Text;
+            string email = txt_UserEmailID.Text; ; //Userid shall be email to make it truly unique
+            string password = txt_Password.Text;
+            int roleid = ddl_Role.SelectedIndex + 1;
+            string rolename = ddl_Role.SelectedValue;
+            int depid = ddl_Department.SelectedIndex + 1;
+
+
+            if ((roleid == 4) || (roleid == 5))
+            {
+                //employee emp = new employee();
+                //emp.EmpIsDepRep = false;
+                //emp.EmployeeContact = Convert.ToInt32(contact);
+                //emp.EmployeeName = username;
+                //emp.EmployeeDepId = Convert.ToInt32(depid);
+                //emp.EmployeeEmail = email;
+                //emp.EmployeeRoleID = roleid;
+                //se.employees.Add(emp);
+                //se.SaveChanges();
+                re.registeremployee(username, email, depid, roleid, contact);
+
+
+            }
+            else
+            {
+                //    //storeemp semp = new storeemp();
+                //    //semp.StoreEmpEmail = email;
+                //    //semp.StoreEmpName = username;
+                //    //semp.StoreEmpContact = Convert.ToInt32(contact);
+                //    //semp.StoreEmpRoleID = roleid;
+                //    //se.storeemps.Add(semp);
+                //    //se.SaveChanges();
+                re.registerStoreemployee(username, email, roleid, contact);
+            }
+
+
+
+            try
+            {
+                MembershipCreateStatus status;
+
+
+                MembershipUser newuser = Membership.CreateUser(txt_UserEmailID.Text, txt_Password.Text, email, null, null, true, out status);
+                if (newuser != null)
+                {
+                    //Roles.CreateRole(rolename);
+                    Roles.AddUserToRole(txt_UserEmailID.Text, rolename);
+                    StatusMessage.Text = "Successfull";
+                }
+                else
+                {
+                    StatusMessage.Text = "Try Again";
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+
+
+
+
+
+            //// Default UserStore constructor uses the default connection string named: DefaultConnection
+            //var userStore = new UserStore<IdentityUser>();
+            //var manager = new UserManager<IdentityUser>(userStore);
+            //var user = new IdentityUser(email); 
+
+            ////role managers
+            ////var rolestore = new RoleStore<IdentityRole>();
+            ////var rolemanager = new RoleManager<IdentityRole>(rolestore);
+            ////var role = new IdentityRole(rolename);
+            ////rolemanager.Create(role);
+
+            //IdentityResult result = manager.Create(user, Password.Text);
+
+            //if (result.Succeeded)
+            //{
+            //    var cuuser=manager.FindByName(email);
+            //    manager.AddToRole(cuuser.Id, rolename);
+
+            //    var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
+            //    var userIdentity = manager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+            //    authenticationManager.SignIn(new AuthenticationProperties() { }, userIdentity);
+            //    Response.Redirect("~/Login.aspx");
+            //}
+            //else
+            //{
+            //    StatusMessage.Text = result.Errors.FirstOrDefault();
+            //}
+
+        }
+    }
+}

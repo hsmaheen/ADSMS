@@ -1,0 +1,207 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/Department/Department.Master" AutoEventWireup="true" CodeBehind="ChartGenerationForm.aspx.cs" Inherits="ADSMS.Presentation.ChartGenerationForm" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+    <div class="container">
+        <div class="page-header">
+            <h1 id="tables">Chart Generation Form</h1>
+        </div>
+        <div class="bs-component">
+            <div class="form-group">
+                <div class="col-lg-2">
+                    <asp:Label ID="categorylbl" runat="server" Text="Category:"></asp:Label>
+                </div>
+                <div class="col-lg-2">
+                    <asp:DropDownList ID="categorylist" AutoPostBack="true" CssClass="form-control" runat="server" AppendDataBoundItems="true" OnSelectedIndexChanged="categorylist_SelectedIndexChanged">
+                        <asp:ListItem Value="0" Text="-Select-" />
+                    </asp:DropDownList>
+                </div>
+                <div class="col-lg-2">
+                    <asp:CheckBox ID="categorychkbox" CssClass="col-lg-offset-6" runat="server" />
+
+                </div>
+                <br />
+            </div>
+
+            <div class="bs-component">
+                <div class="form-group">
+                    <div class="col-lg-2">
+                        <asp:Label ID="itemlbl" runat="server" Text="Item:"></asp:Label>
+                    </div>
+                    <div class="col-lg-2">
+                        <asp:DropDownList ID="itemlist" runat="server" CssClass="form-control" AutoPostBack="true" AppendDataBoundItems="true">
+                            <asp:ListItem Value="0" Text="-Select-" />
+                        </asp:DropDownList>
+
+                    </div>
+                    <div class="col-lg-2">
+                        <asp:CheckBox ID="itemchkbox" CssClass="col-lg-offset-6" runat="server" />
+                    </div>
+                    <br />
+                </div>
+
+                <div class="bs-component">
+                    <div class="form-group">
+                        <div class="col-lg-2">
+                            <asp:Label ID="departmentlbl" runat="server" Text="Department:"></asp:Label>
+                        </div>
+                        <div class="col-lg-2">
+                            <asp:DropDownList ID="departmentlist" runat="server" DataSourceID="DepEnt" DataTextField="DepName" DataValueField="DepID">
+                            </asp:DropDownList>
+
+                            <asp:EntityDataSource ID="DepEnt" runat="server" ConnectionString="name=stationeryEntities" DefaultContainerName="stationeryEntities" EnableFlattening="False" EntitySetName="departments">
+                            </asp:EntityDataSource>
+                        </div>
+                        <div class="col-lg-2">
+                            <asp:CheckBox ID="departmentchkbox" CssClass="col-lg-offset-6" runat="server" />
+                        </div>
+                        <br />
+                    </div>
+                </div>
+                <div class="breadcrumb">
+                    <table class="form-group">
+                        <tr class="info">
+                            <td>
+                                <asp:Label ID="Firstmonthlbl" runat="server" Text="1st month:"></asp:Label></td>
+                            <td>
+                                <asp:DropDownList ID="Month1DDL" runat="server">
+                                    <asp:ListItem>January</asp:ListItem>
+                                    <asp:ListItem>February</asp:ListItem>
+                                    <asp:ListItem>March</asp:ListItem>
+                                    <asp:ListItem>April</asp:ListItem>
+                                    <asp:ListItem>May</asp:ListItem>
+                                    <asp:ListItem>June</asp:ListItem>
+                                    <asp:ListItem>July</asp:ListItem>
+                                    <asp:ListItem>August</asp:ListItem>
+                                    <asp:ListItem>September</asp:ListItem>
+                                    <asp:ListItem>October</asp:ListItem>
+                                    <asp:ListItem>November</asp:ListItem>
+                                    <asp:ListItem>December</asp:ListItem>
+                                </asp:DropDownList></td>
+
+                            <td>
+                                <asp:Label ID="Firstyearlbl" CssClass="well-lg" runat="server" Text="1st Year:"></asp:Label></td>
+                            <td>
+                                <asp:DropDownList ID="Year1DDL" runat="server">
+                                    <asp:ListItem>2014</asp:ListItem>
+                                    <asp:ListItem>2015</asp:ListItem>
+                                    <asp:ListItem>2016</asp:ListItem>
+                                    <asp:ListItem>2017</asp:ListItem>
+                                    <asp:ListItem>2018</asp:ListItem>
+                                </asp:DropDownList></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <br />
+                            </td>
+                        </tr>
+
+                        <tr class="success">
+                            <td>
+                                <asp:Label ID="Secondmonthlbl" runat="server" Text="2nd Month:"></asp:Label></td>
+                            <td>
+                                <asp:DropDownList ID="Month2DDL" runat="server">
+                                    <asp:ListItem>January</asp:ListItem>
+                                    <asp:ListItem>February</asp:ListItem>
+                                    <asp:ListItem>March</asp:ListItem>
+                                    <asp:ListItem>April</asp:ListItem>
+                                    <asp:ListItem>May</asp:ListItem>
+                                    <asp:ListItem>June</asp:ListItem>
+                                    <asp:ListItem>July</asp:ListItem>
+                                    <asp:ListItem>August</asp:ListItem>
+                                    <asp:ListItem>September</asp:ListItem>
+                                    <asp:ListItem>October</asp:ListItem>
+                                    <asp:ListItem>November</asp:ListItem>
+                                    <asp:ListItem>December</asp:ListItem>
+                                </asp:DropDownList></td>
+                            <td>
+                                <asp:Label ID="Secondyearlbl" CssClass="well-lg" runat="server" Text="2nd Year:"></asp:Label></td>
+                            <td>
+                                <asp:DropDownList ID="Year2DDL" runat="server">
+                                    <asp:ListItem>2014</asp:ListItem>
+                                    <asp:ListItem>2015</asp:ListItem>
+                                    <asp:ListItem>2016</asp:ListItem>
+                                    <asp:ListItem>2017</asp:ListItem>
+                                    <asp:ListItem>2018</asp:ListItem>
+                                </asp:DropDownList></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <br />
+                            </td>
+                        </tr>
+
+                        <tr class="danger">
+                            <td>
+                                <asp:Label ID="thirdmonthlbl" runat="server" Text="3rd Month:"></asp:Label></td>
+                            <td>
+                                <asp:DropDownList ID="Month3DDL" runat="server">
+                                    <asp:ListItem>January</asp:ListItem>
+                                    <asp:ListItem>February</asp:ListItem>
+                                    <asp:ListItem>March</asp:ListItem>
+                                    <asp:ListItem>April</asp:ListItem>
+                                    <asp:ListItem>May</asp:ListItem>
+                                    <asp:ListItem>June</asp:ListItem>
+                                    <asp:ListItem>July</asp:ListItem>
+                                    <asp:ListItem>August</asp:ListItem>
+                                    <asp:ListItem>September</asp:ListItem>
+                                    <asp:ListItem>October</asp:ListItem>
+                                    <asp:ListItem>November</asp:ListItem>
+                                    <asp:ListItem>December</asp:ListItem>
+                                </asp:DropDownList></td>
+                            <td>
+                                <asp:Label ID="thirdyearlbl" CssClass="well-lg" runat="server" Text="3rd Year:"></asp:Label></td>
+                            <td>
+                                <asp:DropDownList ID="Year3DDL" runat="server">
+                                    <asp:ListItem>2014</asp:ListItem>
+                                    <asp:ListItem>2015</asp:ListItem>
+                                    <asp:ListItem>2016</asp:ListItem>
+                                    <asp:ListItem>2017</asp:ListItem>
+                                    <asp:ListItem>2018</asp:ListItem>
+                                </asp:DropDownList></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <br />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-12">
+                        <button type="button" class="btn btn-primary">Generate Chart by Category</button>&nbsp;&nbsp;
+              <button type="button" class="btn btn-success" id="btn_GCD">Generate Chart by Department</button>&nbsp;&nbsp;
+              <button type="button" class="btn btn-info" onclick="this.form.reset()">Reset Form</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <br />
+
+    <script>
+        $(function () {
+            $("#btn_GCD").click(function () {
+
+                var category = $("#<%=categorylist.ClientID %> option:selected").text();
+                alert(category);
+                var item = $("#<%=categorylist%>   ").text();
+                var value = $("#categorylist option:selected").val();
+
+            }
+            );
+
+
+
+        });
+
+    </script>
+</asp:Content>
+

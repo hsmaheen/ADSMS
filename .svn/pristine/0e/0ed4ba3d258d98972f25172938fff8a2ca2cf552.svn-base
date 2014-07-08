@@ -1,0 +1,6 @@
+﻿<div class="jumbotron">
+    <h1>{{title}}</h1>
+    <p>{{message}}</p>
+
+        <button type="button" class="btn-lg col-md-offset-9 btn-primary">View Final Disbursements   </button>
+</div>

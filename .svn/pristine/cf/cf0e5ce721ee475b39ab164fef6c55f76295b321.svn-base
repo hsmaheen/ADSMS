@@ -1,0 +1,155 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ADSMS.DataAccess
+{
+    public class ClerkRepositort_Phyo
+    {
+        stationeryEntities cntx = new stationeryEntities();
+
+        public List<category> getAllCategory()
+        {
+            try
+            {
+                List<category> cate = new List<category>();
+                cate = cntx.categories.ToList<category>();
+                return cate;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<item> getAllItemByCid(int cid)
+        {
+            try
+            {
+                List<item> itm = new List<item>();
+                itm = (from a in cntx.items where a.ItemCatID == cid select a).Distinct().ToList();
+                return itm;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<supplier> getAllSupplierByItmid(int itmid)
+        {
+            try
+            {
+                List<supplier> supplier = new List<supplier>();
+                supplier = (from s in cntx.suppliers
+                            join i in cntx.itemsuppliers on s.SupplierID equals i.SupplierID
+                            where i.ItemID == itmid && i.SupplierRank > 0 && i.SupplierRank < 4
+                            select s).Distinct().ToList();
+                return supplier;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public double getPriceBySidItmid(int sid, int itmid)
+        {
+            try
+            {
+                return (double)((from i in cntx.itemsuppliers
+                                 where i.SupplierID == sid &&
+                                     i.ItemID == itmid
+                                 select i.Price).Distinct().FirstOrDefault());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public int createPurchaseOrder(purchaseorder r)
+        {
+            try
+            {
+                purchaseorder req = new purchaseorder();
+                req.POSuppID = r.POSuppID;
+                req.POEmpID = r.POEmpID;
+                req.POReqDate = r.POReqDate;
+                req.PODeliverAddress = r.PODeliverAddress;
+                req.POReqDeliverDate = r.POReqDeliverDate;
+                cntx.purchaseorders.Add(req);
+                cntx.SaveChanges();
+                int id = req.POID;
+                return id;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public int getSIDByPoid(int poid)
+        {
+            try
+            {
+                return (int)(from a in cntx.purchaseorders where a.POID == poid select a.POSuppID).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public int getPOIDBySid(int sid)
+        {
+            try
+            {
+                int i = (from a in cntx.purchaseorders where a.POSuppID == sid select a.POID).FirstOrDefault();
+                if (i == 0)
+                {
+                    return 0;
+                }
+                else return i;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void createPurchaseOrderDetails(purchaseorderdetail rd)
+        {
+            try
+            {
+                purchaseorderdetail detail = new purchaseorderdetail();
+                detail.POID = rd.POID;
+                detail.POItemID = rd.POItemID;
+                detail.POItemQuant = rd.POItemQuant;
+                detail.POStatus = rd.POStatus;
+                cntx.purchaseorderdetails.Add(detail);
+                cntx.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        //Purchase Order History 
+        public List<object> getAllPurchase()
+        {
+            List<object> itm = new List<object>();
+            try
+            {
+                itm = (from f in cntx.purchaseorders
+                         join i in cntx.suppliers on f.POSuppID equals i.SupplierID
+                         join d in cntx.purchaseorderdetails on f.POID equals d.POID
+                         orderby f.POID descending
+                         select new { POID=f.POID,SupplierName = i.SupplierName, POReqDate = f.POReqDate, POReqDeliverDate = f.POReqDeliverDate, POStatus = d.POStatus }).ToList<object> ();
+                
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return itm;
+        }
+    }
+}

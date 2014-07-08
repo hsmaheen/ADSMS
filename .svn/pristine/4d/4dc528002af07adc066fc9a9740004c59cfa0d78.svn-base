@@ -1,0 +1,94 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ADSMS.DataAccess;
+
+namespace ADSMS.BizLogic
+{
+    public class Service_phyo
+    {
+        requisition req = new requisition();
+        requisitiondetail reqDetail = new requisitiondetail();
+        Repository_phyo requisition = new Repository_phyo();
+        MyItem itm = new MyItem();
+
+        public List<object> getAllRequisitionByEid(int eid)
+        {
+            return requisition.getAllRequisitionByEid(eid);
+        }
+
+        public List<object> getAllRequisitionStatusByEid(int eid, string search)
+        {
+            return requisition.getAllRequisitionStatusByEid(eid, search);
+        }
+
+        public List<object> getAllItem()
+        {
+            return requisition.getAllItem();
+        }
+
+        public int getItemIDByItemDescription(string iname)
+        {
+            return requisition.getItemIDByItemDescription(iname);
+        }
+
+        public bool CreteRequisitionAll(int eid, ItemCollection items)
+        {
+            int depid = requisition.getDepIdByEid(eid);
+
+            req.ReqEmpId = eid;
+            req.ReqStatus = "pending";
+            req.ReqDate = DateTime.Now;
+            req.ReqDepID = depid;
+
+            int rid= requisition.createRequisition(req);
+
+            foreach (var item in items)
+            {
+                reqDetail.ReqID=rid;
+                reqDetail.ReqItemID=item.ReqItemID;
+                reqDetail.ReqQuantityReq=item.ReqQuantityReq;
+                requisition.createRequisitionDetails(reqDetail);
+            }
+            return true;
+        }
+
+        public void DeleteRequisitionAll(int reqId)
+        {
+            requisition.DeleteRequisitionAll(reqId);
+        }
+        public requisition ShowRequisitionDetail(int reqId)
+        {
+            return requisition.ShowRequisitionDetail(reqId);
+        }
+        public List<object> ShowAllRequisitionDetailById(int rid)
+        {
+            return requisition.ShowAllRequisitionDetailById(rid);
+        }
+        public bool getRequisitionByStatus(int reqId)
+        {
+            return requisition.getRequisitionByStatus(reqId);
+        }
+        //Department Representative
+        public department getDNameByEid(int eid)
+        {
+            return requisition.getDNameByEid(eid);
+        }
+
+        public List<object> getAllCollectionItemByDepIdStatusDate(int eid, string status, DateTime date)
+        {
+            return requisition.getAllCollectionItemByDepIdStatusDate(eid, status, date);
+        }
+        public void UpdateDisbursementReceiveDateByDepID(int depid)
+        {
+            requisition.UpdateDisbursementReceiveDateByDepID(depid);
+        }
+        
+        public collectionPoint getAllCollectionPointByDeptID(int deptid)
+        {
+            return requisition.getAllCollectionPointByDeptID(deptid);
+        }
+    }
+}
