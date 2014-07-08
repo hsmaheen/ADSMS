@@ -1,0 +1,5 @@
+Steps to get up and ruuning :
+1.) Use Visual Studio 2012
+2.) Run the script located in ..\ADSMS\ADSMS\DB to set up the database
+3.) Configure the Web config file to point to your Database.
+4.) Run the application.
